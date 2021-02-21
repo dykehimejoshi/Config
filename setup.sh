@@ -4,7 +4,7 @@
 # Assumes files have been cloned into ~/Config/
 
 
-if [ -f "~/.tmux.conf" ]; then
+if [ ! -f "~/.tmux.conf" ]; then
     ln -s ~/Config/tmux.conf ~/.tmux.conf
     code=$?
     if [ -z $code ]; then
@@ -16,7 +16,7 @@ else
     echo "Tmux config already linked."
 fi
 
-if [ -f "~/.vimrc" ]; then
+if [ ! -f "~/.vimrc" ]; then
     ln -s ~/Config/vimrc ~/.vimrc
     code=$?
     if [ -z $code ]; then
