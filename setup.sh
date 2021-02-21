@@ -4,7 +4,7 @@
 # Assumes files have been cloned into ~/Config/
 
 
-if [ -f "~/.tmux.conf" ]; then
+if [ ! -f "~/.tmux.conf" ]; then
     ln -s ~/Config/tmux.conf ~/.tmux.conf
     code=$?
     if [ -z $code ]; then
@@ -16,7 +16,7 @@ else
     echo "Tmux config already linked."
 fi
 
-if [ -f "~/.vimrc" ]; then
+if [ ! -f "~/.vimrc" ]; then
     ln -s ~/Config/vimrc ~/.vimrc
     code=$?
     if [ -z $code ]; then
@@ -26,4 +26,16 @@ if [ -f "~/.vimrc" ]; then
     fi
 else
     echo "Vim config already linked."
+fi
+
+if [ ! -f "~/.bash_aliases" ]; then
+    ln -s ~/Config/bash_aliases ~/.bash_aliases
+    code=$?
+    if [ -z $code ]; then
+        echo "Bash aliases successfully linked."
+    else
+        echo "Error in linking Bash aliases: $code"
+    fi
+else
+    echo "Bash aliases already linked."
 fi
