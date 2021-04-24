@@ -52,24 +52,6 @@ alias chkdu='df -h | head -n 1 && df -h | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
 
-# Converting file formats
-## TODO: generalize this function
-
-## mp4 to mp3
-mp4_to_mp3() {
-    find . -type f -name "*.mp4" -exec bash -c 'FILE="$1"; ffmpeg -i "${FILE}" -vn -c:a libmp3lame -y "${FILE%.mp4}.mp3";' _ '{}' \;
-}
-
-## webm to mp3
-webm_to_mp3() {
-    find . -type f -name "*.webm" -exec bash -c 'FILE="$1"; ffmpeg -i "${FILE}" -vn -c:a libmp3lame -y "${FILE%.webm}.mp3";' _ '{}' \;
-}
-
-## mkv to mp3
-mkv_to_mp3() {
-    find . -type f -name "*.mkv" -exec bash -c 'FILE="$1"; ffmpeg -i "${FILE}" -vn -c:a libmp3lame -y "${FILE%.mkv}.mp3";' _ '{}' \;
-}
-
 # Misc
 alias py='python3'
 alias py3='python3'
@@ -79,3 +61,6 @@ alias qmu='qemu-system-x86_64'
 alias rmsyncconflicts='for line in $(find ~ -name "*sync-conflict*"); do echo $line; rm "$line"; done'
 alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 alias getdevs="ls /dev/sd? ; echo ; ls /dev/sd??"
+
+# Setting the prompt
+PS1='\n\[\033[00;00m\][\w] \[\033[01;35m\]\u \[\033[01;34m\]\h \n\[\033[00m\]\$ '
