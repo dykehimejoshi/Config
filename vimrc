@@ -44,3 +44,6 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>f :wq<CR>
 nnoremap <Leader>e :q!<CR>
 nnoremap <Leader>h :set hlsearch!<CR>
+
+vmap <Tab> >
+vmap <S-Tab> <
