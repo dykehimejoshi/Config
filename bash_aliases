@@ -52,15 +52,20 @@ alias chkdu='df -h | head -n 1 && df -h | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
 
-# Misc
+# Python
 alias py='python3'
 alias py3='python3'
+alias mkvenv='python3 -m venv venv'
+alias govenv='. venv/bin/activate'
+
+# Misc
 alias tma='tmux attach'
 alias qemu='qemu-system-x86_64'
 alias qmu='qemu-system-x86_64'
 alias rmsyncconflicts='for line in $(find ~ -name "*sync-conflict*"); do echo $line; rm "$line"; done'
 alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 alias getdevs="ls /dev/sd? ; echo ; ls /dev/sd??"
+alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
 
 # Setting the prompt
 PS1='\n\[\033[00;00m\][\w] \[\033[01;35m\]\u \[\033[01;34m\]\h \n\[\033[00m\]\$ '
