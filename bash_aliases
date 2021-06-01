@@ -13,7 +13,7 @@ alias la='ls -a'
 alias lah='ls -lah'
 alias lh='ls -lh'
 alias l='ls'
-alias ll='ls -l'
+alias ll='ls -la'
 
 # WINE aliases
 alias cdcdir='cd ~/.wine/drive_c/'
