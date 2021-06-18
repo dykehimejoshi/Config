@@ -53,6 +53,13 @@ alias chkdu='df -h | head -n 1 && df -h | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
 
+## If vcgencmd is installed (e.g. on a raspberry pi), find the temp in fahrenheit
+if [ -f "/opt/vc/bin/vcgencmd" ]; then
+    get_temp () {
+        /opt/vc/bin/vcgencmd measure_temp | awk -F "[=\']" '{print($2 * 1.8)+32}'
+    }
+fi
+
 # Python
 alias py='python3'
 alias py3='python3'
