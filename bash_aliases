@@ -59,6 +59,7 @@ alias py3='python3'
 alias mkvenv='python3 -m venv venv'
 alias govenv='. venv/bin/activate'
 alias byevenv='deactivate'
+alias serve='python3 -m http.server'
 
 # Misc
 alias tma='tmux attach'
