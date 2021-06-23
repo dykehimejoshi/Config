@@ -29,6 +29,7 @@ set matchtime=5 " Tenths of a second to show the matching parenthesis when 'show
 set number " Show line numbers.
 set relativenumber " Changes displayed number to be relative to the cursor
 set background=dark " Use colors that look good on the specified ('light', 'dark') background.
+set ruler " Shows the row and column the cursor is on
 if !&scrolloff
     set scrolloff=3 " Minimal number of screen lines to keep above and below the cursor.
 endif
