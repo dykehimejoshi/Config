@@ -34,6 +34,7 @@ if [ ! -z $(which pacman) ]; then
     alias pacs='pacman -Q'
     alias pacshow='pacman -Qi'
     alias pacr='sudo pacman -R'
+    alias update='sudo pacman -Syu'
 fi
 
 if [ ! -z $(which yay) ]; then
@@ -42,6 +43,7 @@ if [ ! -z $(which yay) ]; then
     alias yays='yay -Q'
     alias yayshow='yay -Qi'
     alias yayr='yay -R'
+    # Should overwrite the `update' alias from pacman if installed
     alias update='sudo echo "--- Updating" && yay -Syu'
 fi
 
