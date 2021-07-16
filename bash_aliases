@@ -9,6 +9,8 @@ alias ..4='cd ../../../..'
 alias ..5='cd ../../../../..'
 alias ..6='cd ../../../../../..'
 alias lgr='ls | grep --color=auto'
+alias llgr='ls -l | grep --color=auto'
+alias findinfile='grep -iRl --color=auto'
 alias la='ls -a'
 alias lah='ls -lah'
 alias lh='ls -lh'
@@ -54,6 +56,19 @@ alias _s='sudo -s'
 alias chkdu='df -h | head -n 1 && df -h | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
+
+# Less Configuration
+LESS="-f -g -i -J -M -q -R -S -w -x4 $LESS"; export LESS
+## -f: forcefully open binary files (no warning)
+## -g: highlight occurences of a search
+## -i: smart-ignore casing in searches
+## -J: show status column
+## -M: very verbose prompt
+## -q: no terminal bell
+## -R: only ANSI color esc
+## -S: causes longer lines to be truncated rather than wrapped
+## -w: highlights the newest line after forward movement of a new page
+## -x4: sets tabstop to 4 spaces
 
 # Python
 alias py='python3'
