@@ -33,9 +33,12 @@ if [ ! -z "$tmuxi" ] || [ ! -z "$vimi" ]; then
 fi
 
 # Install the config files to their respective places
+
+export CFGDIR=$(pwd)
+
 ## .tmux.conf
 if [ ! -f "~/.tmux.conf" ]; then
-    ln -s ~/Config/tmux.conf ~/.tmux.conf
+    ln -s $CFGDIR/tmux.conf ~/.tmux.conf
     code=$?
     if [ $code = 0 ]; then
         echo "Tmux config successfully linked."
@@ -48,7 +51,7 @@ fi
 
 ## .vimrc
 if [ ! -f "~/.vimrc" ]; then
-    ln -s ~/Config/vimrc ~/.vimrc
+    ln -s $CFGDIR/vimrc ~/.vimrc
     code=$?
     if [ $code = 0 ]; then
         echo "Vim config successfully linked."
@@ -61,7 +64,7 @@ fi
 
 ## .bash_aliases
 if [ ! -f "~/.bash_aliases" ]; then
-    ln -s ~/Config/bash_aliases ~/.bash_aliases
+    ln -s $CFGDIR/bash_aliases ~/.bash_aliases
     code=$?
     if [ $code = 0 ]; then
         echo "Bash aliases successfully linked."
