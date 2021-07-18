@@ -74,3 +74,16 @@ if [ ! -f "~/.bash_aliases" ]; then
 else
     echo "Bash aliases already exists."
 fi
+
+## .gdbinit
+if [ ! -f "~/.gdbinit" ]; then
+    ln -s $CFGDIR/gdbinit ~/.gdbinit
+    code=$?
+    if [ $code = 0 ]; then
+        echo "GDB init file successfully linked."
+    else
+        echo "Error in linking GDB init file: $code"
+    fi
+else
+    echo "GDB init file already exists."
+fi
