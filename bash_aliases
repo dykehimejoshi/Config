@@ -19,6 +19,7 @@ alias ll='ls -la'
 
 # WINE aliases
 alias cdcdir='cd ~/.wine/drive_c/'
+alias wine64='WINEPREFIX=$HOME/.wine64 wine64'
 
 # Package manager
 if [ ! -z $(which apt-get) ]; then
@@ -86,6 +87,7 @@ alias rmsyncconflicts='for line in $(find ~ -name "*sync-conflict*"); do echo $l
 alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 alias getdevs="ls /dev/sd? ; echo ; ls /dev/sd??"
 alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
+hex () { xxd "$1" | less; }
 
 # Setting the prompt
 PS1='\n\[\033[00;00m\][\w] \[\033[01;35m\]\u \[\033[01;34m\]\h \n\[\033[00m\]\$ '
