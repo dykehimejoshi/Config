@@ -57,6 +57,14 @@ alias _s='sudo -s'
 alias chkdu='df -h | head -n 1 && df -h | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
+sshpassthru () {
+    # $1: port on host you want access to; $2: port to put it on; $3: <user>@<host>
+    if test $# -ne 3; then
+        echo "args: <from host port> <to local port> <host>"
+    else
+        ssh -NL $2:localhost:$1 $3
+    fi
+}
 
 # Less Configuration
 LESS="-f -g -i -J -M -q -R -S -w -x4 $LESS"; export LESS
@@ -90,4 +98,4 @@ alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
 hex () { xxd "$1" | less; }
 
 # Setting the prompt
-PS1='\n\[\033[00;00m\][\w] \[\033[01;35m\]\u \[\033[01;34m\]\h \n\[\033[00m\]\$ '
+PS1='\n\[\033[00;00m\][\w] \[\033[01;95m\]\u \[\033[01;94m\]\h \n\[\033[00m\]\$ '
