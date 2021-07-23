@@ -96,6 +96,7 @@ alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 alias getdevs="ls /dev/sd? ; echo ; ls /dev/sd??"
 alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
 hex () { xxd "$1" | less; }
+alias listen='nc -nvlp $1'
 
 # Setting the prompt
 PS1='\n\[\033[00;00m\][\w] \[\033[01;95m\]\u \[\033[01;94m\]\h \n\[\033[00m\]\$ '
