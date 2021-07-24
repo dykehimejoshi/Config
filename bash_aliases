@@ -16,6 +16,9 @@ alias lah='ls -lah'
 alias lh='ls -lh'
 alias l='ls'
 alias ll='ls -la'
+mkcdir () {
+    mkdir -p "$1" && cd "$1"
+}
 
 # WINE aliases
 alias cdcdir='cd ~/.wine/drive_c/'
