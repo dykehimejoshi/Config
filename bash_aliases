@@ -10,7 +10,7 @@ alias ..5='cd ../../../../..'
 alias ..6='cd ../../../../../..'
 alias lgr='ls | grep --color=auto'
 alias llgr='ls -l | grep --color=auto'
-alias findinfile='grep -iRl --color=auto'
+alias findinfile='grep -iRl --color=auto 2>/dev/null'
 alias la='ls -a'
 alias lah='ls -lah'
 alias lh='ls -lh'
@@ -93,7 +93,7 @@ alias qemu='qemu-system-x86_64'
 alias qmu='qemu-system-x86_64'
 alias rmsyncconflicts='for line in $(find ~ -name "*sync-conflict*"); do echo $line; rm "$line"; done'
 alias findsyncconflicts='find ~ -name "*sync-conflict*"'
-alias getdevs="ls /dev/sd? ; echo ; ls /dev/sd??"
+alias getdevs="ls /dev/sd?*"
 alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
 hex () { xxd "$1" | less; }
 alias listen='nc -nvlp $1'
