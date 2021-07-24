@@ -31,6 +31,15 @@ if [ ! -z $(which apt-get) ]; then
     alias update='sudo echo "--- update" && sudo apt-get update && echo "--- upgrade" && sudo apt-get upgrade -y && echo "--- autoremove" && sudo apt autoremove -y'
 fi
 
+if [ ! -z $(which pkg) ]; then
+    # if pkg is installed
+    alias pki='pkg install'
+    alias pks='pkg search'
+    alias pkshow='pkg show'
+    alias pkr='pkg remove'
+    alias update='pkg upgrade'
+fi
+
 if [ ! -z $(which pacman) ]; then
     # if pacman is installed
     alias paci='sudo pacman -Sy'
