@@ -112,4 +112,11 @@ alias listen='nc -nvlp $1'
 send () { echo "$3" > /dev/tcp/$1/$2; }
 
 # Setting the prompt
-PS1='\n\[\033[00;00m\][\w] \[\033[01;95m\]\u \[\033[01;94m\]\h \n\[\033[00m\]\$ '
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+if [ "$color_prompt" = yes ]; then
+    PS1='\n\[\033[00;00m\][\w] \[\033[01;95m\]\u \[\033[01;94m\]\h \n\[\033[00m\]\$ '
+else
+    PS1='\n[\w] \u \h\n\$ '
+fi
