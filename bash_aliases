@@ -31,7 +31,7 @@ if [ ! -z $(which apt-get) ]; then
     alias acs='apt-cache search'
     alias acshow='apt-cache show'
     alias agr='sudo apt-get remove'
-    alias update='sudo echo "--- update" && sudo apt-get update && echo "--- upgrade" && sudo apt-get upgrade -y && echo "--- autoremove" && sudo apt autoremove -y'
+    alias update='sudo /bin/bash -c "echo \"--- update\" ; apt update && echo \"--- upgrade\" ; apt upgrade -y && echo \"--- autoremove\" ; apt autoremove -y"'
 fi
 
 if [ ! -z $(which pkg) ]; then
