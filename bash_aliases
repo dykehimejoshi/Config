@@ -29,6 +29,7 @@ if [ ! -z $(which apt-get) ]; then
     # if apt-get is installed
     alias agi='sudo apt-get install -y'
     alias acs='apt-cache search'
+    acss () { apt-cache search "$1" | grep --color=none "$1" ; } # s = strict
     alias acshow='apt-cache show'
     alias agr='sudo apt-get remove'
     alias update='sudo /bin/bash -c "echo \"--- update\" ; apt update && echo \"--- upgrade\" ; apt upgrade -y && echo \"--- autoremove\" ; apt autoremove -y"'
