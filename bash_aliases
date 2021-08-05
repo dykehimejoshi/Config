@@ -113,11 +113,20 @@ alias listen='nc -nvlp $1'
 send () { echo "$3" > /dev/tcp/$1/$2; }
 
 # Setting the prompt
+is_root=$(test "$EUID" -eq 0 ; echo $?)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 if [ "$color_prompt" = yes ]; then
-    PS1='\n\[\033[00;00m\][\w] \[\033[01;95m\]\u \[\033[01;94m\]\h \n\[\033[00m\]\$ '
+    if [[ $is_root == 0 ]]; then
+        PS1='\n\[\033[00;00m\][\w] \[\033[01;31m\]\h \n\[\033[7;31;107m\]\$\e[0m '
+    else
+        PS1='\n\[\033[00;00m\][\w] \[\033[01;95m\]\u \[\033[01;94m\]\h \n\[\033[00m\]\$ '
+    fi
 else
-    PS1='\n[\w] \u \h\n\$ '
+    if [[ $is_root == 0 ]]; then
+        PS1='\n[\w] \h\n\$ '
+    else
+        PS1='\n[\w] \u \h\n\$ '
+    fi
 fi
