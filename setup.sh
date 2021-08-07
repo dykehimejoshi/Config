@@ -36,54 +36,32 @@ fi
 
 export CFGDIR=$(pwd)
 
-## .tmux.conf
-if [ ! -f "~/.tmux.conf" ]; then
-    ln -s $CFGDIR/tmux.conf ~/.tmux.conf
-    code=$?
-    if [ $code = 0 ]; then
-        echo "Tmux config successfully linked."
-    else
-        echo "Error in linking tmux config: $code"
+install_config () {
+    if [ $# != 2 ]; then
+        echo '$1 -- where to link ; $2 -- the file in this config (no cfgdir)'
+        return 1
     fi
-else
-    echo "Tmux config already exists."
-fi
+    if [ ! -f "$1" ]; then
+        ln -s $CFGDIR/$2 $1
+        code=$?
+        if [ $code = 0 ]; then
+            echo "$1 successfully linked."
+        else
+            echo "Error in linking $1: $code"
+        fi
+    else
+        echo "$1 already exists."
+    fi
+}
+
+## .tmux.conf
+install_config "$HOME/.tmux.conf" "tmux.conf"
 
 ## .vimrc
-if [ ! -f "~/.vimrc" ]; then
-    ln -s $CFGDIR/vimrc ~/.vimrc
-    code=$?
-    if [ $code = 0 ]; then
-        echo "Vim config successfully linked."
-    else
-        echo "Error in linking vim config: $code"
-    fi
-else
-    echo "Vim config already exists."
-fi
+install_config "$HOME/.vimrc" "vimrc"
 
 ## .bash_aliases
-if [ ! -f "~/.bash_aliases" ]; then
-    ln -s $CFGDIR/bash_aliases ~/.bash_aliases
-    code=$?
-    if [ $code = 0 ]; then
-        echo "Bash aliases successfully linked."
-    else
-        echo "Error in linking Bash aliases: $code"
-    fi
-else
-    echo "Bash aliases already exists."
-fi
+install_config "$HOME/.bash_aliases" "bash_aliases"
 
 ## .gdbinit
-if [ ! -f "~/.gdbinit" ]; then
-    ln -s $CFGDIR/gdbinit ~/.gdbinit
-    code=$?
-    if [ $code = 0 ]; then
-        echo "GDB init file successfully linked."
-    else
-        echo "Error in linking GDB init file: $code"
-    fi
-else
-    echo "GDB init file already exists."
-fi
+install_config "$HOME/.gdbinit" "gdbinit"
