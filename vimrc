@@ -47,7 +47,7 @@ set autochdir
 set belloff=all
 
 " Keybinds
-let mapleader =
+let mapleader = "\<SPACE>"
 
 nnoremap ; :
 nnoremap <Leader>w :w<CR>
