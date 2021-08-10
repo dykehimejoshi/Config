@@ -22,7 +22,6 @@ set nobreakindent
 " Visuals
 set showmatch
 set matchtime=5
-set number
 set relativenumber
 set background=dark
 set ruler
@@ -47,16 +46,28 @@ set autochdir
 set belloff=all
 
 " Keybinds
+
 let mapleader = "\<SPACE>"
-
 nnoremap ; :
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>f :wq<CR>
-nnoremap <Leader>e :q!<CR>
-nnoremap <Leader>h :set hlsearch!<CR>
 
-" set the backspace to delete normally
+"" Saving and not exiting
+inoremap <C-s> <ESC>:w<CR>a
+noremap <C-s> :w<CR>
+
+"" Saving and exiting
+nnoremap <C-x> :wq<CR>
+inoremap <C-x> <ESC>:wq<CR>
+
+"" Exiting without saving
+noremap <C-e>q :q!<CR>
+noremap <C-e><C-q> :q!<CR>
+nnoremap <Leader>e :q!<CR>
+
+"" set the backspace to delete normally
 set backspace=indent,eol,start
 
+"" Misc
+nnoremap <Leader>h :set hlsearch!<CR>
+nnoremap <C-h> :set hlsearch!<CR>
 vmap <Tab> >V
 vmap <S-Tab> <V
