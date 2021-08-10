@@ -1,6 +1,8 @@
 "set runtimepath^=~/.vim runtimepath+=/.vim/after
 "let &packpath = &runtimepath
 
+set nocompatible
+
 " Formatting
 syntax on
 syntax enable
