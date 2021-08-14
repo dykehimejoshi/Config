@@ -112,11 +112,16 @@ hex () { xxd "$1" | less; }
 alias listen='nc -nvlp $1'
 send () { echo "$3" > /dev/tcp/$1/$2; }
 
-# Setting the prompt
+# Setting the prompt (ripping color support straight from debian-based bashrc's
 is_root=$(test "$EUID" -eq 0 ; echo $?)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
+if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    color_prompt=yes
+else
+    color_prompt=
+fi
 if [ "$color_prompt" = yes ]; then
     if [[ $is_root == 0 ]]; then
         PS1='\n\[\033[00;00m\][\w] \[\033[01;31m\]\h\[\033[00;00m\] \t\n\[\033[7;31;107m\]\$\e[0m '
