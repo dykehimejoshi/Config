@@ -117,10 +117,12 @@ is_root=$(test "$EUID" -eq 0 ; echo $?)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
-if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    color_prompt=yes
-else
-    color_prompt=
+if [ -z $color_prompt ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
 fi
 if [ "$color_prompt" = yes ]; then
     if [[ $is_root == 0 ]]; then
