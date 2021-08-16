@@ -68,10 +68,10 @@ nnoremap <Leader>e :q!<CR>
 "" Editing with multiple files
 """ Next
 nnoremap <C-n> :n<CR>
-inoremap <C-n> <ESC>:w:n<CR>
+inoremap <C-n> <ESC>:w<CR>:n<CR>
 """ Previous
 nnoremap <C-p> :N<CR>
-inoremap <C-p> <ESC>:w:N<CR>
+inoremap <C-p> <ESC>:w<CR>:N<CR>
 
 "" set the backspace to delete normally
 set backspace=indent,eol,start
