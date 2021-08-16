@@ -79,6 +79,12 @@ sshpassthru () {
     fi
 }
 
+## usbguard
+alias usballow='sudo usbguard allow-device'
+alias usbblock='sudo usbguard block-device'
+alias usbreject='sudo usbguard reject-device'
+alias usblist='sudo usbguard list-devices'
+
 # Less Configuration
 LESS="-f -g -i -J -M -q -R -S -w -x4 $LESS"; export LESS
 
