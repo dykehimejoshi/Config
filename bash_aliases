@@ -81,16 +81,6 @@ sshpassthru () {
 
 # Less Configuration
 LESS="-f -g -i -J -M -q -R -S -w -x4 $LESS"; export LESS
-## -f: forcefully open binary files (no warning)
-## -g: highlight occurences of a search
-## -i: smart-ignore casing in searches
-## -J: show status column
-## -M: very verbose prompt
-## -q: no terminal bell
-## -R: only ANSI color esc
-## -S: causes longer lines to be truncated rather than wrapped
-## -w: highlights the newest line after forward movement of a new page
-## -x4: sets tabstop to 4 spaces
 
 # Python
 alias py='python3'
@@ -109,10 +99,11 @@ alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 alias getdevs="ls /dev/sd?*"
 alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
 hex () { xxd "$1" | less; }
+bin () { xxd -b "$1" | less; }
 alias listen='nc -nvlp $1'
 send () { echo "$3" > /dev/tcp/$1/$2; }
 
-# Setting the prompt (ripping color support straight from debian-based bashrc's
+# Setting the prompt (ripping color support straight from debian-based bashrc's)
 is_root=$(test "$EUID" -eq 0 ; echo $?)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
