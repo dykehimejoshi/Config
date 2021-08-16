@@ -105,7 +105,7 @@ alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 alias getdevs="ls /dev/sd?*"
 alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
 hex () { xxd "$1" | less; }
-bin () { xxd -b "$1" | less; }
+bin () { xxd -b -c 8 "$1" | less; }
 alias listen='nc -nvlp $1'
 send () { echo "$3" > /dev/tcp/$1/$2; }
 
