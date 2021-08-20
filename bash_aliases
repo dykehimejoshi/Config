@@ -67,7 +67,7 @@ fi
 alias _='sudo'
 alias _i='sudo -i'
 alias _s='sudo -s'
-alias chkdu='df -h | head -n 1 && df -h | grep data-root --color=none'
+alias chkdu='df -h 2>/dev/null | head -n 1 && df -h 2>/dev/null | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
 sshpassthru () {
