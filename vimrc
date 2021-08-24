@@ -46,6 +46,7 @@ set backupext=.vim.bak
 set startofline
 set autochdir
 set belloff=all
+set showcmd
 
 " Keybinds
 
@@ -63,6 +64,12 @@ autocmd FileType javascript imap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env 
 "" Run Shell scripts
 autocmd FileType sh map <buffer> <C-r> :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
 autocmd FileType sh imap <buffer> <C-r> <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+
+"" Move to the beginning of the line in insert mode
+inoremap <C-k> <ESC>0i
+
+"" Move to the end of the line in insert mode
+inoremap <C-l> <ESC>$a
 
 "" Saving and not exiting
 inoremap <C-s> <ESC>:w<CR>a
