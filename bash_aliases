@@ -16,13 +16,13 @@ alias lah='ls -lah'
 alias lh='ls -lh'
 alias l='ls'
 alias ll='ls -la'
-mkcdir () {
-    mkdir -p "$1" && cd "$1"
-}
+mkcdir () { mkdir -p "$1" && cd "$1"; }
 
 # WINE aliases
-alias cdcdir='cd ~/.wine/drive_c/'
-alias wine64='WINEPREFIX=$HOME/.wine64 wine64'
+if [ ! -z $(which wine) ]; then
+    alias cdcdir='cd ~/.wine/drive_c/'
+    alias wine64='WINEPREFIX=$HOME/.wine64 wine64'
+fi
 
 # Package manager
 if [ ! -z $(which apt-get) ]; then
@@ -80,10 +80,12 @@ sshpassthru () {
 }
 
 ## usbguard
-alias usballow='sudo usbguard allow-device'
-alias usbblock='sudo usbguard block-device'
-alias usbreject='sudo usbguard reject-device'
-alias usblist='sudo usbguard list-devices'
+if [ ! -z $(which usbguard) ]; then
+    alias usballow='sudo usbguard allow-device'
+    alias usbblock='sudo usbguard block-device'
+    alias usbreject='sudo usbguard reject-device'
+    alias usblist='sudo usbguard list-devices'
+fi
 
 # Less Configuration
 LESS="-f -g -i -J -M -q -R -S -w -x4 $LESS"; export LESS
@@ -98,16 +100,20 @@ alias serve='python3 -m http.server'
 
 # Misc
 alias tma='tmux attach'
-alias qemu='qemu-system-x86_64'
-alias qmu='qemu-system-x86_64'
-alias rmsyncconflicts='for line in $(find ~ -name "*sync-conflict*"); do echo $line; rm "$line"; done'
-alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 alias getdevs="ls /dev/sd?*"
 alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
 hex () { xxd "$1" | less; }
 bin () { xxd -b -c 8 "$1" | less; }
 alias listen='nc -nvlp $1'
 send () { echo "$3" > /dev/tcp/$1/$2; }
+if [ ! -z $(which qemu-system-x86_64) ]; then
+    alias qemu='qemu-system-x86_64'
+    alias qmu='qemu-system-x86_64'
+fi
+if [ ! -z $(which syncthing) ]; then
+    alias rmsyncconflicts='for line in $(find ~ -name "*sync-conflict*"); do echo $line; rm "$line"; done'
+    alias findsyncconflicts='find ~ -name "*sync-conflict*"'
+fi
 
 # Setting the prompt (ripping color support straight from debian-based bashrc's)
 is_root=$(test "$EUID" -eq 0 ; echo $?)
