@@ -52,6 +52,18 @@ set belloff=all
 let mapleader = "\<SPACE>"
 nnoremap ; :
 
+"" Run Python scripts
+autocmd FileType python map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
+
+"" Run Javascript scripts
+autocmd FileType javascript map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
+autocmd FileType javascript imap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
+
+"" Run Shell scripts
+autocmd FileType sh map <buffer> <C-r> :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+autocmd FileType sh imap <buffer> <C-r> <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+
 "" Saving and not exiting
 inoremap <C-s> <ESC>:w<CR>a
 noremap <C-s> :w<CR>
