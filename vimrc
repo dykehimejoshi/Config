@@ -95,6 +95,20 @@ inoremap <C-p> <ESC>:w<CR>:N<CR>
 "" set the backspace to delete normally
 set backspace=indent,eol,start
 
+"" xxd
+let g:ishex = 0 " off by default
+function Hex()
+    let g:ishex = !g:ishex
+    if g:ishex
+        " this is where we convert the program into xxd
+        call feedkeys(":w\<CR>:%!xxd\<CR>")
+    else
+        " convert back into text
+        call feedkeys(":%!xxd -r\<CR>:w\<CR>")
+    endif
+endfunction
+map <C-b> <ESC>:call Hex()<CR>
+
 "" Misc
 nnoremap <Leader>h :set hlsearch!<CR>
 nnoremap <C-h> :set hlsearch!<CR>
