@@ -65,3 +65,6 @@ install_config "$HOME/.bash_aliases" "bash_aliases"
 
 ## .gdbinit
 install_config "$HOME/.gdbinit" "gdbinit"
+
+## .radare2rc
+install_config "$HOME/.radare2rc" "radare2rc"
