@@ -54,6 +54,9 @@ set showcmd
 let mapleader = "\<SPACE>"
 nnoremap ; :
 
+"" Change the redo keybind (`u' is already undo)
+nnoremap <S-u> :redo<CR>
+
 "" Run Python scripts
 autocmd FileType python map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
