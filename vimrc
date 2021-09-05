@@ -73,10 +73,10 @@ autocmd FileType sh imap <buffer> <C-r> <esc>:w<CR>:exec '!/bin/bash' shellescap
 autocmd FileType *html map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
 
 "" Move to the beginning of the line in insert mode
-inoremap <C-k> <ESC>0i
+inoremap <C-k> <ESC>I
 
 "" Move to the end of the line in insert mode
-inoremap <C-l> <ESC>$a
+inoremap <C-l> <ESC>A
 
 "" Saving and not exiting
 inoremap <C-s> <ESC>:w<CR>a
