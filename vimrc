@@ -70,7 +70,7 @@ autocmd FileType sh map <buffer> <C-r> :w<CR>:exec '!/bin/bash' shellescape(@%, 
 autocmd FileType sh imap <buffer> <C-r> <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
 
 "" Show HTML Files
-autocmd FileType *html map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env firefox' shellescape(@%, 1)<CR>
+autocmd FileType *html map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
 
 "" Move to the beginning of the line in insert mode
 inoremap <C-k> <ESC>0i
