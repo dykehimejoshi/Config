@@ -73,7 +73,7 @@ autocmd FileType sh imap <buffer> <C-r> <esc>:w<CR>:exec '!/bin/bash' shellescap
 autocmd FileType *html map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
 
 "" Show markdown files (uses Calibre's ebook-viewer)
-autocmd FileType markdown map <buffer> <C-r> :w<CR>:exec '!/usr/bin/ebook-viewer' shellescape(@%, 1)<CR>
+autocmd FileType markdown map <buffer> <C-r> :w<CR>:exec '!/usr/bin/ebook-viewer --raise-window --detach' shellescape(@%, 1)<CR><CR>
 
 "" Move to the beginning of the line in insert mode
 inoremap <C-k> <ESC>I
