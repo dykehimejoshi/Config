@@ -16,6 +16,9 @@ alias lah='ls -lah'
 alias lh='ls -lh'
 alias l='ls'
 alias ll='ls -la'
+alias lf='ls -F'
+alias laf='ls -aF'
+alias llf='ls -laF'
 mkcdir () { mkdir -p "$1" && cd "$1"; }
 
 # WINE aliases
