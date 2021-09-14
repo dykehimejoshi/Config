@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # A setup script to link the config files to the places they need to be.
-# Assumes files have been cloned into ~/Config/
 
 # Ask the user if they want to install any of the programs not already installed
 
@@ -34,7 +33,7 @@ fi
 
 # Install the config files to their respective places
 
-export CFGDIR=$(pwd)
+CFGDIR=$(pwd)
 
 install_config () {
     if [ $# != 2 ]; then
