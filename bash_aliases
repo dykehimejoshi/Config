@@ -114,7 +114,7 @@ if [ ! -z $(which qemu-system-x86_64) ]; then
     alias qmu='qemu-system-x86_64'
 fi
 if [ ! -z $(which syncthing) ]; then
-    alias rmsyncconflicts='for line in $(find ~ -name "*sync-conflict*"); do echo $line; rm "$line"; done'
+    alias rmsyncconflicts='find ~ -name "*sync-conflict*" -exec rm -v {} \;'
     alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 fi
 
