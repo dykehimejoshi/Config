@@ -88,6 +88,7 @@ if [ ! -z $(which usbguard) ]; then
     alias usbblock='sudo usbguard block-device'
     alias usbreject='sudo usbguard reject-device'
     alias usblist='sudo usbguard list-devices'
+    alias usbwatch='sudo usbguard watch'
 fi
 
 # Less Configuration
