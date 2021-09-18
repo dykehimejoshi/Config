@@ -91,6 +91,12 @@ if [ ! -z $(which usbguard) ]; then
     alias usbwatch='sudo usbguard watch'
 fi
 
+# KDE Plasma
+if [ ! -z $(which plasmashell) ]; then
+    alias restartplasma='kquitapp5 plasmashell && plasmashell &'
+fi
+
+
 # Less Configuration
 LESS="-f -g -i -J -M -q -R -S -w -x4 $LESS"; export LESS
 
