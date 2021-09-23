@@ -45,7 +45,7 @@ set ttimeoutlen=100
 set backupcopy=yes
 set backupext=.vim.bak
 set startofline
-set autochdir
+"set autochdir
 set belloff=all
 set showcmd
 
