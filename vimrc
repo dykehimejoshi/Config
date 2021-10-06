@@ -21,7 +21,7 @@ set cinkeys-=0#
 set indentkeys-=0#
 set nobreakindent
 
-if &ft == "markdown"
+if &ft == "markdown" || &ft == "css"
     set nocindent
 endif
 
