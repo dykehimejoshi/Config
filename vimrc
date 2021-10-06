@@ -21,6 +21,10 @@ set cinkeys-=0#
 set indentkeys-=0#
 set nobreakindent
 
+if &ft == "markdown"
+    set nocindent
+endif
+
 " Visuals
 set showmatch
 set matchtime=5
@@ -117,7 +121,7 @@ function Hex()
         call feedkeys(":%!xxd -r\<CR>:w\<CR>")
     endif
 endfunction
-map <C-b> <ESC>:call Hex()<CR>
+map <F3> <ESC>:call Hex()<CR>
 
 "" Misc
 nnoremap <Leader>h :set hlsearch!<CR>
