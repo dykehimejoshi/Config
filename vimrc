@@ -21,10 +21,6 @@ set cinkeys-=0#
 set indentkeys-=0#
 set nobreakindent
 
-if &ft == "markdown" || &ft == "css"
-    set nocindent
-endif
-
 " Visuals
 set showmatch
 set matchtime=5
@@ -32,62 +28,80 @@ set relativenumber
 set background=dark
 set ruler
 set conceallevel=2
-if !&scrolloff
-    set scrolloff=3
-endif
-if !&sidescrolloff
-    set sidescrolloff=5
-endif
+set scrolloff=22
+set sidescrolloff=5
 
 " Search and Replace
 set ignorecase
 set smartcase
 set nogdefault
+set incsearch
 
 " Misc
 set ttimeoutlen=100
 set backupcopy=yes
 set backupext=.vim.bak
 set startofline
-"set autochdir
 set belloff=all
 set showcmd
+
+"" set the backspace to delete normally
+set backspace=indent,eol,start
 
 " Keybinds
 
 let mapleader = "\<SPACE>"
-nnoremap ; :
+noremap ; :
 
 "" Change the redo keybind (`u' is already undo)
 nnoremap <S-u> :redo<CR>
 
-"" Run Python scripts
-autocmd FileType python map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
-autocmd FileType python imap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
+"" autocmd
+if has('autocmd')
+    "" set certain options for some text-based filetypes
+    autocmd FileType markdown call TextSettings()
+    autocmd FileType css call TextSettings()
 
-"" Run Javascript scripts
-autocmd FileType javascript map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
-autocmd FileType javascript imap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
+    "" source vimrc after editing it
+    autocmd BufWritePost *vimrc autocmd! | source %
 
-"" Run Shell scripts
-autocmd FileType sh map <buffer> <C-r> :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
-autocmd FileType sh imap <buffer> <C-r> <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+    "" Run Python scripts
+    autocmd FileType python noremap <buffer> <C-r> :w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
+    autocmd FileType python inoremap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
 
-"" Show HTML Files
-autocmd FileType *html map <buffer> <C-r> :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
+    "" Run Javascript scripts
+    autocmd FileType javascript noremap <buffer> <C-r> :w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
+    autocmd FileType javascript inoremap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
 
-"" Show markdown files (uses Calibre's ebook-viewer)
-autocmd FileType markdown map <buffer> <C-r> :w<CR>:exec '!/usr/bin/ebook-viewer --raise-window --detach' shellescape(@%, 1)<CR><CR>
+    "" Run Shell scripts
+    autocmd FileType sh noremap <buffer> <C-r> :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+    autocmd FileType sh inoremap <buffer> <C-r> <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
 
-"" Move to the beginning of the line in insert mode
-inoremap <C-k> <ESC>I
+    "" Show HTML Files
+    autocmd FileType *html noremap <buffer> <C-r> :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
 
-"" Move to the end of the line in insert mode
-inoremap <C-l> <ESC>A
+    "" Show markdown files (uses Calibre's ebook-viewer)
+    autocmd FileType markdown noremap <buffer> <C-r> :w<CR>:exec '!/usr/bin/ebook-viewer --raise-window --detach' shellescape(@%, 1)<CR><CR>
+endif " has autocmd
+
+"" Tabs
+""" Moving tabs: gt for next, gT for previous
+""" If in a split window, <C-w>T (capital T) opens current split in new tab
+""" Open a new tab (tc for "tab create")
+nnoremap <C-w>tc :tabnew<CR>
+""" Close the current tab (tq for "tab quit")
+nnoremap <C-w>tq :tabclose<CR>
+""" Move a tab
+nnoremap <C-w>tm :tabmove 
+
+"" Windows
+""" Keybinds to reflect my tmux.conf file
+nnoremap <C-w>/ :vsplit<CR>
+nnoremap <C-w>" :split<CR>
 
 "" Saving and not exiting
 inoremap <C-s> <ESC>:w<CR>a
-noremap <C-s> :w<CR>
+nnoremap <C-s> :w<CR>
 
 "" Saving and exiting
 nnoremap <C-x> :wq<CR>
@@ -95,7 +109,7 @@ inoremap <C-x> <ESC>:wq<CR>
 
 "" Exiting without saving
 noremap <C-e>q :q!<CR>
-noremap <C-e><C-q> :q!<CR>
+"noremap <C-e><C-q> :q!<CR>
 nnoremap <Leader>e :q!<CR>
 
 "" Editing with multiple files
@@ -106,12 +120,10 @@ inoremap <C-n> <ESC>:w<CR>:n<CR>
 nnoremap <C-p> :N<CR>
 inoremap <C-p> <ESC>:w<CR>:N<CR>
 
-"" set the backspace to delete normally
-set backspace=indent,eol,start
-
 "" xxd
+"" interesting for reverse engineering but not really that useful
 let g:ishex = 0 " off by default
-function Hex()
+function! Hex()
     let g:ishex = !g:ishex
     if g:ishex
         " this is where we convert the program into xxd
@@ -121,10 +133,17 @@ function Hex()
         call feedkeys(":%!xxd -r\<CR>:w\<CR>")
     endif
 endfunction
-map <F3> <ESC>:call Hex()<CR>
+"map <F3> <ESC>:call Hex()<CR>
 
 "" Misc
 nnoremap <Leader>h :set hlsearch!<CR>
 nnoremap <C-h> :set hlsearch!<CR>
-vmap <Tab> >V
-vmap <S-Tab> <V
+vnoremap <Tab> >V
+vnoremap <S-Tab> <V
+
+"" Functions
+
+function! TextSettings()
+    setlocal nocindent
+    setlocal expandtab
+endfunction
