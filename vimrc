@@ -1,5 +1,21 @@
-"set runtimepath^=~/.vim runtimepath+=/.vim/after
-"let &packpath = &runtimepath
+"""""""""""""""""""" head: 16 """
+" Map leader: C-e
+"   Leader-r: for python, javascript,
+"       python, shell, html, and markdown
+"       run those thru interpreters or
+"       by other necessary means
+"   Leader-n: edit next file (:n)
+"   Leader-p: edit previous file (:N)
+"   Leader-x: save and quit (:wq)
+"   Leader-q: quit without saving (:q!)
+"   <C-w>tc: create a new tab
+"   <C-w>tq: quit current tab
+"   <C-w>tm: moves tab (fill in when called)
+"   <C-w>": splits window horizontally
+"   <C-w>/: splits window vertically
+"   <C-s>: saves current file
+"""""""""""""""""""""""""""""""""
+
 
 set nocompatible
 
@@ -45,12 +61,27 @@ set startofline
 set belloff=all
 set showcmd
 
+"" File Browsing (youtu.be/XA2WjJbmmoM)
+let g:netrw_banner=0
+let g:netrw_browse_split=4
+let g:netrw_altv=1
+let g:netrw_liststyle=3
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\$\+'
+" :edit a folder to open in a file browser
+" <CR>, v, or t to open in an h-split, v-split, or tab
+" check |netrw-browse-maps| for more mappings
+
+"" Finding Files (re: link above)
+set path+=**
+set wildmenu
+
 "" set the backspace to delete normally
 set backspace=indent,eol,start
 
 " Keybinds
 
-let mapleader = "\<SPACE>"
+let mapleader = "\<C-e>"
 noremap ; :
 
 "" Change the redo keybind (`u' is already undo)
@@ -66,22 +97,22 @@ if has('autocmd')
     autocmd BufWritePost *vimrc autocmd! | source %
 
     "" Run Python scripts
-    autocmd FileType python noremap <buffer> <C-r> :w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
-    autocmd FileType python inoremap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
+    autocmd FileType python noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
+    autocmd FileType python inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
 
     "" Run Javascript scripts
-    autocmd FileType javascript noremap <buffer> <C-r> :w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
-    autocmd FileType javascript inoremap <buffer> <C-r> <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
+    autocmd FileType javascript noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
+    autocmd FileType javascript inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
 
     "" Run Shell scripts
-    autocmd FileType sh noremap <buffer> <C-r> :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
-    autocmd FileType sh inoremap <buffer> <C-r> <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+    autocmd FileType sh noremap <buffer> <Leader>r :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+    autocmd FileType sh inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
 
     "" Show HTML Files
-    autocmd FileType *html noremap <buffer> <C-r> :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
+    autocmd FileType *html noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
 
     "" Show markdown files (uses Calibre's ebook-viewer)
-    autocmd FileType markdown noremap <buffer> <C-r> :w<CR>:exec '!/usr/bin/ebook-viewer --raise-window --detach' shellescape(@%, 1)<CR><CR>
+    autocmd FileType markdown noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/ebook-viewer --raise-window --detach' shellescape(@%, 1)<CR><CR>
 endif " has autocmd
 
 "" Tabs
@@ -104,21 +135,19 @@ inoremap <C-s> <ESC>:w<CR>a
 nnoremap <C-s> :w<CR>
 
 "" Saving and exiting
-nnoremap <C-x> :wq<CR>
-inoremap <C-x> <ESC>:wq<CR>
+nnoremap <Leader>x :wq<CR>
+inoremap <Leader>x <ESC>:wq<CR>
 
 "" Exiting without saving
-noremap <C-e>q :q!<CR>
-"noremap <C-e><C-q> :q!<CR>
-nnoremap <Leader>e :q!<CR>
+noremap <Leader>q :q!<CR>
 
 "" Editing with multiple files
 """ Next
-nnoremap <C-n> :n<CR>
-inoremap <C-n> <ESC>:w<CR>:n<CR>
+nnoremap <Leader>n :n<CR>
+inoremap <Leader>n <ESC>:w<CR>:n<CR>
 """ Previous
-nnoremap <C-p> :N<CR>
-inoremap <C-p> <ESC>:w<CR>:N<CR>
+nnoremap <Leader>p :N<CR>
+inoremap <Leader>p <ESC>:w<CR>:N<CR>
 
 "" xxd
 "" interesting for reverse engineering but not really that useful
@@ -137,9 +166,8 @@ endfunction
 
 "" Misc
 nnoremap <Leader>h :set hlsearch!<CR>
-nnoremap <C-h> :set hlsearch!<CR>
-vnoremap <Tab> >V
-vnoremap <S-Tab> <V
+vnoremap <Tab> >
+vnoremap <S-Tab> <
 
 "" Functions
 
