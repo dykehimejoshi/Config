@@ -131,8 +131,8 @@ nnoremap <C-w>/ :vsplit<CR>
 nnoremap <C-w>" :split<CR>
 
 "" Saving and not exiting
-inoremap <C-s> <ESC>:w<CR>a
-nnoremap <C-s> :w<CR>
+imap <C-s> <ESC>:w<CR>a
+nmap <C-s> :w<CR>
 
 "" Saving and exiting
 nnoremap <Leader>x :wq<CR>
@@ -169,9 +169,10 @@ nnoremap <Leader>h :set hlsearch!<CR>
 vnoremap <Tab> >
 vnoremap <S-Tab> <
 
-"" Functions
+"" Functions for different filetypes
 
 function! TextSettings()
+    " settings for markdown, css
     setlocal nocindent
     setlocal expandtab
 endfunction
