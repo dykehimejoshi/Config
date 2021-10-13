@@ -1,4 +1,4 @@
-"""""""""""""""""""" head: 16 """
+"""""""""""""""""""" head: 17 """
 " Map leader: C-e
 "   Leader-r: for python, javascript,
 "       python, shell, html, and markdown
@@ -25,6 +25,7 @@ syntax enable
 set list
 set listchars=tab:\|\ ,trail:\-,nbsp:%
 set formatoptions+=otc
+set matchpairs+=<:>
 set tabstop=4
 set shiftwidth=4
 set nojoinspaces
