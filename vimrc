@@ -177,6 +177,20 @@ function! Hex()
 endfunction
 "map <F3> <ESC>:call Hex()<CR>
 
+"" Make copying from tmux easier
+function! ToggleMargin()
+    set relativenumber!
+    let nextfdc=!&fdc
+    let &foldcolumn=nextfdc
+    if nextfdc == 1
+        set listchars=tab:\|\ ,trail:\-,nbsp:%
+    else
+        set listchars=tab:\ \ ,trail:\ ,nbsp:\ 
+    endif
+endfunction
+
+nnoremap <Leader>c :call ToggleMargin()<CR>
+
 "" Misc
 nnoremap <Leader>h :set hlsearch!<CR>
 vnoremap <Tab> >
