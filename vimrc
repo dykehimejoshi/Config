@@ -27,6 +27,7 @@ set listchars=tab:\|\ ,trail:\-,nbsp:%
 set formatoptions+=otc
 set matchpairs+=<:>
 set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set nojoinspaces
 set smartindent
@@ -38,6 +39,12 @@ set cinkeys-=0#
 set indentkeys-=0#
 set nobreakindent
 
+"" Folding
+set foldenable
+set foldlevelstart=10
+set foldmethod=indent
+set fdc=1
+
 " Visuals
 set showmatch
 set matchtime=5
@@ -45,8 +52,10 @@ set relativenumber
 set background=dark
 set ruler
 set conceallevel=2
-set scrolloff=22
-set sidescrolloff=5
+set scrolloff=22 " stay around the middle of the screen while scrolling vertically
+set sidescrolloff=99 " always be in the middle of the screen while sidescrolling
+set nowrap
+set laststatus=2
 
 " Search and Replace
 set ignorecase
@@ -87,6 +96,9 @@ noremap ; :
 
 "" Change the redo keybind (`u' is already undo)
 nnoremap <S-u> :redo<CR>
+
+"" Folding
+nnoremap <Leader>f za
 
 "" autocmd
 if has('autocmd')
