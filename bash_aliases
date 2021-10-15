@@ -160,3 +160,6 @@ else
         PS1='\n[\w] \u \h \t\n\$ '
     fi
 fi
+
+## export the location of this script (used for getting temperature and battery)
+export SebCfgDir=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
