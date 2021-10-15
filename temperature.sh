@@ -13,7 +13,7 @@ elif [ ! -z $(which sensors) ]; then
     thermo="\xf0\x9f\x8c\xa1" # the thermometer emoji
     echo -en "$thermo "
     if [ ! -z $temp ]; then
-        echo -n "$temp °F"
+        echo -n "$temp°F"
     else
         echo -n "Err"
     fi
