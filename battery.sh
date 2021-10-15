@@ -3,7 +3,7 @@
 if [ ! -z $(which upower) ]; then
     # if upower is installed
     charge_state=$(upower -i $(upower -e | grep BAT) | grep --color=never -E "state" | awk '{$1="state:"; print $2}')
-    heart="\xe2\x99\xa5\xef" # heart emoji (the suit because i think it looks better)
+    heart="\xe2\x99\xa5\xef\xb8\x8f" # heart emoji (the suit because i think it looks better)
     echo -en "$heart "
     if [[ $charge_state == 'discharging' ]]; then
         echo -n "-"

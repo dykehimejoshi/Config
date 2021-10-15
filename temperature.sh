@@ -10,7 +10,7 @@ elif [ ! -z $(which sensors) ]; then
     # (it may not be for every device but it is on the ones i use)
     grep "id 0:" |\
     awk -F "[:°+]" '{print($3 * 1.8)+32}')
-    thermo="\xf0\x9f\x8c\xa1" # the thermometer emoji
+    thermo="\xf0\x9f\x8c\xa1\xb8\x8f" # the thermometer emoji
     echo -en "$thermo "
     if [ ! -z $temp ]; then
         echo -n "$temp°F"
