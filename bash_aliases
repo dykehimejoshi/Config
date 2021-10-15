@@ -93,9 +93,8 @@ fi
 
 # KDE Plasma
 if [ ! -z $(which plasmashell) ]; then
-    alias restartplasma='kquitapp5 plasmashell && plasmashell &'
+    alias restartplasma='kquitapp5 plasmashell && plasmashell >/dev/null &'
 fi
-
 
 # Less Configuration
 LESS="-f -g -i -J -M -q -R -S -w -x4 $LESS"; export LESS
@@ -124,6 +123,7 @@ if [ ! -z $(which syncthing) ]; then
     alias rmsyncconflicts='find ~ -name "*sync-conflict*" -exec rm -v {} \;'
     alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 fi
+alias calc='calc () { bc -l <<< "$1"; }; calc'
 
 # Setting the prompt (ripping color support straight from debian-based bashrc's)
 is_root=$(test "$EUID" -eq 0 ; echo $?)
