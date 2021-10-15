@@ -21,6 +21,14 @@ alias laf='ls -aF'
 alias llf='ls -laF'
 mkcdir () { mkdir -p "$1" && cd "$1"; }
 
+# Git aliases
+alias ga='git add'
+alias gcm='git commit'
+alias gpull='git pull'
+alias gpush='git push'
+alias gbr='git branch'
+alias gco='git checkout'
+
 # WINE aliases
 if [ ! -z $(which wine) ]; then
     alias cdcdir='cd ~/.wine/drive_c/'
