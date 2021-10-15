@@ -22,12 +22,14 @@ alias llf='ls -laF'
 mkcdir () { mkdir -p "$1" && cd "$1"; }
 
 # Git aliases
-alias ga='git add'
-alias gcm='git commit'
-alias gpull='git pull'
-alias gpush='git push'
-alias gbr='git branch'
-alias gco='git checkout'
+if [ ! -z $(which git) ]; then
+    alias ga='git add'
+    alias gcm='git commit'
+    alias gpull='git pull'
+    alias gpush='git push'
+    alias gbr='git branch'
+    alias gco='git checkout'
+fi
 
 # WINE aliases
 if [ ! -z $(which wine) ]; then
