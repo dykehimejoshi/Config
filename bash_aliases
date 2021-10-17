@@ -29,6 +29,7 @@ if [ ! -z $(which git) ]; then
     alias gpush='git push'
     alias gbr='git branch'
     alias gco='git checkout'
+    alias gl='git log'
 fi
 
 # WINE aliases
@@ -38,14 +39,21 @@ if [ ! -z $(which wine) ]; then
 fi
 
 # Package manager
-if [ ! -z $(which apt-get) ]; then
-    # if apt-get is installed
-    alias agi='sudo apt-get install -y'
-    alias acs='apt-cache search'
-    acss () { apt-cache search "$1" | grep --color=none "$1" ; } # s = strict
-    alias acshow='apt-cache show'
-    alias agr='sudo apt-get remove'
+# ins, srx, shw, and rem aliases should use the default package manager
+# for any distro
+if [ ! -z $(which apt) ]; then
+    # if apt is installed
+    alias agi='sudo apt install -y'
+    alias acs='apt search'
+    acss () { apt search "$1" | grep --color=none "$1" ; } # s = strict
+    alias acshow='apt show'
+    alias agr='sudo apt remove'
     alias update='sudo /bin/bash -c "echo \"--- update\" ; apt update && echo \"--- upgrade\" ; apt upgrade -y && echo \"--- autoremove\" ; apt autoremove -y"'
+
+    alias ins='agi'
+    alias srx='acs'
+    alias shw='acshow'
+    alias rem='agr'
 fi
 
 if [ ! -z $(which pkg) ]; then
@@ -55,6 +63,11 @@ if [ ! -z $(which pkg) ]; then
     alias pkshow='pkg show'
     alias pkr='pkg remove'
     alias update='pkg upgrade'
+
+    alias ins='pki'
+    alias srx='pks'
+    alias shw='pkshow'
+    alias rem='pkr'
 fi
 
 if [ ! -z $(which pacman) ]; then
@@ -64,6 +77,11 @@ if [ ! -z $(which pacman) ]; then
     alias pacshow='pacman -Qi'
     alias pacr='sudo pacman -R'
     alias update='sudo pacman -Syu'
+
+    alias ins='sudo paci'
+    alias srx='pacs'
+    alias shw='pacshow'
+    alias rem='pacr'
 fi
 
 if [ ! -z $(which yay) ]; then
@@ -74,6 +92,11 @@ if [ ! -z $(which yay) ]; then
     alias yayr='yay -R'
     # Should overwrite the `update' alias from pacman if installed
     alias update='sudo echo "--- Updating" && yay -Syu'
+
+    alias ins='yayi'
+    alias srx='yays'
+    alias shw='yayshow'
+    alias rem='yayr'
 fi
 
 # Administration
@@ -119,21 +142,22 @@ alias serve='python3 -m http.server'
 
 # Misc
 alias tma='tmux attach'
+alias calc='calc () { bc -l <<< "$1"; }; calc'
 alias getdevs="ls /dev/sd?*"
-alias mapscii='telnet mapscii.me' # https://github.com/rastapasta/mapscii
 hex () { xxd "$1" | less; }
 bin () { xxd -b -c 8 "$1" | less; }
 alias listen='nc -nvlp $1'
 send () { echo "$3" > /dev/tcp/$1/$2; }
+
 if [ ! -z $(which qemu-system-x86_64) ]; then
     alias qemu='qemu-system-x86_64'
     alias qmu='qemu-system-x86_64'
 fi
+
 if [ ! -z $(which syncthing) ]; then
     alias rmsyncconflicts='find ~ -name "*sync-conflict*" -exec rm -v {} \;'
     alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 fi
-alias calc='calc () { bc -l <<< "$1"; }; calc'
 
 # Setting the prompt (ripping color support straight from debian-based bashrc's)
 is_root=$(test "$EUID" -eq 0 ; echo $?)
