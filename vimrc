@@ -53,7 +53,7 @@ set background=dark
 set ruler
 set conceallevel=2
 set scrolloff=22 " stay around the middle of the screen while scrolling vertically
-set sidescrolloff=99 " always be in the middle of the screen while sidescrolling
+set sidescrolloff=5
 set nowrap
 set laststatus=2
 
