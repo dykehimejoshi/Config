@@ -11,6 +11,23 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+zstyle ':completion:*' menu select
+zstyle ':completion::complete:*' gain-privileges 1
+
+autoload -Uz promptinit
+promptinit
+
+prompt_seb_setup() {
+    RPROMPT="[%D{%H:%M:%S]"
+    PROMPT="
+%f%b[%~] %B%F{magenta}%n %B%F{blue}%m%f%b
+%# "
+}
+
+prompt_themes+=( seb )
+
+prompt seb
+
 export SebCfgDir=$(dirname `readlink -f /home/deya/.zshrc` )
 
 source $SebCfgDir/aliases
