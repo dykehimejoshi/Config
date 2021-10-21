@@ -44,12 +44,12 @@ install_config () {
         ln -s $CFGDIR/$2 $1
         code=$?
         if [ $code = 0 ]; then
-            echo "$1 successfully linked."
+            echo "[+] $1 successfully linked."
         else
-            echo "Error in linking $1: $code"
+            echo "[!] Error in linking $1: $code"
         fi
     else
-        echo "$1 already exists."
+        echo "[~] $1 already exists."
     fi
 }
 
@@ -67,3 +67,6 @@ install_config "$HOME/.gdbinit" "gdbinit"
 
 ## .radare2rc
 install_config "$HOME/.radare2rc" "radare2rc"
+
+## zshrc
+install_config "$HOME/.zshrc" "zshrc"
