@@ -18,9 +18,9 @@ autoload -Uz promptinit
 promptinit
 
 prompt_seb_setup() {
-    RPROMPT="[%D{%H:%M:%S]"
+    RPROMPT="[%D{%H:%M:%S}]"
     PROMPT="
-%f%b[%~] %B%F{magenta}%n %B%F{blue}%m%f%b
+%f%b[%~] %B%F{magenta}%n %B%F{blue}%m%f%b [%F{yellow}%?%f]
 %# "
 }
 

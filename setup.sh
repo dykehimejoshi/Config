@@ -4,7 +4,16 @@
 
 # Ask the user if they want to install any of the programs not already installed
 
-tmuxi="$(which tmux)"
+# Set the command to use for which
+if [ "$(which whence)" = "whence: shell built-in command" ]; then
+    # we're using zsh
+    whichcmd="whence"
+else
+    # otherwise, assuming we're using bash
+    whichcmd="which"
+fi
+
+tmuxi="$($whichcmd tmux)"
 if [ -z $tmuxi ]; then
     echo "Tmux not installed..."
     tmuxi="tmux"
@@ -12,7 +21,7 @@ else
     tmuxi=""
 fi
 
-vimi="$(which vim)"
+vimi="$($whichcmd vim)"
 if [ -z $vimi ] && [ "${vimi: -4}" != "nvim" ]; then
     echo "Vim not installed..."
     vimi="vim"
@@ -20,12 +29,20 @@ else
     vimi=""
 fi
 
-if [ ! -z "$tmuxi" ] || [ ! -z "$vimi" ]; then
+zshi="$($whichcmd zsh)"
+if [ -z $zshi ]; then
+    echo "zsh not installed..."
+    zshi="zsh"
+else
+    zshi=""
+fi
+
+if [ ! -z "$tmuxi" ] || [ ! -z "$vimi" ] || [ ! -z "$zshi" ]; then
     echo -n "Install missing programs? (y/n) > "
     read user_i
     # FIXME: might not always have apt or apt-get
     if [[ $user_i = "y" || $user_i = "ye" || $user_i = "yes" ]]; then
-        /bin/bash -c "$(which sudo) apt-get install $tmuxi $vimi"
+        /bin/bash -c "$(which sudo) apt install $tmuxi $vimi $zshi"
     else
         echo "Not installing."
     fi
