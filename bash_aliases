@@ -27,7 +27,7 @@ else
 fi
 
 if [ -z $SebCfgDir ]; then
-    export SebCfgDir=$(dirname `readlink -f /home/deya/.bash_aliases` )
+    export SebCfgDir=$(dirname `readlink -f $HOME/.bash_aliases` )
 fi
 
 ## source the aliases

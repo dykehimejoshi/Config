@@ -5,7 +5,7 @@ SAVEHIST=100000
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/deya/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -28,6 +28,6 @@ prompt_themes+=( seb )
 
 prompt seb
 
-export SebCfgDir=$(dirname `readlink -f /home/deya/.zshrc` )
+export SebCfgDir=$(dirname `readlink -f $HOME/.zshrc` )
 
 source $SebCfgDir/aliases
