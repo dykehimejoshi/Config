@@ -32,3 +32,11 @@ prompt seb
 export SebCfgDir=$(dirname `readlink -f $HOME/.zshrc` )
 
 source $SebCfgDir/aliases
+
+if [ -f "$HOME/reminders" ]; then
+    if [ -s "$HOME/reminders" ]; then
+        echo -e "Reminders:\n----------"
+        cat $HOME/reminders
+        echo "----------"
+    fi
+fi
