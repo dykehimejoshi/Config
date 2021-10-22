@@ -9,7 +9,6 @@ else
     whichcmd="which"
 fi
 
-
 # Navigating directories
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -18,9 +17,13 @@ alias ..3='cd ../../..'
 alias ..4='cd ../../../..'
 alias ..5='cd ../../../../..'
 alias ..6='cd ../../../../../..'
-alias lgr='ls | grep --color=auto'
-alias llgr='ls -l | grep --color=auto'
-alias findinfile='grep -iRl --color=auto 2>/dev/null'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias lgr='ls | grep'
+alias llgr='ls -l | grep'
+alias findinfile='grep -iRl 2>/dev/null'
 alias la='ls -a'
 alias lah='ls -lah'
 alias lh='ls -lh'
