@@ -40,3 +40,9 @@ if [ -f "$HOME/reminders" ]; then
         echo "----------"
     fi
 fi
+
+if [ -f "$HOME/.zsh-extras" ]; then
+    # if we have any other things for zsh to source that are specific
+    # to one system, source them here
+    source $HOME/.zsh-extras
+fi
