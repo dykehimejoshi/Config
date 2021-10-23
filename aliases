@@ -144,7 +144,7 @@ if [ ! -z $($whichcmd plasmashell) ]; then
 fi
 
 # Less Configuration
-LESS="-f -g -i -J -M -R -S -w -x4 $LESS"; export LESS
+LESS="-f -g -i -J -M -R -S -w -x4"; export LESS
 
 # Python
 alias py='python3'
