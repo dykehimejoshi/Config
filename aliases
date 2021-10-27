@@ -140,19 +140,21 @@ fi
 
 # KDE Plasma
 if [ ! -z $($whichcmd plasmashell) ]; then
-    alias restartplasma='kquitapp5 plasmashell && plasmashell >/dev/null &'
+    alias restartplasma='sh -c "kquitapp5 plasmashell && plasmashell >/dev/null &"'
 fi
 
 # Less Configuration
 LESS="-f -g -i -J -M -R -S -w -x4"; export LESS
 
 # Python
-alias py='python3'
-alias py3='python3'
-alias mkvenv='python3 -m venv venv'
-alias govenv='. venv/bin/activate'
-alias byevenv='deactivate'
-alias serve='python3 -m http.server'
+if [ ! -z $($whichcmd python) ]; then
+    alias py='python3'
+    alias py3='python3'
+    alias mkvenv='python3 -m venv venv'
+    alias govenv='. venv/bin/activate'
+    alias byevenv='deactivate'
+    alias serve='python3 -m http.server'
+fi
 
 # Misc
 alias tma='tmux attach'
@@ -161,7 +163,6 @@ alias getdevs="ls /dev/sd?*"
 hex () { xxd "$1" | less; }
 bin () { xxd -b -c 8 "$1" | less; }
 alias listen='nc -nvlp $1'
-send () { echo "$3" > /dev/tcp/$1/$2; }
 
 if [ ! -z $($whichcmd qemu-system-x86_64) ]; then
     alias qemu='qemu-system-x86_64'
@@ -169,6 +170,6 @@ if [ ! -z $($whichcmd qemu-system-x86_64) ]; then
 fi
 
 if [ ! -z $($whichcmd syncthing) ]; then
-    alias rmsyncconflicts='find ~ -name "*sync-conflict*" -exec rm -v {} \;'
+    alias rmsyncconflicts='find ~ -name "*sync-conflict*" -exec rm -i {} \;'
     alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 fi
