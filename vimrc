@@ -27,7 +27,7 @@ set listchars=tab:\|\ ,trail:\-,nbsp:%
 set formatoptions+=otc
 set matchpairs+=<:>
 set tabstop=4
-set softtabstop=4
+set softtabstop=0
 set shiftwidth=4
 set nojoinspaces
 set smartindent
@@ -105,6 +105,12 @@ if has('autocmd')
     "" set certain options for some text-based filetypes
     autocmd FileType markdown call TextSettings()
     autocmd FileType css call TextSettings()
+
+    "" set certain options for filetypes of programming languages
+    autocmd FileType python call ProgrammingSettings()
+    autocmd FileType c* call ProgrammingSettings()
+    autocmd FileType vim call ProgrammingSettings()
+    autocmd FileType java* call ProgrammingSettings()
 
     "" source vimrc after editing it
     autocmd BufWritePost *vimrc autocmd! | source %
@@ -202,4 +208,9 @@ function! TextSettings()
     " settings for markdown, css
     setlocal nocindent
     setlocal expandtab
+endfunction
+
+function! ProgrammingSettings()
+    " settings for various programming languages
+    setlocal softtabstop=4
 endfunction
