@@ -111,6 +111,7 @@ if has('autocmd')
     autocmd FileType markdown call TextSettings()
     autocmd FileType css call TextSettings()
     autocmd FileType text call TextSettings()
+    autocmd FileType make call MakeSettings()
 
     "" set certain options for filetypes of programming languages
     autocmd FileType python call PythonSettings()
@@ -141,6 +142,9 @@ if has('autocmd')
 
     "" Show markdown files (uses Calibre's ebook-viewer)
     autocmd FileType markdown noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/ebook-viewer --raise-window --detach' shellescape(@%, 1)<CR><CR>
+
+    "" Run makefiles
+    autocmd FileType make nnoremap <buffer> <Leader>r :w<CR>:exec '!make'<CR>
 endif " has autocmd
 
 "" Tabs
@@ -222,6 +226,12 @@ endfunction
 function! ProgrammingSettings()
     " settings for various programming languages
     setlocal softtabstop=4
+endfunction
+
+function! MakeSettings()
+    setlocal noexpandtab
+    setlocal tabstop=4
+    setlocal shiftwidth=4
 endfunction
 
 function! PythonSettings()
