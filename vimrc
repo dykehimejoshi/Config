@@ -100,6 +100,11 @@ nnoremap <S-u> :redo<CR>
 "" Folding
 nnoremap <Leader>f za
 
+"" Moving lines
+nnoremap K :m -2<CR>
+nnoremap J :m +1<CR>
+" todo: visual mode
+
 "" autocmd
 if has('autocmd')
     "" set certain options for some text-based filetypes
