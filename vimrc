@@ -242,6 +242,6 @@ function! JavaSettings()
     ab psvm public static void main(String[] args)
 endfunction
 
-function! JavaSettings()
+function! JavaScriptSettings()
     call ProgrammingSettings()
 endfunction
