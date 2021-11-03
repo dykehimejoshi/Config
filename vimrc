@@ -115,9 +115,11 @@ if has('autocmd')
     "" set certain options for filetypes of programming languages
     autocmd FileType python call PythonSettings()
     autocmd FileType c* call CSettings()
-    autocmd FileType vim call CPPSettings()
+    autocmd FileType cpp call CPPSettings()
+    autocmd FileType vim call ProgrammingSettings()
     autocmd FileType java call JavaSettings()
-    autocmd FileType Javascript call JavaScriptSettings()
+    autocmd FileType javascript call JavaScriptSettings()
+    autocmd FileType arduino call ArduinoSettings()
 
     "" source vimrc after editing it
     autocmd BufWritePost *vimrc autocmd! | source %
@@ -243,5 +245,9 @@ function! JavaSettings()
 endfunction
 
 function! JavaScriptSettings()
+    call ProgrammingSettings()
+endfunction
+
+function! ArduinoSettings()
     call ProgrammingSettings()
 endfunction
