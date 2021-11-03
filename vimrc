@@ -105,12 +105,14 @@ if has('autocmd')
     "" set certain options for some text-based filetypes
     autocmd FileType markdown call TextSettings()
     autocmd FileType css call TextSettings()
+    autocmd FileType text call TextSettings()
 
     "" set certain options for filetypes of programming languages
-    autocmd FileType python call ProgrammingSettings()
-    autocmd FileType c* call ProgrammingSettings()
-    autocmd FileType vim call ProgrammingSettings()
-    autocmd FileType java* call ProgrammingSettings()
+    autocmd FileType python call PythonSettings()
+    autocmd FileType c* call CSettings()
+    autocmd FileType vim call CPPSettings()
+    autocmd FileType java call JavaSettings()
+    autocmd FileType Javascript call JavaScriptSettings()
 
     "" source vimrc after editing it
     autocmd BufWritePost *vimrc autocmd! | source %
@@ -199,8 +201,8 @@ nnoremap <Leader>c :call ToggleMargin()<CR>
 
 "" Misc
 nnoremap <Leader>h :set hlsearch!<CR>
-vnoremap <Tab> >
-vnoremap <S-Tab> <
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 "" Functions for different filetypes
 
@@ -213,4 +215,28 @@ endfunction
 function! ProgrammingSettings()
     " settings for various programming languages
     setlocal softtabstop=4
+endfunction
+
+function! PythonSettings()
+    call ProgrammingSettings()
+    ab ifnamemain if __name__ == "__main__":
+endfunction
+
+function! CSettings()
+    call ProgrammingSettings()
+    ab cmainargs int main(int argv, char **argv)
+    ab cmainvoid int main(void)
+endfunction
+
+function! CPPSettings()
+    call CSettings()
+endfunction
+
+function! JavaSettings()
+    call ProgrammingSettings()
+    ab psvm public static void main(String[] args)
+endfunction
+
+function! JavaSettings()
+    call ProgrammingSettings()
 endfunction
