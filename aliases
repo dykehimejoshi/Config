@@ -174,7 +174,7 @@ fi
 ## Aliases for reverse engineering/pentesting/etc. ##
 
 # radare2
-if [ ! -z $(whichcmd r2) ]; then
+if [ ! -z $($whichcmd r2) ]; then
     alias r2d='r2 -A -d'
     alias r2wd='r2 -A -d -w'
     alias r2empty='r2 malloc://512'
