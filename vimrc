@@ -27,7 +27,7 @@ set listchars=tab:\|\ ,trail:\-,nbsp:%
 set formatoptions+=otc
 set matchpairs+=<:>
 set tabstop=4
-set softtabstop=0
+set softtabstop=4
 set shiftwidth=4
 set nojoinspaces
 set smartindent
