@@ -147,7 +147,7 @@ fi
 LESS="-f -g -i -J -M -R -S -w -x4"; export LESS
 
 # Python
-if [ ! -z $($whichcmd python) ]; then
+if [ ! -z $($whichcmd python3) ]; then
     alias py='python3'
     alias py3='python3'
     alias mkvenv='python3 -m venv venv'
@@ -160,9 +160,6 @@ fi
 alias tma='tmux attach'
 alias calc='calc () { bc -l <<< "$1"; }; calc'
 alias getdevs="ls /dev/sd?*"
-hex () { xxd "$1" | less; }
-bin () { xxd -b -c 8 "$1" | less; }
-alias listen='nc -nvlp $1'
 
 if [ ! -z $($whichcmd qemu-system-x86_64) ]; then
     alias qemu='qemu-system-x86_64'
@@ -173,3 +170,17 @@ if [ ! -z $($whichcmd syncthing) ]; then
     alias rmsyncconflicts='find ~ -name "*sync-conflict*" -exec rm -i {} \;'
     alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 fi
+
+## Aliases for reverse engineering/pentesting/etc. ##
+
+# radare2
+if [ ! -z $(whichcmd r2) ]; then
+    alias r2d='r2 -A -d'
+    alias r2wd='r2 -A -d -w'
+    alias r2empty='r2 malloc://512'
+fi
+
+hex () { xxd "$1" | less; }
+bin () { xxd -b -c 8 "$1" | less; }
+
+alias listen='nc -nvlp $1'
