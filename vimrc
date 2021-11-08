@@ -56,6 +56,8 @@ set scrolloff=22 " stay around the middle of the screen while scrolling vertical
 set sidescrolloff=5
 set nowrap
 set laststatus=2
+set colorcolumn=80
+highlight ColorColumn ctermbg=8
 
 " Search and Replace
 set ignorecase
@@ -71,7 +73,7 @@ set startofline
 set belloff=all
 set showcmd
 set spelllang=en_us
-set spell=off
+set nospell
 
 "" File Browsing (youtu.be/XA2WjJbmmoM)
 let g:netrw_banner=0
@@ -223,6 +225,7 @@ function! TextSettings()
     " settings for markdown, css
     setlocal nocindent
     setlocal expandtab
+    setlocal colorcolumn=80
 endfunction
 
 function! ProgrammingSettings()
