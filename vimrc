@@ -70,6 +70,8 @@ set backupext=.vim.bak
 set startofline
 set belloff=all
 set showcmd
+set spelllang=en_us
+set spell=off
 
 "" File Browsing (youtu.be/XA2WjJbmmoM)
 let g:netrw_banner=0
