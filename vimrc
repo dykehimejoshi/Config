@@ -242,12 +242,16 @@ endfunction
 function! PythonSettings()
     call ProgrammingSettings()
     ab ifnamemain if __name__ == "__main__":
+    nnoremap # 0i#<Esc>
+    nnoremap & ^x<Esc>
 endfunction
 
 function! CSettings()
     call ProgrammingSettings()
     ab cmainargs int main(int argv, char **argv)
     ab cmainvoid int main(void)
+    nnoremap # 0i//<Esc>
+    nnoremap & ^2x<Esc>
 endfunction
 
 function! CPPSettings()
@@ -257,12 +261,18 @@ endfunction
 function! JavaSettings()
     call ProgrammingSettings()
     ab psvm public static void main(String[] args)
+    nnoremap # 0i//<Esc>
+    nnoremap & ^2x<Esc>
 endfunction
 
 function! JavaScriptSettings()
     call ProgrammingSettings()
+    nnoremap # 0i//<Esc>
+    nnoremap & ^2x<Esc>
 endfunction
 
 function! ArduinoSettings()
     call ProgrammingSettings()
+    nnoremap # 0i//<Esc>
+    nnoremap & ^2x<Esc>
 endfunction
