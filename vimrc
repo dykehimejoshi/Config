@@ -121,7 +121,7 @@ if has('autocmd')
     autocmd FileType python call PythonSettings()
     autocmd FileType c* call CSettings()
     autocmd FileType cpp call CPPSettings()
-    autocmd FileType vim call ProgrammingSettings()
+    autocmd FileType vim call VimSettings()
     autocmd FileType java call JavaSettings()
     autocmd FileType javascript call JavaScriptSettings()
     autocmd FileType arduino call ArduinoSettings()
@@ -226,7 +226,6 @@ function! TextSettings()
     " settings for markdown, css
     setlocal nocindent
     setlocal expandtab
-    setlocal colorcolumn=80
 endfunction
 
 function! ProgrammingSettings()
@@ -243,21 +242,19 @@ endfunction
 function! PythonSettings()
     call ProgrammingSettings()
     ab ifnamemain if __name__ == "__main__":
-    nnoremap # 0i#<Esc>
-    nnoremap & ^x<Esc>
+    call CommentHash()
 endfunction
 
 function! ShSettings()
-    nnoremap # 0i#<Esc>
-    nnoremap & ^x<Esc>
+    call ProgrammingSettings()
+    call CommentHash()
 endfunction
 
 function! CSettings()
     call ProgrammingSettings()
+    call CommentDoubleSlash()
     ab cmainargs int main(int argv, char **argv)
     ab cmainvoid int main(void)
-    nnoremap # 0i//<Esc>
-    nnoremap & ^2x<Esc>
 endfunction
 
 function! CPPSettings()
@@ -267,18 +264,40 @@ endfunction
 function! JavaSettings()
     call ProgrammingSettings()
     ab psvm public static void main(String[] args)
-    nnoremap # 0i//<Esc>
-    nnoremap & ^2x<Esc>
+    call CommentDoubleSlash()
 endfunction
 
 function! JavaScriptSettings()
     call ProgrammingSettings()
-    nnoremap # 0i//<Esc>
-    nnoremap & ^2x<Esc>
+    call CommentDoubleSlash()
 endfunction
 
 function! ArduinoSettings()
     call ProgrammingSettings()
+    call CommentDoubleSlash()
+endfunction
+
+function! VimSettings()
+    call ProgrammingSettings()
+    call CommentQuote()
+endfunction
+
+"" Functions to call for languages with different commenting styles
+
+function! CommentHash()
+    " #
+    nnoremap # 0i#<Esc>
+    nnoremap & ^x<Esc>
+endfunction
+
+function! CommentDoubleSlash()
+    " //
     nnoremap # 0i//<Esc>
     nnoremap & ^2x<Esc>
+endfunction
+
+function! CommentQuote()
+    " "
+    nnoremap # 0i"<Esc>
+    nnoremap & ^x<Esc>
 endfunction
