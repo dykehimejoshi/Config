@@ -56,7 +56,7 @@ set scrolloff=22 " stay around the middle of the screen while scrolling vertical
 set sidescrolloff=5
 set nowrap
 set laststatus=2
-set colorcolumn=80
+set colorcolumn=81
 highlight ColorColumn ctermbg=8
 
 " Search and Replace
