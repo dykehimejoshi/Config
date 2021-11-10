@@ -125,6 +125,7 @@ if has('autocmd')
     autocmd FileType java call JavaSettings()
     autocmd FileType javascript call JavaScriptSettings()
     autocmd FileType arduino call ArduinoSettings()
+    autocmd FileType *sh call ShSettings()
 
     "" source vimrc after editing it
     autocmd BufWritePost *vimrc autocmd! | source %
@@ -138,8 +139,8 @@ if has('autocmd')
     autocmd FileType javascript inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
 
     "" Run Shell scripts
-    autocmd FileType sh noremap <buffer> <Leader>r :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
-    autocmd FileType sh inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+    autocmd FileType *sh noremap <buffer> <Leader>r :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+    autocmd FileType *sh inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
 
     "" Show HTML Files
     autocmd FileType *html noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
@@ -242,6 +243,11 @@ endfunction
 function! PythonSettings()
     call ProgrammingSettings()
     ab ifnamemain if __name__ == "__main__":
+    nnoremap # 0i#<Esc>
+    nnoremap & ^x<Esc>
+endfunction
+
+function! ShSettings()
     nnoremap # 0i#<Esc>
     nnoremap & ^x<Esc>
 endfunction
