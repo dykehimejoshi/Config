@@ -1,1 +1,4 @@
 e asm.syntax=att
+e scr.prompt.vi=true
+e scr.prompt.mode=true
+e scr.prompt.popup=true
