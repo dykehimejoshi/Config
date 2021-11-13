@@ -180,7 +180,13 @@ if [ ! -z $($whichcmd r2) ]; then
     alias r2empty='r2 malloc://512'
 fi
 
-hex () { xxd "$1" | less; }
-bin () { xxd -b -c 8 "$1" | less; }
+# javap (reversing compiled .class files)
+if [ ! -z $($whichcmd javap) ]; then
+    alias javadec='java -v -p -c'
+fi
+
+# Look at the hex or binary representations of files
+hex () { xxd "$1" | view -; }
+bin () { xxd -b -c 8 "$1" | view -; }
 
 alias listen='nc -nvlp $1'
