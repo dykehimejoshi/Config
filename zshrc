@@ -26,8 +26,11 @@ prompt_seb_setup() {
 %f%b[%~] %b%F{red}%m%f%b [%F{yellow}%?%f]
 %K{red}%#%f%b%k "
     else
+        # default colors: (name);(hostname);(exit code)
+        # magenta;blue;yellow
+        # or: 121;69;11
         PROMPT="
-%f%b[%~] %B%F{magenta}%n %B%F{blue}%m%f%b [%F{yellow}%?%f]
+%f%b[%~] %B%F{121}%n %B%F{69}%m%f%b [%F{11}%?%f]
 %# "
     fi
 }
