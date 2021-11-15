@@ -19,10 +19,17 @@ autoload -Uz promptinit
 promptinit
 
 prompt_seb_setup() {
+    is_root=$(test "$EUID" -eq 0; echo $?)
     RPROMPT="[%D{%H:%M:%S}]"
-    PROMPT="
+    if [[ $is_root == 0 ]]; then
+        PROMPT="
+%f%b[%~] %b%F{red}%m%f%b [%F{yellow}%?%f]
+%K{red}%#%f%b%k "
+    else
+        PROMPT="
 %f%b[%~] %B%F{magenta}%n %B%F{blue}%m%f%b [%F{yellow}%?%f]
 %# "
+    fi
 }
 
 prompt_themes+=( seb )
