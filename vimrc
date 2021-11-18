@@ -231,6 +231,7 @@ endfunction
 function! ProgrammingSettings()
     " settings for various programming languages
     setlocal softtabstop=4
+    ab ube /usr/bin/env
 endfunction
 
 function! MakeSettings()
