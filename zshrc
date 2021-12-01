@@ -56,3 +56,7 @@ if [ -f "$HOME/.zsh-extras" ]; then
     # to one system, source them here
     source $HOME/.zsh-extras
 fi
+
+# Using a GPG key as an SSH key
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
