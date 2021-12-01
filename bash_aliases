@@ -40,3 +40,7 @@ if [ -f "$HOME/reminders" ]; then
         echo "----------"
     fi
 fi
+
+# Using a GPG key as an SSH key
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
