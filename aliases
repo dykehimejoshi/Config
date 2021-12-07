@@ -153,7 +153,7 @@ if [ ! -z $($whichcmd python3) ]; then
     alias mkvenv='python3 -m venv venv'
     alias govenv='. venv/bin/activate'
     alias byevenv='deactivate'
-    alias serve='python3 -m http.server'
+    alias serve='hostname -I 2>/dev/null ; python3 -m http.server'
 fi
 
 # Misc
