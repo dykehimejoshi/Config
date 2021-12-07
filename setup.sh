@@ -87,3 +87,7 @@ install_config "$HOME/.radare2rc" "radare2rc"
 
 ## zshrc
 install_config "$HOME/.zshrc" "zshrc"
+
+## i3config
+mkdir -p "$HOME/.config/i3/"
+install_config "$HOME/.config/i3/config" "i3config"
