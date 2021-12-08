@@ -58,7 +58,6 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-# defaults are one right of vim
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
@@ -184,3 +183,37 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+for_window [class="firetools"] floating enable
+bindsym $mod+t exec firetools
+
+# gaps
+
+# they say for this to be border pixel 0 but i like having 1 more
+for_window [class="."] border pixel 1
+gaps inner 25
+
+# colors
+# defaults (taken from https://i3wm.org/docs/userguide.html#_changing_colors):
+# class                 border  backgr. text    indicator child_border
+# client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+# client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+# client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+# client.urgent           #2f343a #900000 #ffffff #900000   #900000
+# client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+# client.background       #ffffff
+
+# 256-colors (the same ones in tmux.conf)
+set $color121 #87FFAF
+set $color234 #1C1C1C
+
+# class                 border  backgr.   text    indicator child_border
+client.focused          #70f0a0 $color121 #000000 #51FF8B   #87FFAF
+
+# background
+# ln -s desired background to ~/Pictures/wallpaper; if it doesn't exist, set it
+# to solid black
+exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper || xsetroot -solid "#000000"
+
+# mirror screens
+exec xrandr --output HDMI-1 --same-as eDP-1
