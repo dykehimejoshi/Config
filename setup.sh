@@ -58,6 +58,7 @@ install_config () {
         return 1
     fi
     if [ ! -f "$1" ]; then
+        mkdir -p "$(dirname "$1")"
         ln -s $CFGDIR/$2 $1
         code=$?
         if [ $code = 0 ]; then
@@ -89,5 +90,4 @@ install_config "$HOME/.radare2rc" "radare2rc"
 install_config "$HOME/.zshrc" "zshrc"
 
 ## i3config
-mkdir -p "$HOME/.config/i3/"
 install_config "$HOME/.config/i3/config" "i3config"
