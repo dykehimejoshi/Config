@@ -19,20 +19,29 @@ autoload -Uz promptinit
 promptinit
 
 prompt_seb_setup() {
+    nl=$'\n'
     is_root=$(test "$EUID" -eq 0; echo $?)
-    RPROMPT="[%D{%H:%M:%S}]"
-    if [[ $is_root == 0 ]]; then
-        PROMPT="
-%f%b[%~] %b%F{red}%m%f%b [%F{yellow}%?%f]
-%K{red}%#%f%b%k "
+    # directory
+    pstr="${nl}%f%b[%~] "
+    # username/hostname
+    if [ $is_root -eq 0 ]; then
+        pstr+="%b%F{red}%m%f%b"
     else
         # default colors: (name);(hostname);(exit code)
         # magenta;blue;yellow
         # or: 121;69;11
-        PROMPT="
-%f%b[%~] %B%F{121}%n %B%F{69}%m%f%b [%F{11}%?%f]
-%# "
+        pstr+="%B%F{121}%n %B%F{69}%m%f%b"
     fi
+    # return code of previous command
+    pstr+=" [%F{11}%?%f]${nl}"
+    # root indicator (?) the $ or the #
+    if [ $is_root -eq 0 ]; then
+        pstr+="%K{red}%#%f%b%k "
+    else
+        pstr+="%# "
+    fi
+    PROMPT=$pstr
+    RPROMPT="[%D{%H:%M:%S}]"
 }
 
 prompt_themes+=( seb )

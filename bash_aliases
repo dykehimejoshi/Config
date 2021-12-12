@@ -12,19 +12,38 @@ if [ -z $color_prompt ]; then
         color_prompt=
     fi
 fi
+
+# test if escape sequences work
+if [ $(basename $SHELL) = "sh" ]; then :; fi # TODO
+nl=$'\n'
+resetcolor='\[\033[00;00m\]'
+pstr="${resetcolor}${nl}"
+pstr+=
+# directory
+pstr+='[\w] '
+
+# username/hostname
 if [ "$color_prompt" = yes ]; then
-    if [[ $is_root == 0 ]]; then
-        PS1='\n\[\033[00;00m\][\w] \[\033[01;31m\]\h\[\033[00;00m\] \t\n\[\033[7;31;107m\]\$\e[0m '
+    if [ $is_root -eq 0 ]; then
+        pstr+='\[\033[01;31m\]\h\[\033[00;00m\]'
     else
-        PS1='\n\[\033[00;00m\][\w] \[\033[01;95m\]\u \[\033[01;94m\]\h\[\033[00;00m\] \t\n\[\033[00m\]\$ '
-    fi
-else
-    if [[ $is_root == 0 ]]; then
-        PS1='\n[\w] \h \t\n\$ '
-    else
-        PS1='\n[\w] \u \h \t\n\$ '
+        pstr+='\[\033[01;95m\]\u \[\033[01;94m\]\h\[\033[00;00m\]'
     fi
 fi
+
+# time
+pstr+=' \t${nl}'
+
+# root indicator
+if [ "$color_prompt" = yes ]; then
+    if [ $is_root -eq 0 ]; then
+        pstr+='\[\033[7;31;107m\]\$\e[0m '
+    else
+        pstr+='\[\033[00m\]\$ '
+    fi
+fi
+
+PS1=$pstr
 
 if [ -z $SebCfgDir ]; then
     export SebCfgDir=$(dirname `readlink -f $HOME/.bash_aliases` )
