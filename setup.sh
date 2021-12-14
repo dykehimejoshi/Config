@@ -91,3 +91,6 @@ install_config "$HOME/.zshrc" "zshrc"
 
 ## i3config
 install_config "$HOME/.config/i3/config" "i3config"
+
+## rangerrc
+install_config "$HOME/.config/ranger/rc.conf" "rangerrc"

@@ -1,1 +1,22 @@
+# rc.conf
+
+# options
 set preview_images true
+set preview_images_method ueberzug
+set draw_borders true
+set update_tmux_title true
+
+# keybindings
+
+# move a file to trash
+map DD shell gio trash %s
+map Dl shell gio list trash:// | less
+
+unmap <F2>
+unmap <F3>
+unmap <F4>
+map <F5> shell pkill ueberzug
+unmap <F6>
+unmap <F7>
+unmap <F8>
+unmap <F10>
