@@ -5,6 +5,7 @@ set preview_images true
 set preview_images_method ueberzug
 set draw_borders true
 set update_tmux_title true
+set mouse_enabled false
 
 # keybindings
 
