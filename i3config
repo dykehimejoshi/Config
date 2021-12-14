@@ -49,6 +49,9 @@ bindsym $mod+Return exec konsole || i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# mod+F4 to close a window
+bindsym $mod+F4 kill
+
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
@@ -227,4 +230,4 @@ client.focused          #70f0a0 $color121 #000000 #51FF8B   #87FFAF
 exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper || xsetroot -solid "#000000"
 
 # mirror screens
-exec xrandr --output HDMI-1 --auto
+exec xrandr --output HDMI-1 --same-as eDP-1
