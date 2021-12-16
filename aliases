@@ -52,6 +52,11 @@ if [ ! -z $($whichcmd wine) ]; then
     alias wine64='WINEPREFIX=$HOME/.wine64 wine64'
 fi
 
+# xclip
+if [ ! -z $($whichcmd xclip) ]; then
+    alias copyimg='copyimg () { xclip -selection clipboard -t image/png -i < $1; }; copyimg'
+fi
+
 # Package manager
 # ins, srx, shw, and rem aliases should use the default package manager
 # for any distro
