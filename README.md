@@ -25,6 +25,8 @@
 | PrintScr | Take a picture of the whole screen | |
 | Shift+PrintScr | Take a picture of the selected window | |
 | $mod+t | Execute firetools | |
+| $mod+i | Move window to scratchpad | |
+| $mod+u | Move window from scratchpad | |
 
 ## ranger
 

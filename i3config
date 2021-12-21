@@ -60,6 +60,9 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
+bindsym $mod+i move scratchpad
+bindsym $mod+u scratchpad show
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -187,12 +190,12 @@ bar {
     #status_command i3status
     position top
     colors {
-        background $color234
-        statusline $color121
+        background $secondary
+        statusline $primary
         separator  #666666
 
         # <colorclass>      <border>    <background>    <text>
-        focused_workspace   #000000     $color121       #000000
+        focused_workspace   #000000     $primary       #000000
     }
 }
 
@@ -218,11 +221,11 @@ gaps inner 25
 # client.background       #ffffff
 
 # 256-colors (the same ones in tmux.conf)
-set $color121 #87FFAF
-set $color234 #1C1C1C
+set $primary #4EB7DB
+set $secondary #1C1C1C
 
 # class                 border  backgr.   text    indicator child_border
-client.focused          #70f0a0 $color121 #000000 #51FF8B   #87FFAF
+client.focused          #70f0a0 $secondary #000000 #51FF8B   $primary
 
 # background
 # ln -s desired background to ~/Pictures/wallpaper; if it doesn't exist, set it
@@ -231,3 +234,6 @@ exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper || xsetroot -solid "#000
 
 # mirror screens
 exec xrandr --output HDMI-1 --same-as eDP-1
+
+# start ibus
+exec ibus-daemon -d
