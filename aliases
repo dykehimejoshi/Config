@@ -118,6 +118,20 @@ if [ ! -z $($whichcmd yay) ]; then
     alias rem='yayr'
 fi
 
+if [ ! -z $($whichcmd emerge) ]; then
+    # USE can be changed after a command, with the specified package going after
+    alias emi='emerge --ask'
+    alias emr='emerge --deselect' # will be later removed with --depclean
+    alias emsrx='emerge --search'
+
+    alias update='sudo echo "--- Updating" && emerge --update --deep @world'
+
+    alias ins='emi'
+    alias srx='emsrx'
+    #alias shw=''
+    alias rem='emr'
+fi
+
 # Administration
 alias _='sudo'
 alias _i='sudo -i'
@@ -187,7 +201,7 @@ fi
 
 # javap (reversing compiled .class files)
 if [ ! -z $($whichcmd javap) ]; then
-    alias javadec='java -v -p -c'
+    alias javadec='javap -v -p -c'
 fi
 
 # Look at the hex or binary representations of files
