@@ -92,12 +92,12 @@ fi
 if [ ! -z $($whichcmd pacman) ]; then
     # if pacman is installed
     alias paci='sudo pacman -Sy'
-    alias pacs='pacman -Q'
-    alias pacshow='pacman -Qi'
+    alias pacs='pacman -Ss'
+    alias pacshow='pacman -Si'
     alias pacr='sudo pacman -R'
     alias update='sudo pacman -Syu'
 
-    alias ins='sudo paci'
+    alias ins='paci'
     alias srx='pacs'
     alias shw='pacshow'
     alias rem='pacr'
@@ -110,7 +110,7 @@ if [ ! -z $($whichcmd yay) ]; then
     alias yayshow='yay -Qi'
     alias yayr='yay -R'
     # Should overwrite the `update' alias from pacman if installed
-    alias update='sudo echo "--- Updating" && yay -Syu'
+    alias update='yay -Syu'
 
     alias ins='yayi'
     alias srx='yays'
@@ -124,7 +124,7 @@ if [ ! -z $($whichcmd emerge) ]; then
     alias emr='emerge --deselect' # will be later removed with --depclean
     alias emsrx='emerge --search'
 
-    alias update='sudo echo "--- Updating" && emerge --update --deep @world'
+    alias update='emerge --update --deep @world'
 
     alias ins='emi'
     alias srx='emsrx'
