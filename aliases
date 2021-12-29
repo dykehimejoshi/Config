@@ -91,11 +91,11 @@ fi
 
 if [ ! -z $($whichcmd pacman) ]; then
     # if pacman is installed
-    alias paci='sudo pacman -Sy'
+    alias paci='sudo pacman -Syu'
     alias pacs='pacman -Ss'
     alias pacshow='pacman -Si'
     alias pacr='sudo pacman -R'
-    alias update='sudo pacman -Syu'
+    alias update='sudo pacman -Syyu'
 
     alias ins='paci'
     alias srx='pacs'
@@ -105,12 +105,12 @@ fi
 
 if [ ! -z $($whichcmd yay) ]; then
     # if yay is installed
-    alias yayi='yay -S'
-    alias yays='yay -Q'
-    alias yayshow='yay -Qi'
+    alias yayi='yay -Syu'
+    alias yays='yay -Ss'
+    alias yayshow='yay -Si'
     alias yayr='yay -R'
     # Should overwrite the `update' alias from pacman if installed
-    alias update='yay -Syu'
+    alias update='yay -Syyu'
 
     alias ins='yayi'
     alias srx='yays'
