@@ -1,51 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # A setup script to link the config files to the places they need to be.
 
-# Ask the user if they want to install any of the programs not already installed
+# some variables to make it look a little nicer
+COLOR_YELLOW=`tput setaf 3`
+COLOR_GREEN=`tput setaf 2`
+COLOR_RED=`tput setaf 1`
+COLOR_RST=`tput sgr 0`
 
-# Set the command to use for which
-if [ "$(which whence)" = "whence: shell built-in command" ]; then
-    # we're using zsh
-    whichcmd="whence"
+# iterate through some common package managers to find which one we have
+which apt &&    inst="apt install"
+which pacman && inst="pacman -Syyu"
+which pkg &&    inst="pkg install"
+which emerge && inst="emerge --ask"
+
+programs="tmux vim zsh"
+
+# Ask the user if they want to install programs
+echo -n "Install programs? (y/n) > "
+read user_i
+if [[ $user_i = "y" ]]; then
+    /usr/bin/env sh -c "$(which sudo) $inst $programs"
 else
-    # otherwise, assuming we're using bash
-    whichcmd="which"
-fi
-
-tmuxi="$($whichcmd tmux)"
-if [ -z $tmuxi ]; then
-    echo "Tmux not installed..."
-    tmuxi="tmux"
-else
-    tmuxi=""
-fi
-
-vimi="$($whichcmd vim)"
-if [ -z $vimi ] && [ "${vimi: -4}" != "nvim" ]; then
-    echo "Vim not installed..."
-    vimi="vim"
-else
-    vimi=""
-fi
-
-zshi="$($whichcmd zsh)"
-if [ -z $zshi ]; then
-    echo "zsh not installed..."
-    zshi="zsh"
-else
-    zshi=""
-fi
-
-if [ ! -z "$tmuxi" ] || [ ! -z "$vimi" ] || [ ! -z "$zshi" ]; then
-    echo -n "Install missing programs? (y/n) > "
-    read user_i
-    # FIXME: might not always have apt or apt-get
-    if [[ $user_i = "y" || $user_i = "ye" || $user_i = "yes" ]]; then
-        /bin/bash -c "$(which sudo) apt install $tmuxi $vimi $zshi"
-    else
-        echo "Not installing."
-    fi
+    echo "Not installing."
 fi
 
 # Install the config files to their respective places
@@ -62,12 +39,12 @@ install_config () {
         ln -s $CFGDIR/$2 $1
         code=$?
         if [ $code = 0 ]; then
-            echo "[+] $1 successfully linked."
+            echo "$COLOR_GREEN[+] $1 successfully linked.$COLOR_RST"
         else
-            echo "[!] Error in linking $1: $code"
+            echo "$COLOR_RED[!] Error in linking $1: $code$COLOR_RST"
         fi
     else
-        echo "[~] $1 already exists."
+        echo "$COLOR_YELLOW[~] $1 already exists.$COLOR_RST"
     fi
 }
 
