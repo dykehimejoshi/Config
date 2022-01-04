@@ -14,12 +14,17 @@ test $(command -v pacman) && inst="pacman -Syyu"
 test $(command -v pkg) &&    inst="pkg install"
 test $(command -v emerge) && inst="emerge --ask"
 
-programs="tmux vim zsh git ranger ueberzug keepassxc"
+programs="tmux vim zsh git ranger keepassxc"
 
 # Ask the user if they want to install programs
 echo -n "Install programs? (y/n) > "
 read user_i
 if [[ $user_i =~ ^[Yy]$ ]]; then
+    echo -n "Install optional ranger dependencies? (y/n) > "
+    read ranger_i
+    if [[ $ranger_i =~ ^[Yy]$ ]]; then
+        programs+=" atool highlight ueberzug odt2txt perl-image-exiftool poppler transmission-cli"
+    fi
     /usr/bin/env sh -c "$(which sudo) $inst $programs"
 else
     echo "Not installing."
@@ -27,12 +32,10 @@ fi
 
 # Install the config files to their respective places
 
-CFGDIR=$(pwd)
-
 install_config () {
     if [ ! -f "$1" ]; then
         mkdir -p "$(dirname "$1")"
-        ln -s $CFGDIR/$2 $1
+        ln -s $(pwd)/$2 $1
         code=$?
         if [ $code = 0 ]; then
             echo "$COLOR_GREEN[+] $1 successfully linked.$COLOR_RST"
