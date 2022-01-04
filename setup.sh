@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # A setup script to link the config files to the places they need to be.
 
@@ -9,17 +9,17 @@ COLOR_RED=`tput setaf 1`
 COLOR_RST=`tput sgr 0`
 
 # iterate through some common package managers to find which one we have
-which apt &&    inst="apt install"
-which pacman && inst="pacman -Syyu"
-which pkg &&    inst="pkg install"
-which emerge && inst="emerge --ask"
+test $(command -v apt) &&    inst="apt install"
+test $(command -v pacman) && inst="pacman -Syyu"
+test $(command -v pkg) &&    inst="pkg install"
+test $(command -v emerge) && inst="emerge --ask"
 
-programs="tmux vim zsh"
+programs="tmux vim zsh git ranger ueberzug keepassxc"
 
 # Ask the user if they want to install programs
 echo -n "Install programs? (y/n) > "
 read user_i
-if [[ $user_i = "y" ]]; then
+if [[ $user_i =~ ^[Yy]$ ]]; then
     /usr/bin/env sh -c "$(which sudo) $inst $programs"
 else
     echo "Not installing."
@@ -30,10 +30,6 @@ fi
 CFGDIR=$(pwd)
 
 install_config () {
-    if [ $# != 2 ]; then
-        echo '$1 -- where to link ; $2 -- the file in this config (no cfgdir)'
-        return 1
-    fi
     if [ ! -f "$1" ]; then
         mkdir -p "$(dirname "$1")"
         ln -s $CFGDIR/$2 $1
