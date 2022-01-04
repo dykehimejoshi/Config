@@ -28,7 +28,7 @@ alias llf='ls -laF'
 mkcdir () { mkdir -p "$1" && cd "$1"; }
 
 # Git aliases
-if [ ! -z $(command -v git) ]; then
+if [ $(command -v git) ]; then
     alias ga='git add'
     alias gcm='git commit'
     alias gpull='git pull'
@@ -39,37 +39,37 @@ if [ ! -z $(command -v git) ]; then
 fi
 
 # WINE aliases
-if [ ! -z $(command -v wine) ]; then
+if [ $(command -v wine) ]; then
     alias cdcdir='cd ~/.wine/drive_c/'
     alias wine64='WINEPREFIX=$HOME/.wine64 wine64'
 fi
 
 # xclip
-if [ ! -z $(command -v xclip) ]; then
+if [ $(command -v xclip) ]; then
     alias copyimg='copyimg () { xclip -selection clipboard -t image/png -i < $1; }; copyimg'
 fi
 
 # vim
-if [ ! -z $(command -v vim) ]; then
+if [ $(command -v vim) ]; then
     alias view='vim -R'
 fi
 
 # set the pdf viewer alias
-command -v zathura   && alias pdf='zathura'
-command -v evince    && alias pdf='evince'
+test $(command -v zathura)   && alias pdf='zathura'
+test $(command -v evince)    && alias pdf='evince'
 
 # set the epub viewer alias
-command -v ebook-viewer  && alias epub='ebook-viewer'
+test $(command -v ebook-viewer)  && alias epub='ebook-viewer'
 
 # set the image viewer alias
-command -v feh  && alias image='feh'
-command -v eog  && alias image='eog'
-command -v eom  && alias image='eom'
+test $(command -v feh)  && alias image='feh'
+test $(command -v eog)  && alias image='eog'
+test $(command -v eom)  && alias image='eom'
 
 # Package manager
 # ins, srx, shw, and rem aliases should use the default package manager
 # for any distro
-if [ ! -z $(command -v apt) ]; then
+if [ $(command -v apt) ]; then
     # if apt is installed
     alias agi='sudo apt install -y'
     alias acs='apt search'
@@ -84,7 +84,7 @@ if [ ! -z $(command -v apt) ]; then
     alias rem='agr'
 fi
 
-if [ ! -z $(command -v pkg) ]; then
+if [ $(command -v pkg) ]; then
     # if pkg is installed
     alias pki='pkg install'
     alias pks='pkg search'
@@ -98,7 +98,7 @@ if [ ! -z $(command -v pkg) ]; then
     alias rem='pkr'
 fi
 
-if [ ! -z $(command -v pacman) ]; then
+if [ $(command -v pacman) ]; then
     # if pacman is installed
     alias paci='sudo pacman -Syu'
     alias pacs='pacman -Ss'
@@ -112,7 +112,7 @@ if [ ! -z $(command -v pacman) ]; then
     alias rem='pacr'
 fi
 
-if [ ! -z $(command -v yay) ]; then
+if [ $(command -v yay) ]; then
     # if yay is installed
     alias yayi='yay -Syu'
     alias yays='yay -Ss'
@@ -127,7 +127,7 @@ if [ ! -z $(command -v yay) ]; then
     alias rem='yayr'
 fi
 
-if [ ! -z $(command -v emerge) ]; then
+if [ $(command -v emerge) ]; then
     # USE can be changed after a command, with the specified package going after
     alias emi='emerge --ask'
     alias emr='emerge --deselect' # will be later removed with --depclean
@@ -158,7 +158,7 @@ sshpassthru () {
 }
 
 ## usbguard
-if [ ! -z $(command -v usbguard) ]; then
+if [ $(command -v usbguard) ]; then
     alias usballow='sudo usbguard allow-device'
     alias usbblock='sudo usbguard block-device'
     alias usbreject='sudo usbguard reject-device'
@@ -167,7 +167,7 @@ if [ ! -z $(command -v usbguard) ]; then
 fi
 
 # KDE Plasma
-if [ ! -z $(command -v plasmashell) ]; then
+if [ $(command -v plasmashell) ]; then
     alias restartplasma='sh -c "kquitapp5 plasmashell && plasmashell >/dev/null &"'
 fi
 
@@ -175,7 +175,7 @@ fi
 LESS="-f -g -i -J -M -R -S -w -x4"; export LESS
 
 # Python
-if [ ! -z $(command -v python3) ]; then
+if [ $(command -v python3) ]; then
     alias py='python3'
     alias py3='python3'
     alias mkvenv='python3 -m venv venv'
@@ -191,12 +191,12 @@ alias tma='tmux attach'
 alias calc='calc () { bc -l <<< "$1"; }; calc'
 alias getdevs="ls /dev/sd?*"
 
-if [ ! -z $(command -v qemu-system-x86_64) ]; then
+if [ $(command -v qemu-system-x86_64) ]; then
     alias qemu='qemu-system-x86_64'
     alias qmu='qemu-system-x86_64'
 fi
 
-if [ ! -z $(command -v syncthing) ]; then
+if [ $(command -v syncthing) ]; then
     alias rmsyncconflicts='find ~ -name "*sync-conflict*" -exec rm -i {} \;'
     alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 fi
@@ -204,14 +204,14 @@ fi
 ## Aliases for reverse engineering/pentesting/etc. ##
 
 # radare2
-if [ ! -z $(command -v r2) ]; then
+if [ $(command -v r2) ]; then
     alias r2d='r2 -A -d'
     alias r2wd='r2 -A -d -w'
     alias r2empty='r2 malloc://512'
 fi
 
 # javap (reversing compiled .class files)
-if [ ! -z $(command -v javap) ]; then
+if [ $(command -v javap) ]; then
     alias javadec='javap -v -p -c'
 fi
 
