@@ -19,10 +19,10 @@ programs="tmux vim zsh git ranger keepassxc"
 # Ask the user if they want to install programs
 echo -n "Install programs? (y/n) > "
 read user_i
-if [[ $user_i =~ ^[Yy]$ ]]; then
+if $(echo $user_i | grep -Eq '^(Y|y)$') ; then
     echo -n "Install optional ranger dependencies? (y/n) > "
     read ranger_i
-    if [[ $ranger_i =~ ^[Yy]$ ]]; then
+    if $(echo $ranger_i | grep -Eq '^(Y|y)$') ; then
         programs+=" atool highlight ueberzug odt2txt perl-image-exiftool poppler transmission-cli"
     fi
     /usr/bin/env sh -c "$(which sudo) $inst $programs"
