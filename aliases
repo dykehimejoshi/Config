@@ -58,6 +58,11 @@ if [ ! -z $($whichcmd xclip) ]; then
     alias copyimg='copyimg () { xclip -selection clipboard -t image/png -i < $1; }; copyimg'
 fi
 
+# vim
+if [ ! -z $($whichcmd vim) ]; then
+    alias view='vim -R'
+fi
+
 # Package manager
 # ins, srx, shw, and rem aliases should use the default package manager
 # for any distro
@@ -173,7 +178,9 @@ if [ ! -z $($whichcmd python3) ]; then
     alias mkvenv='python3 -m venv venv'
     alias govenv='. venv/bin/activate'
     alias byevenv='deactivate'
-    alias serve='hostname -I 2>/dev/null ; python3 -m http.server'
+    alias serve='(ip a | sed "s/ * / /g" | grep "inet " | cut -d " " -f3 | \
+        grep -v "tun[0-9]" | grep -v "br-" | grep -v "docker" | \
+        cut -d/ -f1 | tail -n1) ; python3 -m http.server'
 fi
 
 # Misc
