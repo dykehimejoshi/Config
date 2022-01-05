@@ -36,6 +36,8 @@ if [ $(command -v git) ]; then
     alias gbr='git branch'
     alias gco='git checkout'
     alias gl='git log'
+    alias gdif='git diff'
+    alias gst='git status'
 fi
 
 # WINE aliases
