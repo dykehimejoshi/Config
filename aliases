@@ -148,6 +148,7 @@ alias _s='sudo -s'
 alias chkdu='df -h 2>/dev/null | head -n 1 && df -h 2>/dev/null | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
+alias ip='ip -color'
 sshpassthru () {
     # $1: port on host you want access to; $2: port to put it on; $3: <user>@<host>
     if test $# -ne 3; then
@@ -181,9 +182,9 @@ if [ $(command -v python3) ]; then
     alias mkvenv='python3 -m venv venv'
     alias govenv='. venv/bin/activate'
     alias byevenv='deactivate'
-    alias serve='(ip a | sed "s/ * / /g" | grep "inet " | cut -d " " -f3 | \
+    alias serve='(ip -br -4 a | sed "s/ * / /g" | \
         grep -v "tun[0-9]" | grep -v "br-" | grep -v "docker" | \
-        cut -d/ -f1 | tail -n1) ; python3 -m http.server'
+        cut -d " " -f3 | cut -d/ -f1 | tail -n1) ; python3 -m http.server'
 fi
 
 # Misc
