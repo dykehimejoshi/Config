@@ -14,7 +14,7 @@ map DD shell gio trash %s
 map Dl shell gio list trash:// | less
 
 unmap <F2>
-map <F3> preview_images!
+map <F3> set preview_images!
 unmap <F4>
 map <F5> shell pkill ueberzug
 unmap <F6>
