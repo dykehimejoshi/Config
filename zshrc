@@ -30,10 +30,18 @@ prompt_seb_setup() {
         # default colors: (name);(hostname);(exit code)
         # magenta;blue;yellow
         # or: 121;69;11
-        pstr+="%B%F{121}%n %B%F{69}%m%f%b"
+        if [ "$TERM" = "linux" ]; then
+            pstr+="%B%F{magenta}%n %B%F{blue}%m%f%b"
+        else
+            pstr+="%B%F{121}%n %B%F{69}%m%f%b"
+        fi
     fi
     # return code of previous command
-    pstr+=" [%F{11}%?%f]${nl}"
+    if [ "$TERM" = "linux" ]; then
+        pstr+=" [%F{yellow}%?%f]${nl}"
+    else
+        pstr+=" [%F{11}%?%f]${nl}"
+    fi
     # root indicator (?) the $ or the #
     if [ $is_root -eq 0 ]; then
         pstr+="%K{red}%#%f%b%k "
