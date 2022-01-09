@@ -1,21 +1,4 @@
-"""""""""""""""""""" head: 17 """
-" Map leader: C-e
-"   Leader-r: for python, javascript,
-"       python, shell, html, and markdown
-"       run those thru interpreters or
-"       by other necessary means
-"   Leader-n: edit next file (:n)
-"   Leader-p: edit previous file (:N)
-"   Leader-x: save and quit (:wq)
-"   Leader-q: quit without saving (:q!)
-"   <C-w>tc: create a new tab
-"   <C-w>tq: quit current tab
-"   <C-w>tm: moves tab (fill in when called)
-"   <C-w>": splits window horizontally
-"   <C-w>/: splits window vertically
-"   <C-s>: saves current file
-"""""""""""""""""""""""""""""""""
-
+" vimrc
 
 set nocompatible
 
