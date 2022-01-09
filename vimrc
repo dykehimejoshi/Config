@@ -102,7 +102,7 @@ if has('autocmd')
 
     "" set certain options for filetypes of programming languages
     autocmd FileType python call PythonSettings()
-    autocmd FileType c* call CSettings()
+    autocmd FileType c call CSettings()
     autocmd FileType cpp call CPPSettings()
     autocmd FileType vim call VimSettings()
     autocmd FileType java call JavaSettings()
@@ -215,6 +215,7 @@ function! ProgrammingSettings()
     " settings for various programming languages
     setlocal softtabstop=4
     ab ube #!/usr/bin/env
+    set conceallevel=0
 endfunction
 
 function! MakeSettings()
