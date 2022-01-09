@@ -57,17 +57,23 @@ if [ $(command -v vim) ]; then
     alias vi='vim -v -C -u NONE'
 fi
 
-# set the pdf viewer alias
-test $(command -v zathura)   && alias pdf='zathura'
-test $(command -v evince)    && alias pdf='evince'
+if [ ! -z $XDG_SESSION_DESKTOP ]; then
+    # we (probably) have a gui
 
-# set the epub viewer alias
-test $(command -v ebook-viewer)  && alias epub='ebook-viewer'
+    # set the pdf viewer alias
+    test $(command -v zathura)   && alias pdf='zathura'
+    test $(command -v evince)    && alias pdf='evince'
 
-# set the image viewer alias
-test $(command -v feh)  && alias image='feh'
-test $(command -v eog)  && alias image='eog'
-test $(command -v eom)  && alias image='eom'
+    # set the epub viewer alias
+    test $(command -v ebook-viewer)  && alias epub='ebook-viewer'
+
+    # set the image viewer alias
+    test $(command -v feh)  && alias image='feh'
+    test $(command -v eog)  && alias image='eog'
+    test $(command -v eom)  && alias image='eom'
+else
+    : # TODO
+fi
 
 # Package manager
 # ins, srx, shw, and rem aliases should use the default package manager
