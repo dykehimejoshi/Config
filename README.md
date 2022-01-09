@@ -44,7 +44,7 @@
 | C-v     | Prefix | |
 | / | Split horizontally | |
 | " | Split vertically | |
-| ; | Show command prompt | |
+| ; or : | Show command prompt | |
 | h, j, k, l | Select/move/resize windows | |
 | v | Starts selection | Copy mode |
 | y | Copies (yanks) selection | Copy mode |
