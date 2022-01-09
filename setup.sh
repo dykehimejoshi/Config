@@ -14,7 +14,7 @@ test $(command -v pacman) && inst="pacman -Syyu"
 test $(command -v pkg) &&    inst="pkg install"
 test $(command -v emerge) && inst="emerge --ask"
 
-programs="tmux vim zsh git ranger keepassxc"
+programs="tmux vim zsh git ranger "
 
 # Ask the user if they want to install programs
 echo -n "Install programs? (y/n) > "
@@ -70,3 +70,7 @@ install_config "$HOME/.config/i3/config" "i3config"
 
 ## rangerrc
 install_config "$HOME/.config/ranger/rc.conf" "rangerrc"
+
+## elinks.conf
+
+install_config "$HOME/.elinks/elinks.conf" "elinks.conf"
