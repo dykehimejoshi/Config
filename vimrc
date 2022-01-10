@@ -40,7 +40,11 @@ set sidescrolloff=5
 set nowrap
 set laststatus=2
 set colorcolumn=81
-highlight ColorColumn ctermbg=8
+if &t_Co == 8
+    highlight ColorColumn ctermbg=7
+else
+    highlight ColorColumn ctermbg=8
+endif
 
 " Search and Replace
 set ignorecase
