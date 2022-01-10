@@ -185,6 +185,13 @@ function! Hex()
 endfunction
 "map <F3> <ESC>:call Hex()<CR>
 
+function! FixHex()
+    " Useful for if you accidentally save while editing the hex, this reverts
+    " the hex back to code
+    let g:ishex = 1
+    call Hex()
+endfunction
+
 "" Make copying from tmux easier
 function! ToggleMargin()
     set relativenumber!
