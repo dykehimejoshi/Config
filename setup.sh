@@ -14,7 +14,7 @@ test $(command -v pacman) && inst="pacman -Syyu"
 test $(command -v pkg) &&    inst="pkg install"
 test $(command -v emerge) && inst="emerge --ask"
 
-programs="tmux vim zsh git ranger "
+programs="tmux vim zsh git ranger elinks"
 
 # Ask the user if they want to install programs
 echo -n "Install programs? (y/n) > "
