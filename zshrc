@@ -31,7 +31,7 @@ prompt_seb_setup() {
         # magenta;blue;yellow
         # or: 121;69;11
         if [ "$TERM" = "linux" ]; then
-            pstr+="%B%F{magenta}%n %B%F{blue}%m%f%b"
+            pstr+="%B%F{green}%n %B%F{blue}%m%f%b"
         else
             pstr+="%B%F{121}%n %B%F{69}%m%f%b"
         fi
