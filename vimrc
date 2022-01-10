@@ -109,6 +109,7 @@ if has('autocmd')
     autocmd FileType javascript call JavaScriptSettings()
     autocmd FileType arduino call ArduinoSettings()
     autocmd FileType *sh call ShSettings()
+    autocmd FileType json call ProgrammingSettings()
 
     "" source vimrc after editing it
     autocmd BufWritePost *vimrc autocmd! | source %
