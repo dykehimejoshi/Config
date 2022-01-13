@@ -109,7 +109,7 @@ fi
 
 if [ $(command -v pacman) ]; then
     # if pacman is installed
-    alias paci='sudo pacman -Syu'
+    alias paci='sudo pacman -S'
     alias pacs='pacman -Ss'
     alias pacshow='pacman -Si'
     alias pacr='sudo pacman -R'
@@ -123,7 +123,7 @@ fi
 
 if [ $(command -v yay) ]; then
     # if yay is installed
-    alias yayi='yay -Syu'
+    alias yayi='yay -S'
     alias yays='yay -Ss'
     alias yayshow='yay -Si'
     alias yayr='yay -R'
