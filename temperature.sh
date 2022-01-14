@@ -7,7 +7,7 @@ if [ -f "/opt/vc/bin/vcgencmd" ]; then
     if [ ! -z $temp ]; then
         echo -en "$temp°F"
     fi
-    echo -n ' | ' # space for padding
+    echo -n ' ' # space for padding
 elif [ ! -z $(which sensors) ]; then
     # package lm-sensors
     #sensors | grep "CPU temp" | awk -F "[:°+]" '{print($3 * 1.8)+32}'
@@ -19,7 +19,7 @@ elif [ ! -z $(which sensors) ]; then
     if [ ! -z $temp ]; then
         echo -en "$temp°F"
     fi
-    echo -n ' | '
+    echo -n ' '
     # 🌡( #(/bin/bash ~/Config/temperature.sh)°F
 else
     # TODO: figure something else out later
