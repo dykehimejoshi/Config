@@ -63,6 +63,7 @@ if [ ! -z $XDG_SESSION_DESKTOP ]; then
     # set the pdf viewer alias
     test $(command -v zathura)   && alias pdf='zathura'
     test $(command -v evince)    && alias pdf='evince'
+    test $(command -v atril)     && alias pdf='atril'
 
     # set the epub viewer alias
     test $(command -v ebook-viewer)  && alias epub='ebook-viewer'
