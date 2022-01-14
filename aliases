@@ -31,6 +31,7 @@ mkcdir () { mkdir -p "$1" && cd "$1"; }
 if [ $(command -v git) ]; then
     alias ga='git add'
     alias gcm='git commit'
+    alias gcsm='git commit -S'
     alias gpull='git pull'
     alias gpush='git push'
     alias gbr='git branch'
