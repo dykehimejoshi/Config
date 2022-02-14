@@ -193,7 +193,7 @@ if [ $(command -v python3) ]; then
     alias mkvenv='python3 -m venv venv'
     alias govenv='. venv/bin/activate'
     alias byevenv='deactivate'
-    alias serve='(ip -br -4 a | sed "s/ * / /g" | \
+    alias serve='(ip -c=never -br -4 a | sed "s/ * / /g" | \
         grep -vE "(tun[0-9]|br-|veth-|docker)" | cut -d " " -f3 | cut -d/ -f1 |\
         tail -n1) ; python3 -m http.server'
 fi
