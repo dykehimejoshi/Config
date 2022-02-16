@@ -62,17 +62,17 @@ if [ ! -z $XDG_SESSION_DESKTOP ]; then
     # we (probably) have a gui
 
     # set the pdf viewer alias
-    test $(command -v zathura)   && alias pdf='zathura'
-    test $(command -v evince)    && alias pdf='evince'
     test $(command -v atril)     && alias pdf='atril'
+    test $(command -v evince)    && alias pdf='evince'
+    test $(command -v zathura)   && alias pdf='zathura'
 
     # set the epub viewer alias
     test $(command -v ebook-viewer)  && alias epub='ebook-viewer'
 
     # set the image viewer alias
-    test $(command -v feh)  && alias image='feh'
     test $(command -v eog)  && alias image='eog'
     test $(command -v eom)  && alias image='eom'
+    test $(command -v feh)  && alias image='feh'
 else
     : # TODO
 fi
