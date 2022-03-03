@@ -82,7 +82,12 @@ set backspace=indent,eol,start
 
 " Keybinds
 
-let mapleader = "\<C-e>"
+" temporary keybinds for until the muscle memory of C-e is no more
+nnoremap <C-e>q <Esc>
+nnoremap <C-e> <Esc>
+inoremap <C-e> <Esc>
+
+let mapleader = ","
 noremap ; :
 
 "" Change the redo keybind (`u' is already undo)
