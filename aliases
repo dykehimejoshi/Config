@@ -209,7 +209,7 @@ if [ $(command -v qemu-system-x86_64) ]; then
 fi
 
 if [ $(command -v syncthing) ]; then
-    alias rmsyncconflicts='find ~ -name "*sync-conflict*" -exec rm -i {} \;'
+    alias rmsyncconflicts='find -L ~ -name "*sync-conflict*" -exec rm -i {} \;'
     alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 fi
 
