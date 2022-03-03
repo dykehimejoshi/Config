@@ -117,6 +117,8 @@ if [ $(command -v pacman) ]; then
     alias pacr='sudo pacman -R'
     alias update='sudo pacman -Syyu'
 
+    alias remorphans='pacman -Qtdq | sudo pacman -Rns - || echo No packages to remove'
+
     alias ins='paci'
     alias srx='pacs'
     alias shw='pacshow'
