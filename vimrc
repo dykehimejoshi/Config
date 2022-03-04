@@ -125,15 +125,15 @@ if has('autocmd')
 
     "" Run Python scripts
     autocmd FileType python noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
-    autocmd FileType python inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
+"    autocmd FileType python inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
 
     "" Run Javascript scripts
     autocmd FileType javascript noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
-    autocmd FileType javascript inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
+"    autocmd FileType javascript inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
 
     "" Run Shell scripts
     autocmd FileType *sh noremap <buffer> <Leader>r :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
-    autocmd FileType *sh inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+"    autocmd FileType *sh inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
 
     "" Show HTML Files
     autocmd FileType *html noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
@@ -166,7 +166,7 @@ nmap <C-s> :w<CR>
 
 "" Saving and exiting
 nnoremap <Leader>x :wq<CR>
-inoremap <Leader>x <ESC>:wq<CR>
+"inoremap <Leader>x <ESC>:wq<CR>
 
 "" Exiting without saving
 noremap <Leader>q :q!<CR>
@@ -174,10 +174,10 @@ noremap <Leader>q :q!<CR>
 "" Editing with multiple files
 """ Next
 nnoremap <Leader>n :n<CR>
-inoremap <Leader>n <ESC>:w<CR>:n<CR>
+"inoremap <Leader>n <ESC>:w<CR>:n<CR>
 """ Previous
 nnoremap <Leader>p :N<CR>
-inoremap <Leader>p <ESC>:w<CR>:N<CR>
+"inoremap <Leader>p <ESC>:w<CR>:N<CR>
 
 "" xxd
 "" interesting for reverse engineering but not really that useful
