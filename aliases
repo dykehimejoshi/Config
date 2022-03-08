@@ -89,6 +89,8 @@ if [ $(command -v apt) ]; then
     alias agr='sudo apt remove'
     alias update='sudo /bin/bash -c "echo \"--- update\" ; apt update && echo \"--- upgrade\" ; apt upgrade -y && echo \"--- autoremove\" ; apt autoremove -y"'
 
+    alias showmanualins='apt-mark showmanual'
+
     alias ins='agi'
     alias srx='acs'
     alias shw='acshow'
@@ -118,6 +120,7 @@ if [ $(command -v pacman) ]; then
     alias update='sudo pacman -Syyu'
 
     alias remorphans='pacman -Qtdq | sudo pacman -Rns - || echo No packages to remove'
+    alias showmanualins='pacman -Qetq'
 
     alias ins='paci'
     alias srx='pacs'
@@ -133,6 +136,8 @@ if [ $(command -v yay) ]; then
     alias yayr='yay -R'
     # Should overwrite the `update' alias from pacman if installed
     alias update='yay -Syyu'
+
+    alias showmanualins='yay -Qetq'
 
     alias ins='yayi'
     alias srx='yays'
