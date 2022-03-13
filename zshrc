@@ -60,7 +60,7 @@ prompt_seb_setup() {
         # here means yes, e.g. a mounted filesystem
         is_chroot="yes"
     fi
-    if [ -n "$is_chroot" ]; then
+    if [ "$is_chroot" = "yes" ]; then
         pstr+=" (chroot)"
     fi
     pstr+="${nl}"
