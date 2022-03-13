@@ -38,10 +38,32 @@ prompt_seb_setup() {
     fi
     # return code of previous command
     if [ "$TERM" = "linux" ]; then
-        pstr+=" [%F{yellow}%?%f]${nl}"
+        pstr+=" [%F{yellow}%?%f]"
     else
-        pstr+=" [%F{11}%?%f]${nl}"
+        pstr+=" [%F{11}%?%f]"
     fi
+    # display if chrooted
+    is_chroot=
+    if [ -f /proc/1/mountinfo ]; then
+        # if yes, more stuff to do
+        for entry in $(cat /proc/1/mountinfo); do
+            # we're looking for an entry for /
+            if [ $(echo "$entry" | cut -d ' ' -f 4) = $(echo "$entry" | cut -d ' ' -f 5) ]; then
+                # if we're here, then we're not in a chroot
+                is_chroot=
+                break
+            else
+                is_chroot="yes"
+            fi
+        done
+    else
+        # here means yes, e.g. a mounted filesystem
+        is_chroot="yes"
+    fi
+    if [ -n "$is_chroot" ]; then
+        pstr+=" (chroot)"
+    fi
+    pstr+="${nl}"
     # root indicator (?) the $ or the #
     if [ $is_root -eq 0 ]; then
         pstr+="%K{red}%#%f%b%k "
