@@ -207,6 +207,7 @@ fi
 
 # Misc
 alias tma='tmux attach'
+alias tmax='tmux attach || tmux'
 alias calc='calc () { bc -l <<< "$1"; }; calc'
 alias getdevs="ls /dev/sd?*"
 
