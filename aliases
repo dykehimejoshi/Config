@@ -26,6 +26,7 @@ alias lf='ls -F'
 alias laf='ls -aF'
 alias llf='ls -laF'
 mkcdir () { mkdir -p "$1" && cd "$1"; }
+alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
 
 # Git aliases
 if [ $(command -v git) ]; then
@@ -209,7 +210,6 @@ fi
 alias tma='tmux attach'
 alias tmax='tmux attach || tmux'
 alias calc='calc () { bc -l <<< "$1"; }; calc'
-alias getdevs="ls /dev/sd?*"
 
 if [ $(command -v qemu-system-x86_64) ]; then
     alias qemu='qemu-system-x86_64'
