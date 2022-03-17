@@ -82,6 +82,10 @@ export SebCfgDir=$(dirname `readlink -f $HOME/.zshrc` )
 
 source $SebCfgDir/aliases
 
+# add completion for the newcd function alias
+# otherwise it would try to complete to files as well, which we don't want
+compdef _dirs newcd
+
 if [ -f "$HOME/reminders" ]; then
     if [ -s "$HOME/reminders" ]; then
         echo -e "Reminders:\n----------"
@@ -99,3 +103,9 @@ fi
 # Using a GPG key as an SSH key
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
+
+# fuck microsoft
+export POWERSHELL_TELEMETRY_OPTOUT=1
+export POWERSHELL_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_TELEMETRY_OPTOUT=1
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
