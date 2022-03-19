@@ -17,13 +17,17 @@ test $(command -v emerge) && inst="emerge --ask"
 programs="tmux vim zsh git ranger elinks"
 
 # Ask the user if they want to install programs
-echo -n "Install programs? (y/n) > "
+echo -n "Install programs? (y/N) > "
 read user_i
 if $(echo $user_i | grep -Eq '^(Y|y)$') ; then
-    echo -n "Install optional ranger dependencies? (y/n) > "
+    echo -n "Install optional ranger dependencies? (y/N) > "
     read ranger_i
     if $(echo $ranger_i | grep -Eq '^(Y|y)$') ; then
-        programs+=" atool highlight ueberzug odt2txt perl-image-exiftool poppler transmission-cli"
+        # programs with different package names (like in pacman vs apt):
+        #   exiftool
+        #   ueberzug
+        #   poppler
+        programs+=" atool highlight odt2txt transmission-cli"
     fi
     /usr/bin/env sh -c "$(which sudo) $inst $programs"
 else
