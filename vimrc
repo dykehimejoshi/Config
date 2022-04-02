@@ -149,16 +149,16 @@ endif " has autocmd
 """ Moving tabs: gt for next, gT for previous
 """ If in a split window, <C-w>T (capital T) opens current split in new tab
 """ Open a new tab (tc for "tab create")
-nnoremap <C-w>tc :tabnew<CR>
+nnoremap <Leader>tc :tabnew<CR>
 """ Close the current tab (tq for "tab quit")
-nnoremap <C-w>tq :tabclose<CR>
+nnoremap <Leader>tq :tabclose<CR>
 """ Move a tab
-nnoremap <C-w>tm :tabmove 
+nnoremap <Leader>tm :tabmove 
 
 "" Windows
 """ Keybinds to reflect my tmux.conf file
-nnoremap <C-w>/ :vsplit<CR>
-nnoremap <C-w>" :split<CR>
+nnoremap <Leader>/ :vsplit<CR>
+nnoremap <Leader>" :split<CR>
 
 "" Saving and not exiting
 imap <C-s> <ESC>:w<CR>a
