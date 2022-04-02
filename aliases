@@ -206,6 +206,13 @@ if [ $(command -v python3) ]; then
         tail -n1) ; python3 -m http.server'
 fi
 
+# php
+if [ $(command -v php) ]; then
+    # $1 is the port with 8000 being default
+    # $2 is the address we bind to, with everywhere being the default
+    alias servephp='servephp () { php -S ${2:-0.0.0.0}:${1:-8000}; }; servephp'
+fi
+
 # Misc
 alias tma='tmux attach'
 alias tmax='tmux attach || tmux'
