@@ -161,21 +161,30 @@ if [ $(command -v emerge) ]; then
 fi
 
 # Administration
-alias _='sudo'
-alias _i='sudo -i'
-alias _s='sudo -s'
+
+## sudo
+if [ $(command -v sudo) ] && [ -n "$(groups | grep -E '(sudo|wheel)')" ]; then
+    alias _='sudo'
+    alias _i='sudo -i'
+    alias _s='sudo -s'
+fi
+
 alias chkdu='df -h 2>/dev/null | head -n 1 && df -h 2>/dev/null | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
 alias ip='ip -color'
-sshpassthru () {
-    # $1: port on host you want access to; $2: port to put it on; $3: <user>@<host>
-    if test $# -ne 3; then
-        echo "args: <from host port> <to local port> <host>"
-    else
-        ssh -NL $2:localhost:$1 $3
-    fi
-}
+
+## ssh
+if [ $(command -v ssh) ]; then
+    sshpassthru () {
+        # $1: port on host you want access to; $2: port to put it on; $3: <user>@<host>
+        if test $# -ne 3; then
+            echo "args: <from host port> <to local port> <host>"
+        else
+            ssh -NL "$2":localhost:"$1" "$3"
+        fi
+    }
+fi
 
 ## usbguard
 if [ $(command -v usbguard) ]; then
@@ -216,11 +225,10 @@ fi
 # Misc
 alias tma='tmux attach'
 alias tmax='tmux attach || tmux'
-alias calc='calc () { bc -l <<< "$1"; }; calc'
 
-if [ $(command -v qemu-system-x86_64) ]; then
-    alias qemu='qemu-system-x86_64'
-    alias qmu='qemu-system-x86_64'
+## bc
+if [ $(command -v bc) ]; then
+    alias calc='calc () { bc -l <<< "$1"; }; calc'
 fi
 
 if [ $(command -v syncthing) ]; then
@@ -246,4 +254,7 @@ fi
 hex () { xxd "$1" | view -; }
 bin () { xxd -b -c 8 "$1" | view -; }
 
-alias listen='nc -nvlp $1'
+## netcat
+if [ $(command -v nc) ]; then
+    alias listen='nc -nvlp $1'
+fi
