@@ -82,9 +82,10 @@ export SebCfgDir=$(dirname `readlink -f $HOME/.zshrc` )
 
 source $SebCfgDir/aliases
 
-# add completion for the newcd function alias
+# add completion for the newcd and mkcdir function aliases
 # otherwise it would try to complete to files as well, which we don't want
 compdef _dirs newcd
+compdef _dirs mkcdir
 
 if [ -f "$HOME/reminders" ]; then
     if [ -s "$HOME/reminders" ]; then
