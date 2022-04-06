@@ -3,10 +3,14 @@
 # A setup script to link the config files to the places they need to be.
 
 # some variables to make it look a little nicer
-COLOR_YELLOW=`tput setaf 3`
-COLOR_GREEN=`tput setaf 2`
-COLOR_RED=`tput setaf 1`
-COLOR_RST=`tput sgr 0`
+# test for tput (usually default on linux systems, but not on termux)
+if [ $(command -v tput) ]; then
+    COLOR_YELLOW=`tput setaf 3`
+    COLOR_GREEN=`tput setaf 2`
+    COLOR_RED=`tput setaf 1`
+    COLOR_RST=`tput sgr 0`
+fi
+# if we don't have tput, then there's not problem with regular text
 
 # iterate through some common package managers to find which one we have
 test $(command -v apt) &&    inst="apt install"
