@@ -163,6 +163,10 @@ nnoremap <Leader>" :split<CR>
 "" Saving and not exiting
 imap <C-s> <ESC>:w<CR>a
 nmap <C-s> :w<CR>
+"" Saving and not exiting with the map leader
+"" TODO maybe not have this in insert mode?  will try it out and see
+imap <Leader>s <ESC>:w<CR>a
+nmap <Leader>s :w<CR>
 
 "" Saving and exiting
 nnoremap <Leader>x :wq<CR>
