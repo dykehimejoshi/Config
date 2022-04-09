@@ -143,6 +143,9 @@ if has('autocmd')
 
     "" Run makefiles
     autocmd FileType make nnoremap <buffer> <Leader>r :w<CR>:exec '!make'<CR>
+
+    "" Compile and upload arduino .ino sketches (requires arduino-cli and the core set up beforehand)
+    autocmd FileType arduino nnoremap <buffer> <Leader>r :w<CR>:exec '! cmd="$(arduino-cli board list)"; [ \! "$cmd" = "No boards found." ] && arduino-cli compile --fqbn $(echo $cmd \| cut -d " " -f 12) && arduino-cli upload -p $(echo $cmd \| cut -d " " -f 1 \| tail -n 1 \| tr -d "\n") --fqbn $(echo $cmd \| cut -d " " -f 12)'<CR>
 endif " has autocmd
 
 "" Tabs
