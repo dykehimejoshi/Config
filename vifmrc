@@ -115,6 +115,10 @@ set statusline="%A %10u:%-7g %15s %20d  "
 mark b ~/bin/
 mark h ~/
 
+" TODO: find out how to expand the $USER variable
+mark? m /run/media/
+mark? M /mnt
+
 " ------------------------------------------------------------------------------
 
 " :com[mand][!] command_name action
@@ -223,7 +227,11 @@ filextype {*.html,*.htm},<text/html>
         \ firefox %f &,
         \ {Open with uzbl}
         \ uzbl-browser %f %i &,
-filetype {*.html,*.htm},<text/html> links, lynx
+"filetype {*.html,*.htm},<text/html> links, lynx
+filetype {*.html,*.htm},<text/html> highlight -O ansi -s dante %c
+
+" json (requires jq)
+fileviewer *.json,<application/json> cat %c | jq . | highlight -O ansi -s dante --syntax json
 
 " Object
 filetype {*.o},<application/x-object> nm %f | less
@@ -358,6 +366,16 @@ filextype */
         \ nautilus %f &
 fileviewer */
         \ tree %c,
+
+" text and source files
+filetype {*.txt,*.log,*.py,*.sh,*.[ch],*.[ch]pp},<text/plain>,<text/x-*>
+        \ vim %c
+fileviewer {*.txt,*.log,*.py,*.sh,*.[ch],*.[ch]pp},<text/plain>
+        \ highlight -O ansi -s dante %c
+
+" kdbx files
+filextype *.kdbx keepassxc %f
+filetype *.kdbx keepassxc-cli open %f
 
 " Syntax highlighting in preview
 "
@@ -528,6 +546,8 @@ nnoremap ,q :quit!<CR>
 
 " view the file (i as the same as ranger)
 "nmap i 
+
+nmap M :media<CR>
 
 " if there's nothing else for a file, set the default viewer to exiftool
 fileviewer * exiftool %c
