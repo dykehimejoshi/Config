@@ -236,6 +236,11 @@ if [ $(command -v syncthing) ]; then
     alias findsyncconflicts='find ~ -name "*sync-conflict*"'
 fi
 
+## alsamixer
+if [ $(command -v alsamixer) ]; then
+    alias mixer='alsamixer'
+fi
+
 ## Aliases for reverse engineering/pentesting/etc. ##
 
 # radare2
