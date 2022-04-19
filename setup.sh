@@ -31,14 +31,15 @@ if $(echo $user_i | grep -Eq '^(Y|y)$') ; then
         # make sure (most|all) tools get installed on systems with different
         # package names
         programs+=" odt2txt p7zip unrar unzip jq mpv"
-        if   $(command -v pkg); then
+        if   [ $(command -v pkg) ]; then
             programs+=" transmission-gtk poppler zip exiftool"
-        elif $(command -v apt); then
+        elif [ $(command -v apt) ]; then
             progams+=" poppler-utils transmission-cli ziptool atool highlight"
-        elif $(command -v pacman); then
+        elif [ $(command -v pacman) ]; then
             programs+=" poppler transmission-cli perl-image-exiftool atool"
             programs+=" highlight"
-        elif $(command -v emerge); then
+        elif [ $(command -v emerge) ]; then
+            :
             # todo (i don't really use gentoo)
         fi
     fi
