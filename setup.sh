@@ -18,21 +18,22 @@ test $(command -v pacman) && inst="pacman -Syyu"
 test $(command -v pkg) &&    inst="pkg install"
 test $(command -v emerge) && inst="emerge --ask"
 
-programs="tmux vim zsh git ranger elinks"
+# testing vifm in place of ranger
+programs="tmux vim zsh git vifm elinks"
 
 # Ask the user if they want to install programs
 echo -n "Install programs? (y/N) > "
 read user_i
 if $(echo $user_i | grep -Eq '^(Y|y)$') ; then
-    echo -n "Install optional ranger dependencies? (y/N) > "
-    read ranger_i
-    if $(echo $ranger_i | grep -Eq '^(Y|y)$') ; then
+#    echo -n "Install optional ranger dependencies? (y/N) > "
+#    read ranger_i
+#    if $(echo $ranger_i | grep -Eq '^(Y|y)$') ; then
         # programs with different package names (like in pacman vs apt):
         #   exiftool
         #   ueberzug
         #   poppler
-        programs+=" atool highlight odt2txt transmission-cli"
-    fi
+#        programs+=" atool highlight odt2txt transmission-cli"
+#    fi
     /usr/bin/env sh -c "$(which sudo) $inst $programs"
 else
     echo "Not installing."
@@ -77,8 +78,10 @@ install_config "$HOME/.zshrc" "zshrc"
 install_config "$HOME/.config/i3/config" "i3config"
 
 ## rangerrc
-install_config "$HOME/.config/ranger/rc.conf" "rangerrc"
+#install_config "$HOME/.config/ranger/rc.conf" "rangerrc"
+
+## vifm
+install_config "$HOME/.config/vifm/vifmrc" "vifmrc"
 
 ## elinks.conf
-
 install_config "$HOME/.elinks/elinks.conf" "elinks.conf"
