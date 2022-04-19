@@ -228,7 +228,9 @@ filextype {*.html,*.htm},<text/html>
         \ {Open with uzbl}
         \ uzbl-browser %f %i &,
 "filetype {*.html,*.htm},<text/html> links, lynx
-filetype {*.html,*.htm},<text/html> highlight -O ansi -s dante %c
+filetype {*.html,*.htm},<text/html>
+        \ highlight -O ansi -s dante %c,
+        \ elinks %c
 
 " json (requires jq)
 fileviewer *.json,<application/json> cat %c | jq . | highlight -O ansi -s dante --syntax json
@@ -251,7 +253,8 @@ filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
         \ {View in shotwell}
         \ shotwell,
 fileviewer {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
-         \ identify %f
+         \ identify %f,
+         \ exiftool %f
 
 " OpenRaster
 filextype *.ora
@@ -343,8 +346,8 @@ fileviewer {*.7z},<application/x-7z-compressed> 7z l %c
 
 " Office files
 filextype {*.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt},
-         \<application/vnd.openxmlformats-officedocument.*,
           \application/msword,
+         \<application/vnd.openxmlformats-officedocument.*,
           \application/vnd.ms-excel>
         \ libreoffice %f &
 fileviewer {*.doc},<application/msword> catdoc %c
@@ -352,12 +355,6 @@ fileviewer {*.docx},
           \<application/
            \vnd.openxmlformats-officedocument.wordprocessingml.document>
          \ docx2txt.pl %f -
-
-" TuDu files
-filetype *.tudu tudu -f %c
-
-" Qt projects
-filextype *.pro qtcreator %f &
 
 " Directories
 filextype */
@@ -369,9 +366,10 @@ fileviewer */
 
 " text and source files
 filetype {*.txt,*.log,*.py,*.sh,*.[ch],*.[ch]pp},<text/plain>,<text/x-*>
-        \ vim %c
+        \ vim %f
 fileviewer {*.txt,*.log,*.py,*.sh,*.[ch],*.[ch]pp},<text/plain>
-        \ highlight -O ansi -s dante %c
+        \ highlight -O ansi -s dante %c,
+        \ cat %c
 
 " kdbx files
 filextype *.kdbx keepassxc %f

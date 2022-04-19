@@ -57,9 +57,15 @@ fi
 if [ $(command -v vim) ]; then
     alias view='vim -R -M'
     alias vi='vim -v -C -u NONE'
+    alias v='vim'
 fi
 
-if [ ! -z $XDG_SESSION_DESKTOP ]; then
+# vifm
+if [ $(command -v vifm) ]; then
+    alias vf='vifm .'
+fi
+
+if [ ! -z $DISPLAY ] || [ ! -z $WAYLAND_DISPLAY ]; then
     # we (probably) have a gui
 
     # set the pdf viewer alias
@@ -75,6 +81,9 @@ if [ ! -z $XDG_SESSION_DESKTOP ]; then
     test $(command -v eom)  && alias image='eom'
     test $(command -v feh)  && alias image='feh'
 else
+    # pdf
+    test $(command -v pdftotext)    && alias pdf='pdf () { pdftotext "$1" - | less; }; pdf'
+
     : # TODO
 fi
 

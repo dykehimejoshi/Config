@@ -25,15 +25,23 @@ programs="tmux vim zsh git vifm elinks"
 echo -n "Install programs? (y/N) > "
 read user_i
 if $(echo $user_i | grep -Eq '^(Y|y)$') ; then
-#    echo -n "Install optional ranger dependencies? (y/N) > "
-#    read ranger_i
-#    if $(echo $ranger_i | grep -Eq '^(Y|y)$') ; then
-        # programs with different package names (like in pacman vs apt):
-        #   exiftool
-        #   ueberzug
-        #   poppler
-#        programs+=" atool highlight odt2txt transmission-cli"
-#    fi
+    echo -n "Install optional vifm utilities? (y/N) > "
+    read vifm_i
+    if $(echo $vifm_i | grep -Eq '^(Y|y)$') ; then
+        # make sure (most|all) tools get installed on systems with different
+        # package names
+        programs+=" odt2txt p7zip unrar unzip jq mpv"
+        if   $(command -v pkg); then
+            programs+=" transmission-gtk poppler zip exiftool"
+        elif $(command -v apt); then
+            progams+=" poppler-utils transmission-cli ziptool atool highlight"
+        elif $(command -v pacman); then
+            programs+=" poppler transmission-cli perl-image-exiftool atool"
+            programs+=" highlight"
+        elif $(command -v emerge); then
+            # todo (i don't really use gentoo)
+        fi
+    fi
     /usr/bin/env sh -c "$(which sudo) $inst $programs"
 else
     echo "Not installing."
