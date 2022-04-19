@@ -167,7 +167,7 @@ command! reload :write | restart full
 " program.
 
 " Pdf
-filextype {*.pdf},<application/pdf> zathura %c %i &, apvlv %c, xpdf %c, evince %c
+filextype {*.pdf},<application/pdf> zathura %c %i &, apvlv %c, xpdf %c, evince %c &
 filetype {*.pdf},<application/pdf> pdftotext -nopgbrk %c - | less
 fileviewer {*.pdf},<application/pdf> pdftotext -nopgbrk %c -
 
@@ -530,4 +530,4 @@ nnoremap ,q :quit!<CR>
 "nmap i 
 
 " if there's nothing else for a file, set the default viewer to exiftool
-"fileviewer * exiftool %c
+fileviewer * exiftool %c
