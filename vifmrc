@@ -543,7 +543,9 @@ nnoremap ,x :quit<CR>
 nnoremap ,q :quit!<CR>
 
 " view the file (i as the same as ranger)
-"nmap i 
+nmap i e
+" in view mode, we use qmap for keybinds
+qmap i q
 
 nmap M :media<CR>
 
