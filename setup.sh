@@ -30,7 +30,7 @@ if $(echo $user_i | grep -Eq '^(Y|y)$') ; then
     if $(echo $vifm_i | grep -Eq '^(Y|y)$') ; then
         # make sure (most|all) tools get installed on systems with different
         # package names
-        programs+=" odt2txt p7zip unrar unzip jq mpv"
+        programs+=" tree odt2txt p7zip unrar unzip jq mpv"
         if   [ $(command -v pkg) ]; then
             programs+=" transmission-gtk poppler zip exiftool"
         elif [ $(command -v apt) ]; then
