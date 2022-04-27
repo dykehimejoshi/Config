@@ -127,7 +127,7 @@ if [ $(command -v pacman) ]; then
     alias pacs='pacman -Ss'
     alias pacshow='pacman -Si'
     alias pacr='sudo pacman -R'
-    alias update='sudo pacman -Syyu'
+    alias update='yes | sudo pacman -Sy archlinux-keyring && sudo pacman -Syyu'
 
     alias remorphans='pacman -Qtdq | sudo pacman -Rns - || echo No packages to remove'
     alias showmanualins='pacman -Qetq'
@@ -145,7 +145,7 @@ if [ $(command -v yay) ]; then
     alias yayshow='yay -Si'
     alias yayr='yay -R'
     # Should overwrite the `update' alias from pacman if installed
-    alias update='yay -Syyu'
+    alias update='yes | sudo pacman -Sy archlinux-keyring && yay -Syyu'
 
     alias showmanualins='yay -Qetq'
 
