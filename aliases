@@ -235,6 +235,11 @@ fi
 alias tma='tmux attach'
 alias tmax='tmux attach || tmux'
 
+## ed
+if [ $(command -v ed) ]; then
+    alias ed='ed -p "> "'
+fi
+
 ## bc
 if [ $(command -v bc) ]; then
     alias calc='calc () { bc -l <<< "$1"; }; calc'
