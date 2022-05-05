@@ -365,8 +365,6 @@ fileviewer */
         \ tree %c,
 
 " text and source files
-filetype {*.txt,*.log,*.py,*.sh,*.[ch],*.[ch]pp},<text/plain>,<text/x-*>
-        \ vim %f
 fileviewer {*.txt,*.log,*.py,*.sh,*.[ch],*.[ch]pp},<text/plain>
         \ highlight -O ansi -s dante %c,
         \ cat %c
