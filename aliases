@@ -25,7 +25,7 @@ alias ll='ls -la'
 alias lf='ls -F'
 alias laf='ls -aF'
 alias llf='ls -laF'
-mkcdir () { mkdir -p "$1" && cd "$1"; }
+mkcd () { mkdir -p "$1" && cd "$1"; }
 alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
 
 # Git aliases
