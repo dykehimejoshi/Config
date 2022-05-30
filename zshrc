@@ -31,9 +31,9 @@ prompt_seb_setup() {
         # magenta;blue;yellow
         # or: 121;69;11
         if [ "$TERM" = "linux" ]; then
-            pstr+="%B%F{green}%n %B%F{blue}%m%f%b"
+            pstr+="%F{magenta}%n %F{green}%m%f%b"
         else
-            pstr+="%B%F{121}%n %B%F{69}%m%f%b"
+            pstr+="%F{212}%n %F{121}%m%f%b"
         fi
     fi
     # return code of previous command
@@ -66,6 +66,7 @@ prompt_seb_setup() {
     pstr+="${nl}"
     # root indicator (?) the $ or the #
     if [ $is_root -eq 0 ]; then
+        # make it nice and obviously red
         pstr+="%K{red}%#%f%b%k "
     else
         pstr+="%# "
