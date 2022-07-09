@@ -255,6 +255,11 @@ if [ $(command -v alsamixer) ]; then
     alias mixer='alsamixer'
 fi
 
+## nautilus (todo for other gui file managers)
+if [ $(command -v nautilus) ]; then
+    alias openhere='sh -c "nautilus . &"'
+fi
+
 ## Aliases for reverse engineering/pentesting/etc. ##
 
 # radare2
