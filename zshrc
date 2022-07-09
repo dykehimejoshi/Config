@@ -19,6 +19,13 @@ autoload -Uz promptinit
 promptinit
 
 prompt_seb_setup() {
+    # if we're using a terminal that doesn't have 256 colors, then we need
+    # to set a variable here to change the colors to something that works
+    if [ "$TERM" = "linux" ] || [ "$TERM" = "tmux" ]; then
+        less_colors="yes"
+    else
+        less_colors="no"
+    fi
     nl=$'\n'
     is_root=$(test "$EUID" -eq 0; echo $?)
     # directory
@@ -30,14 +37,14 @@ prompt_seb_setup() {
         # default colors: (name);(hostname);(exit code)
         # magenta;blue;yellow
         # or: 121;69;11
-        if [ "$TERM" = "linux" ]; then
+        if [ $less_colors = "yes" ]; then
             pstr+="%F{magenta}%n %F{green}%m%f%b"
         else
             pstr+="%F{212}%n %F{121}%m%f%b"
         fi
     fi
     # return code of previous command
-    if [ "$TERM" = "linux" ]; then
+    if [ $less_colors = "yes" ]; then
         pstr+=" [%F{yellow}%?%f]"
     else
         pstr+=" [%F{11}%?%f]"
