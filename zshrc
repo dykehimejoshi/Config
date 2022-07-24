@@ -21,7 +21,7 @@ promptinit
 prompt_seb_setup() {
     # if we're using a terminal that doesn't have 256 colors, then we need
     # to set a variable here to change the colors to something that works
-    if [ "$TERM" = "linux" ] || [ "$TERM" = "tmux" ]; then
+    if $(echo "$TERM" | grep -vq 256color); then
         less_colors="yes"
     else
         less_colors="no"
