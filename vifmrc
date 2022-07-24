@@ -362,7 +362,7 @@ filextype */
         \ Thunar %f &,
         \ nautilus %f &
 fileviewer */
-        \ tree %c,
+        \ tree -C %c,
 
 " text and source files
 fileviewer {*.txt,*.log,*.py,*.sh,*.[ch],*.[ch]pp},<text/plain>
