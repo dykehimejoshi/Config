@@ -200,6 +200,26 @@ alias dd='dd status=progress'
 alias rm='rm -i'
 alias ip='ip -color'
 
+perms () {
+    # get permissions for the current directory or a specified file
+    listing=$(ls -dl $1 | sed 's/ * / /g')
+    fname=$(echo $listing | cut -d ' ' -f 9)
+    permissions=$(echo $listing | cut -d ' ' -f 1)
+    is_dir=$(echo ${permissions:0:1})
+    p_owner=$(echo ${permissions:1:3})
+    p_group=$(echo ${permissions:4:3})
+    p_other=$(echo ${permissions:7:3})
+    owner=$(echo $listing | cut -d ' ' -f 3)
+    group=$(echo $listing | cut -d ' ' -f 4)
+    echo -n "Permissions for: $(basename $fname) "
+    if [ "$is_dir" = 'd' ]; then echo "[directory]"; else echo "[file]"; fi
+    echo " $p_owner ($owner)"
+    echo " $p_group ($group)"
+    echo " $p_other"
+    # todo: maybe more
+    # also `stat' does good work but it's a lot of information
+}
+
 ## ssh
 if [ $(command -v ssh) ]; then
     sshpassthru () {
