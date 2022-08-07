@@ -211,13 +211,14 @@ perms () {
     p_other=$(echo ${permissions:7:3})
     owner=$(echo $listing | cut -d ' ' -f 3)
     group=$(echo $listing | cut -d ' ' -f 4)
+    octal=$(stat -c "%04a" ${1:-.})
     echo -n "Permissions for: $(basename $fname) "
     if [ "$is_dir" = 'd' ]; then echo "[directory]"; else echo "[file]"; fi
-    echo " $p_owner ($owner)"
-    echo " $p_group ($group)"
-    echo " $p_other"
+    echo " $p_owner ${octal:1:1} ($owner)"
+    echo " $p_group ${octal:2:1} ($group)"
+    echo " $p_other ${octal:3:1}"
+    echo " sticky bit: ${octal:0:1}"
     # todo: maybe more
-    # also `stat' does good work but it's a lot of information
 }
 
 ## ssh
