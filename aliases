@@ -28,6 +28,11 @@ alias llf='ls -laF'
 mkcd () { mkdir -p "$1" && cd "$1"; }
 alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
 
+# exit without saving shell history
+alias xx='kill -9 $$; unset HISTFILE && exit'
+# reload shell without exit
+alias rlsh='exec $SHELL -l'
+
 # Git aliases
 if [ $(command -v git) ]; then
     alias ga='git add'
@@ -257,7 +262,7 @@ if [ $(command -v python3) ]; then
     alias mkvenv='python3 -m venv venv'
     alias govenv='. venv/bin/activate'
     alias byevenv='deactivate'
-    alias serve='(ip -c=never -br -4 a | sed "s/ * / /g" | \
+    alias serve='(ip -c=never -br -4 a | tr -s " " | \
         grep -E "^(wl|ww|sl|ib|en|eth|lo)" | cut -d " " -f3 | cut -d/ -f1 |\
         tail -n1) ; python3 -m http.server'
 fi
@@ -295,7 +300,7 @@ fi
 
 ## nautilus (todo for other gui file managers)
 if [ $(command -v nautilus) ]; then
-    alias openhere='sh -c "nautilus . &"'
+    alias openhere='nautilus . &'
 fi
 
 ## Aliases for reverse engineering/pentesting/etc. ##
@@ -315,6 +320,19 @@ fi
 # Look at the hex or binary representations of files
 hex () { xxd "$1" | view -; }
 bin () { xxd -b -c 8 "$1" | view -; }
+
+# compare hex dumps
+hexdiff () {
+    vimdiff <(_hexdiff $1) <(_hexdiff $2)
+}
+# helper command
+_hexdiff () { hexdump -C $1 | cut -d ' ' -f3- | tr -s ' '; }
+
+# annotate tail -f with timestamps
+watchlog () {
+    tail -f "$1" | \
+    while read ; do echo "$(date +%T.%N) $REPLY"; done
+}
 
 ## netcat
 if [ $(command -v nc) ]; then
