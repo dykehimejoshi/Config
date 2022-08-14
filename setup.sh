@@ -17,6 +17,7 @@ test $(command -v apt) &&    inst="apt install"
 test $(command -v pacman) && inst="pacman -Syyu"
 test $(command -v pkg) &&    inst="pkg install"
 test $(command -v emerge) && inst="emerge --ask"
+test $(command -v guix) &&   inst="guix install"
 
 # testing vifm in place of ranger
 programs="tmux vim zsh git vifm elinks"
@@ -41,6 +42,9 @@ if $(echo $user_i | grep -Eq '^(Y|y)$') ; then
         elif [ $(command -v emerge) ]; then
             :
             # todo (i don't really use gentoo)
+        elif [ $(command -v guix) ]; then
+            :
+            # todo
         fi
     fi
     /usr/bin/env sh -c "$(which sudo) $inst $programs"
