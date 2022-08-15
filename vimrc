@@ -108,6 +108,7 @@ if has('autocmd')
     autocmd FileType css call TextSettings()
     autocmd FileType text call TextSettings()
     autocmd FileType make call MakeSettings()
+    autocmd FileType *html call HtmlSettings()
 
     "" set certain options for filetypes of programming languages
     autocmd FileType python call PythonSettings()
@@ -289,6 +290,11 @@ endfunction
 function! VimSettings()
     call ProgrammingSettings()
     call CommentQuote()
+endfunction
+
+function! HtmlSettings()
+    call TextSettings()
+    setlocal softtabstop=2
 endfunction
 
 "" Functions to call for languages with different commenting styles
