@@ -133,8 +133,11 @@ if has('autocmd')
 "    autocmd FileType javascript inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env node' shellescape(@%, 1)<CR>
 
     "" Run Shell scripts
-    autocmd FileType *sh noremap <buffer> <Leader>r :w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+    autocmd FileType *sh noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env bash' shellescape(@%, 1)<CR>
 "    autocmd FileType *sh inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/bin/bash' shellescape(@%, 1)<CR>
+
+    "" zsh scripts
+    autocmd FileType zsh noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env zsh' shellescape(@%, 1)<CR>
 
     "" Show HTML Files
     autocmd FileType *html noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env firefox file://' . expand("%:p:h") . '/' . shellescape(@%, 1)<CR>
