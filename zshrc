@@ -95,7 +95,7 @@ source $SebCfgDir/aliases
 compdef _dirs newcd
 compdef _dirs mkcdir
 
-tmpfile="/tmp/.reminders_read" # only show reminders once
+tmpfile="${TMPDIR:-/tmp}/.reminders_read" # only show reminders once
 if [ -f "$HOME/reminders" ] && [ ! -f $tmpfile ]; then
     if [ -s "$HOME/reminders" ]; then
         echo -e "Reminders:\n----------"
