@@ -7,7 +7,7 @@ syntax on
 syntax enable
 set list
 set listchars=tab:\|\ ,trail:\-,nbsp:%
-set formatoptions+=otc
+set formatoptions=tcoql
 set matchpairs+=<:>
 set tabstop=4
 set softtabstop=4
