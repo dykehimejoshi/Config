@@ -105,7 +105,7 @@ nnoremap J :m +1<CR>
 if has('autocmd')
     "" set certain options for some text-based filetypes
     autocmd FileType markdown call TextSettings()
-    autocmd FileType css call TextSettings()
+    autocmd FileType css call CssSettings()
     autocmd FileType text call TextSettings()
     autocmd FileType make call MakeSettings()
     autocmd FileType *html call HtmlSettings()
@@ -246,6 +246,11 @@ function! ProgrammingSettings()
     set conceallevel=0
 endfunction
 
+function! CssSettings()
+    call TextSettings()
+    ab debug background-color: #f00
+endfunction
+
 function! MakeSettings()
     setlocal noexpandtab
     setlocal tabstop=4
@@ -254,13 +259,15 @@ endfunction
 
 function! PythonSettings()
     call ProgrammingSettings()
-    ab ifnamemain if __name__ == "__main__":
     call CommentHash()
+    ab ifnamemain if __name__ == "__main__":
+    ab debug print("XXX")
 endfunction
 
 function! ShSettings()
     call ProgrammingSettings()
     call CommentHash()
+    ab debug echo "XXX"
 endfunction
 
 function! CSettings()
@@ -268,6 +275,7 @@ function! CSettings()
     call CommentDoubleSlash()
     ab cmainargs int main(int argv, char **argv)
     ab cmainvoid int main(void)
+    ab debug printf("XXX\n")
 endfunction
 
 function! CPPSettings()
@@ -276,13 +284,15 @@ endfunction
 
 function! JavaSettings()
     call ProgrammingSettings()
-    ab psvm public static void main(String[] args)
     call CommentDoubleSlash()
+    ab psvm public static void main(String[] args)
+    ab debug System.out.println("XXX")
 endfunction
 
 function! JavaScriptSettings()
     call ProgrammingSettings()
     call CommentDoubleSlash()
+    ab debug console.log("XXX")
 endfunction
 
 function! ArduinoSettings()
