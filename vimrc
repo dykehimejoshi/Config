@@ -276,6 +276,9 @@ function! CSettings()
     ab cmainargs int main(int argv, char **argv)
     ab cmainvoid int main(void)
     ab debug printf("XXX\n")
+    function! IfndefGuards()
+        call feedkeys("ggi#ifndef " . expand("%:t:r") . "_H\<ESC>vBUo#define " . expand("%:t:r") . "_H\<ESC>vBUGo#endif\<ESC>ggjo\<ESC>")
+    endfunction
 endfunction
 
 function! CPPSettings()
