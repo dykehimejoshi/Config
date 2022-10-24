@@ -156,11 +156,11 @@ endif " has autocmd
 """ Moving tabs: gt for next, gT for previous
 """ If in a split window, <C-w>T (capital T) opens current split in new tab
 """ Open a new tab (tc for "tab create")
-nnoremap <Leader>tc :tabnew<CR>
+nnoremap <C-w>tc :tabnew<CR>
 """ Close the current tab (tq for "tab quit")
-nnoremap <Leader>tq :tabclose<CR>
+nnoremap <C-w>tq :tabclose<CR>
 """ Move a tab
-nnoremap <Leader>tm :tabmove 
+nnoremap <C-w>tm :tabmove 
 
 "" Windows
 """ Keybinds to reflect my tmux.conf file
