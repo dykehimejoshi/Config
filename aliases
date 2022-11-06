@@ -17,6 +17,7 @@ alias egrep='egrep --color=auto'
 alias lgr='ls | grep'
 alias llgr='ls -l | grep'
 alias findinfile='grep -iRl 2>/dev/null'
+alias printinfile='grep -iR 2>/dev/null'
 alias la='ls -a'
 alias lah='ls -lah'
 alias lh='ls -lh'
@@ -276,9 +277,9 @@ if [ $(command -v python3) ]; then
     alias mkvenv='python3 -m venv venv'
     alias govenv='. venv/bin/activate'
     alias byevenv='deactivate'
-    alias serve='(ip -c=never -br -4 a | tr -s " " | \
+    alias serve='serve () { port="${1:-8000}"; echo $( (ip -c=never -br -4 a | tr -s " " | \
         grep -E "^(wl|ww|sl|ib|en|eth|lo)" | cut -d " " -f3 | cut -d/ -f1 |\
-        tail -n1) ; python3 -m http.server'
+        tail -n1) ):$port ; python3 -m http.server $port; }; serve'
 fi
 
 # php
