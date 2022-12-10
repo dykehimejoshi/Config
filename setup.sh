@@ -98,3 +98,6 @@ install_config "$HOME/.config/vifm/vifmrc" "vifmrc"
 
 ## elinks.conf
 install_config "$HOME/.elinks/elinks.conf" "elinks.conf"
+
+## helix config.toml
+install_config "$HOME/.config/helix/config.toml" "helix.toml"
