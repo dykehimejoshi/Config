@@ -64,11 +64,19 @@ if [ $(command -v vim) ]; then
     alias view='vim -R -M'
     alias vi='vim -v -C -u NONE'
     alias v='vim'
+    alias e='vim'
 fi
 
 # vifm
 if [ $(command -v vifm) ]; then
     alias vf='vifm .'
+fi
+
+# helix
+if [ $(command -v helix) ]; then
+    alias hx='helix'
+    # overwrite the alias in vim
+    alias e='helix'
 fi
 
 if [ ! -z $DISPLAY ] || [ ! -z $WAYLAND_DISPLAY ]; then
