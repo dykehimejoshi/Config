@@ -101,102 +101,6 @@ else
     : # TODO
 fi
 
-# Package manager
-# ins, srx, shw, and rem aliases should use the default package manager
-# for any distro
-if [ $(command -v apt) ]; then
-    # if apt is installed
-    alias agi='sudo apt install -y'
-    alias acs='apt search'
-    acss () { apt search "$1" | grep --color=none "$1" ; } # s = strict
-    alias acshow='apt show'
-    alias agr='sudo apt remove'
-    alias update='sudo /bin/bash -c "echo \"--- update\" ; apt update && echo \"--- upgrade\" ; apt upgrade -y && echo \"--- autoremove\" ; apt autoremove -y"'
-
-    alias showmanualins='apt-mark showmanual'
-
-    alias ins='agi'
-    alias srx='acs'
-    alias shw='acshow'
-    alias rem='agr'
-fi
-
-if [ $(command -v pkg) ]; then
-    # if pkg is installed
-    alias pki='pkg install'
-    alias pks='pkg search'
-    alias pkshow='pkg show'
-    alias pkr='pkg remove'
-    alias update='pkg upgrade'
-
-    alias ins='pki'
-    alias srx='pks'
-    alias shw='pkshow'
-    alias rem='pkr'
-fi
-
-if [ $(command -v pacman) ]; then
-    # if pacman is installed
-    alias paci='sudo pacman -S'
-    alias pacs='pacman -Ss'
-    alias pacshow='pacman -Si'
-    alias pacr='sudo pacman -R'
-    alias update='sudo pacman -Syyu'
-
-    alias remorphans='pacman -Qtdq | sudo pacman -Rns - || echo No packages to remove'
-    alias showmanualins='pacman -Qetq'
-
-    alias ins='paci'
-    alias srx='pacs'
-    alias shw='pacshow'
-    alias rem='pacr'
-fi
-
-if [ $(command -v yay) ]; then
-    # if yay is installed
-    alias yayi='yay -S'
-    alias yays='yay -Ss'
-    alias yayshow='yay -Si'
-    alias yayr='yay -R'
-    # Should overwrite the `update' alias from pacman if installed
-    alias update='yay'
-
-    alias showmanualins='yay -Qetq'
-
-    alias ins='yayi'
-    alias srx='yays'
-    alias shw='yayshow'
-    alias rem='yayr'
-fi
-
-if [ $(command -v emerge) ]; then
-    # USE can be changed after a command, with the specified package going after
-    alias emi='emerge --ask'
-    alias emr='emerge --deselect' # will be later removed with --depclean
-    alias emsrx='emerge --search'
-
-    alias update='emerge --update --deep @world'
-
-    alias ins='emi'
-    alias srx='emsrx'
-    #alias shw=''
-    alias rem='emr'
-fi
-
-if [ $(command -v guix) ]; then
-    alias gins='guix install'
-    alias grem='guix remove'
-    alias gsrx='guix search'
-    alias gshw='guix show'
-
-    alias update='guix pull && guix package -u'
-
-    alias ins='gins'
-    alias rem='grem'
-    alias shw='gshw'
-    alias srx='gsrx'
-fi
-
 ## battery profile
 if [ $(command -v powerprofilesctl) ]; then
     batprf () {
@@ -216,11 +120,109 @@ fi
 
 # Administration
 
-## sudo
-if [ $(command -v sudo) ] && [ -n "$(groups | grep -E '(sudo|wheel)')" ]; then
-    alias _='sudo'
-    alias _i='sudo -i'
-    alias _s='sudo -s'
+## sudo & pkg manager aliases
+if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERMUX_VERSION" ]]; then
+    if [ $(command -v sudo) ]; then
+        alias _='sudo'
+        alias _i='sudo -i'
+        alias _s='sudo -s'
+    fi
+
+    # ins, srx, shw, and rem aliases should use the default package manager
+    # for any distro
+    if [ $(command -v apt) ]; then
+        # if apt is installed
+        alias agi='sudo apt install -y'
+        alias acs='apt search'
+        acss () { apt search "$1" | grep --color=none "$1" ; } # s = strict
+        alias acshow='apt show'
+        alias agr='sudo apt remove'
+        alias update='sudo /bin/bash -c "echo \"--- update\" ; apt update && echo \"--- upgrade\" ; apt upgrade -y && echo \"--- autoremove\" ; apt autoremove -y"'
+
+        alias showmanualins='apt-mark showmanual'
+
+        alias ins='agi'
+        alias srx='acs'
+        alias shw='acshow'
+        alias rem='agr'
+    fi
+
+    if [ $(command -v pkg) ]; then
+        # if pkg is installed
+        alias pki='pkg install'
+        alias pks='pkg search'
+        alias pkshow='pkg show'
+        alias pkr='pkg remove'
+        alias update='pkg upgrade'
+
+        alias ins='pki'
+        alias srx='pks'
+        alias shw='pkshow'
+        alias rem='pkr'
+    fi
+
+    if [ $(command -v pacman) ]; then
+        # if pacman is installed
+        alias paci='sudo pacman -S'
+        alias pacs='pacman -Ss'
+        alias pacshow='pacman -Si'
+        alias pacr='sudo pacman -R'
+        alias update='sudo pacman -Syyu'
+
+        alias remorphans='pacman -Qtdq | sudo pacman -Rns - || echo No packages to remove'
+        alias showmanualins='pacman -Qetq'
+
+        alias ins='paci'
+        alias srx='pacs'
+        alias shw='pacshow'
+        alias rem='pacr'
+    fi
+
+    if [ $(command -v yay) ]; then
+        # if yay is installed
+        alias yayi='yay -S'
+        alias yays='yay -Ss'
+        alias yayshow='yay -Si'
+        alias yayr='yay -R'
+        # Should overwrite the `update' alias from pacman if installed
+        alias update='yay'
+
+        alias showmanualins='yay -Qetq'
+
+        alias ins='yayi'
+        alias srx='yays'
+        alias shw='yayshow'
+        alias rem='yayr'
+    fi
+
+    if [ $(command -v emerge) ]; then
+        # USE can be changed after a command, with the specified package going after
+        alias emi='emerge --ask'
+        alias emr='emerge --deselect' # will be later removed with --depclean
+        alias emsrx='emerge --search'
+
+        alias update='emerge --update --deep @world'
+
+        alias ins='emi'
+        alias srx='emsrx'
+        #alias shw=''
+        alias rem='emr'
+    fi
+
+    if [ $(command -v guix) ]; then
+        alias gins='guix install'
+        alias grem='guix remove'
+        alias gsrx='guix search'
+        alias gshw='guix show'
+
+        alias update='guix pull && guix package -u'
+
+        alias ins='gins'
+        alias rem='grem'
+        alias shw='gshw'
+        alias srx='gsrx'
+    fi
+
 fi
 
 alias chkdu='df -h 2>/dev/null | head -n 1 && df -h 2>/dev/null | grep data-root --color=none'
