@@ -93,7 +93,7 @@ source $SebCfgDir/aliases
 # add completion for the newcd and mkcdir function aliases
 # otherwise it would try to complete to files as well, which we don't want
 compdef _dirs newcd
-compdef _dirs mkcdir
+compdef _dirs mkcd
 
 tmpfile="${TMPDIR:-/tmp}/.reminders_read" # only show reminders once
 if [ -f "$HOME/reminders" ] && [ ! -f $tmpfile ]; then
