@@ -115,6 +115,11 @@ fi
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
+# If we have a ~/bin folder, add it to the path
+if [ -d "$HOME/bin/" ]; then
+    export PATH=$PATH:$HOME/bin
+fi
+
 # fuck microsoft
 export POWERSHELL_TELEMETRY_OPTOUT=1
 export POWERSHELL_CLI_TELEMETRY_OPTOUT=1
