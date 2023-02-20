@@ -236,6 +236,10 @@ vnoremap <Leader>s c<sub><C-r>"</sub><ESC>
 vnoremap <Leader>S c<sup><C-r>"</sup><ESC>
 vnoremap <Leader>b c**<C-r>"**<ESC>
 vnoremap <Leader>i c*<C-r>"*<ESC>
+" parens/brackets/etc
+vnoremap <Leader>( c(<C-r>")<ESC>
+vnoremap <Leader>[ c[<C-r>"]<ESC>
+vnoremap <Leader>< c<<C-r>"><ESC>
 
 
 "" Functions for different filetypes
