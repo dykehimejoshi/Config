@@ -232,7 +232,9 @@ alias ip='ip -color'
 
 perms () {
     # get permissions for the current directory or a specified file
-    listing=$(ls -dl $1 | sed 's/ * / /g')
+    filelisting=$(ls -dl $1)
+    if [[ ! "$(echo $?)" == 0 ]]; then return; fi
+    listing=$(echo $filelisting | sed 's/ * / /g')
     fname=$(echo $listing | cut -d ' ' -f 9)
     permissions=$(echo $listing | cut -d ' ' -f 1)
     is_dir=$(echo ${permissions:0:1})
