@@ -18,7 +18,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 autoload -Uz promptinit
 promptinit
 
-prompt_seb_setup() {
+prompt_custom_setup() {
     # if we're using a terminal that doesn't have 256 colors, then we need
     # to set a variable here to change the colors to something that works
     if $(echo "$TERM" | grep -vq 256color); then
@@ -82,13 +82,13 @@ prompt_seb_setup() {
     RPROMPT="[%D{%H:%M:%S}]"
 }
 
-prompt_themes+=( seb )
+prompt_themes+=( custom )
 
-prompt seb
+prompt custom
 
-export SebCfgDir=$(dirname `readlink -f $HOME/.zshrc` )
+export _confdir=$(dirname `readlink -f $HOME/.zshrc` )
 
-source $SebCfgDir/aliases
+source $_confdir/aliases
 
 # add completion for the newcd and mkcdir function aliases
 # otherwise it would try to complete to files as well, which we don't want

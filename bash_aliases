@@ -45,12 +45,12 @@ fi
 
 PS1=$pstr
 
-if [ -z $SebCfgDir ]; then
-    export SebCfgDir=$(dirname `readlink -f $HOME/.bash_aliases` )
+if [ -z $_confdir ]; then
+    export _confdir=$(dirname `readlink -f $HOME/.bash_aliases` )
 fi
 
 ## source the aliases
-source $SebCfgDir/aliases
+source $_confdir/aliases
 
 if [ -f "$HOME/reminders" ]; then
     if [ -s "$HOME/reminders" ]; then
