@@ -33,6 +33,19 @@ alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
 alias xx='kill -9 $$; unset HISTFILE && exit'
 # reload shell without exit
 alias rlsh='exec $SHELL -l'
+nohist () {
+    test -z "$HISTFILE" && { echo 'Histfile already unset!'; return 1; }
+    unset HISTFILE
+    # might not always be first? idk
+    shellname="$(ps -ef | grep $$ | grep sh$ | tr -s ' ' | cut -d ' ' -f8 | head -n 1)"
+    if [ "${shellname#-}" = zsh ]; then
+        export PROMPT="${PROMPT/\%#*/}(!h) "
+    elif [ "${shellname#-}" = bash ]; then
+        export PS1="${PS1/\${nl\}*/}\n(!h) "
+    else
+        echo 'Histfile unset.'
+    fi
+}
 
 # Git aliases
 if [ $(command -v git) ]; then
@@ -365,3 +378,4 @@ watchlog () {
 if [ $(command -v nc) ]; then
     alias listen='nc -nvlp $1'
 fi
+
