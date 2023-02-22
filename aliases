@@ -287,6 +287,12 @@ if [ $(command -v usbguard) ]; then
     alias usbwatch='sudo usbguard watch'
 fi
 
+## gpg
+if [ $(command -v gpg) ]; then
+    # fixes when the gpg agent fucks up sometimes
+    alias _fix-gpg='gpg-connect-agent killagent /bye; sleep 2; gpg-connect-agent updatestartuptty /bye'
+fi
+
 # KDE Plasma
 if [ $(command -v plasmashell) ]; then
     alias restartplasma='sh -c "kquitapp5 plasmashell && plasmashell >/dev/null &"'
