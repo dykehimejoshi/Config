@@ -226,6 +226,20 @@ endfunction
 
 nnoremap <Leader>c :call ToggleMargin()<CR>
 
+"" fix the indentation thing when you paste a piece of code
+function! FixIndents(number_of_lines)
+    let counter = 1
+    while counter <= a:number_of_lines
+        let i = 0
+        while i < counter
+            call feedkeys("<<")
+            let i += 1
+        endwhile
+        let counter += 1
+        call feedkeys("j")
+    endwhile
+endfunction
+
 "" Misc
 nnoremap <Leader>h :set hlsearch!<CR>
 vnoremap <Tab> >gv
