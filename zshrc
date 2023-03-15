@@ -11,44 +11,59 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+autoload -Uz promptinit
+autoload -Uz vcs_info
+promptinit
+
 zstyle ':completion:*' menu select
 zstyle ':completion::complete:*' gain-privileges 1
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':vcs_info:git:*' formats '%r:%b%f'
+zstyle ':vcs_info:*' enable git
 
-autoload -Uz promptinit
-promptinit
+# runs before each prompt
+function precmd() {
+    # this funky little workaround prints a blank line after each command
+    precmd() { echo }
+}
 
 prompt_custom_setup() {
-    # if we're using a terminal that doesn't have 256 colors, then we need
-    # to set a variable here to change the colors to something that works
+    # i don't know if this is better than what i had before, but this at least
+    # allows the prompt the change dynamically based on e.g. whether or not
+    # we're in a git repo, or if the histfile is unset
+    PROMPT="%f%b[%~] %(!.%b%F{red}%m%f%b.%F{\$_prompt_color_username}%n \
+%F{\$_prompt_color_hostname}%m%f%b) [%D{%H:%M:%S}]\
+%(?.. [%F{\$_prompt_color_cmderror}%?%f])\$_prompt_get_chroot
+%(!.%K{red}.)\$_prompt_histfile_active%#%f%b%k "
+
+    RPROMPT=\$vcs_info_msg_0_
+    #RPROMPT="[%D{%H:%M:%S}]"
+}
+
+# get all the variables we use in our prompt string
+_prompt_get_vars () {
+    _prompt_histfile_active=`test -z $HISTFILE && echo '--'`
+
+    # find out whether the terminal supports 256 colors or not
     if $(echo "$TERM" | grep -vq 256color); then
         less_colors="yes"
     else
-        less_colors="no"
+        less_colors=
     fi
-    nl=$'\n'
-    is_root=$(test "$EUID" -eq 0; echo $?)
-    # directory
-    pstr="${nl}%f%b[%~] "
-    # username/hostname
-    if [ $is_root -eq 0 ]; then
-        pstr+="%b%F{red}%m%f%b"
+    # TODO: change based on hostname?
+    if [ ! -z "$less_colors" ]; then
+        # we have a limited color set
+        _prompt_color_username='magenta'
+        _prompt_color_hostname='green'
+        _prompt_color_cmderror='yellow'
     else
-        # default colors: (name);(hostname);(exit code)
-        # magenta;blue;yellow
-        # or: 121;69;11
-        if [ $less_colors = "yes" ]; then
-            pstr+="%F{magenta}%n %F{green}%m%f%b"
-        else
-            pstr+="%F{212}%n %F{121}%m%f%b"
-        fi
+        # we have the full color set
+        _prompt_color_username=212
+        _prompt_color_hostname=121
+        _prompt_color_cmderror=11
     fi
-    # return code of previous command
-    if [ $less_colors = "yes" ]; then
-        pstr+=" [%F{yellow}%?%f]"
-    else
-        pstr+=" [%F{11}%?%f]"
-    fi
+    unset less_colors
+
     # display if chrooted
     is_chroot=
     if [ -f /proc/1/mountinfo ]; then
@@ -65,22 +80,19 @@ prompt_custom_setup() {
         done
     else
         # here means yes, e.g. a mounted filesystem
+        # i recognize that this only shows is the filesystem we're in also has
+        # this config repo, but     i don't really care
         is_chroot="yes"
     fi
     if [ "$is_chroot" = "yes" ]; then
-        pstr+=" (chroot)"
+        _prompt_get_chroot=" (chroot)"
     fi
-    pstr+="${nl}"
-    # root indicator (?) the $ or the #
-    if [ $is_root -eq 0 ]; then
-        # make it nice and obviously red
-        pstr+="%K{red}%#%f%b%k "
-    else
-        pstr+="%# "
-    fi
-    PROMPT=$pstr
-    RPROMPT="[%D{%H:%M:%S}]"
+    unset is_chroot
 }
+
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( _prompt_get_vars precmd_vcs_info )
+setopt prompt_subst
 
 prompt_themes+=( custom )
 
