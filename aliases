@@ -28,6 +28,7 @@ alias laf='ls -aF'
 alias llf='ls -laF'
 mkcd () { mkdir -p "$1" && cd "$1"; }
 alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
+test -d /run/media/$USER && alias cdmedia="cd /run/media/$USER"
 
 # exit without saving shell history
 alias xx='kill -9 $$; unset HISTFILE && exit'
@@ -35,16 +36,7 @@ alias xx='kill -9 $$; unset HISTFILE && exit'
 alias rlsh='exec $SHELL -l'
 nohist () {
     test -z "$HISTFILE" && { echo 'Histfile already unset!'; return 1; }
-    unset HISTFILE
-    # might not always be first? idk
-    shellname="$(ps -ef | grep $$ | grep sh$ | tr -s ' ' | cut -d ' ' -f8 | head -n 1)"
-    if [ "${shellname#-}" = zsh ]; then
-        export PROMPT="${PROMPT/\%#*/}(!h) "
-    elif [ "${shellname#-}" = bash ]; then
-        export PS1="${PS1/\${nl\}*/}\n(!h) "
-    else
-        echo 'Histfile unset.'
-    fi
+    unset HISTFILE && echo 'Histfile unset.'
 }
 
 # Git aliases
@@ -59,6 +51,7 @@ if [ $(command -v git) ]; then
     alias gl='git log'
     alias gdif='git diff'
     alias gst='git status'
+    alias getgiturl='git config --get remote.origin.url'
 fi
 
 # WINE aliases
@@ -199,6 +192,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias yayr='yay -R'
         # Should overwrite the `update' alias from pacman if installed
         alias update='yay'
+        alias updaur='yay -aSyyu'
 
         alias showmanualins='yay -Qetq'
 
