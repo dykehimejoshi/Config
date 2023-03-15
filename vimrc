@@ -254,6 +254,9 @@ vnoremap <Leader>wi c*<C-r>"*<ESC>
 vnoremap <Leader>w( c(<C-r>")<ESC>
 vnoremap <Leader>w[ c[<C-r>"]<ESC>
 vnoremap <Leader>w< c<<C-r>"><ESC>
+" apostrophe/quote
+vnoremap <Leader>w' c'<C-r>"'<ESC>
+vnoremap <Leader>w" c"<C-r>""<ESC>
 
 
 "" Functions for different filetypes
