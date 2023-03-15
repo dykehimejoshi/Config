@@ -50,20 +50,21 @@ _prompt_get_vars () {
     else
         less_colors=
     fi
-    # TODO: change based on hostname?
-    if [ ! -z "$less_colors" ]; then
-        # we have a limited color set
-        _prompt_color_username='magenta'
-        _prompt_color_hostname='green'
-        _prompt_color_cmderror='yellow'
-    else
-        # we have the full color set
-        _prompt_color_username=212
-        _prompt_color_hostname=121
-        _prompt_color_cmderror=11
-    fi
+
+    # define colors for different hosts
+    h=$(hostname)
+    # format: ( 256username 256hostname 8username 8hostname )
+    using=( 219 228 5 3 ) # default
+    test $h = "capybara"  && using=( 147 209 3 6 ) # server
+    test $h = "amnesia"   && using=( 99  255 5 7 ) # tails usb
+    test $h = "localhost" && using=( $using ) # termux TODO change
+    ###
+    export _prompt_color_username=$(test ! -z "$less_colors" && echo ${using[3]} || echo ${using[1]} )
+    export _prompt_color_hostname=$(test ! -z "$less_colors" && echo ${using[4]} || echo ${using[2]} )
+    export _prompt_color_cmderror=$(test ! -z "$less_colors" && echo yellow || echo 11 )
     unset less_colors
 
+    return
     # display if chrooted
     is_chroot=
     if [ -f /proc/1/mountinfo ]; then
