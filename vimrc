@@ -353,6 +353,7 @@ function! CommentDoubleSlash()
     " //
     nnoremap # 0i//<Esc>
     nnoremap & ^2x<Esc>
+    vnoremap <Leader>w# c/*<C-r>"*/<ESC>
 endfunction
 
 function! CommentQuote()
