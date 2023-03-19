@@ -18,5 +18,12 @@ elif [[ ${charge_state,,} == 'charging' ]]; then
 else
     echo -n ""
 fi
+
 # strip the % if it exists, and add our own
-echo -n "${percentage%\%}%"
+if [ $(command -v powerprofilesctl) ] && \
+    [ "$(powerprofilesctl get)" = "performance" ] ; then
+        # display whether or not we're in performance mode
+        echo -n "${percentage%\%}!"
+else
+    echo -n "${percentage%\%}%"
+fi
