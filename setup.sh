@@ -2,6 +2,27 @@
 
 # A setup script to link the config files to the places they need to be.
 
+# optionally 
+rem_existing_files=
+
+print_help () {
+    echo -e \
+"Usage:
+    $0 [-r | --remove] [-h | --help]
+
+    -r | --remove   choose to interactively remove files when they already exist during setup
+                    and aren't links
+    -h | --help     show this help"
+    exit 0
+}
+
+case "$1" in
+    -h | --help) print_help;;
+    -r | --remove) rem_existing_files=1;;
+esac
+
+test -n "$rem_existing_files" && echo "Interactively removing conflicting files..."
+
 # some variables to make it look a little nicer
 # test for tput (usually default on linux systems, but not on termux)
 if [ $(command -v tput) ]; then
@@ -63,6 +84,8 @@ install_config () {
             echo "$COLOR_GREEN[+] $1 successfully linked.$COLOR_RST"
         else
             echo "$COLOR_RED[!] Error in linking $1: $code$COLOR_RST"
+            test -n "$rem_existing_files" && \
+                rm -i "$1" && install_config "$1" "$2"
         fi
     else
         echo "$COLOR_YELLOW[~] $1 already exists.$COLOR_RST"
