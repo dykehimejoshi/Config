@@ -49,6 +49,7 @@ if [ $(command -v git) ]; then
     alias gbr='git branch'
     alias gco='git checkout'
     alias gl='git log'
+    alias gl-pretty='git log --oneline --decorate --graph --all'
     alias gdif='git diff'
     alias gst='git status'
     alias getgiturl='git config --get remote.origin.url'
