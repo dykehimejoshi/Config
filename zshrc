@@ -118,19 +118,16 @@ if [ -f "$HOME/reminders" ] && [ ! -f $tmpfile ]; then
     fi
 fi
 
-if [ -f "$HOME/.zsh-extras" ]; then
-    # if we have any other things for zsh to source that are specific
-    # to one system, source them here
-    source $HOME/.zsh-extras
-fi
-
 # Using a GPG key as an SSH key
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
-# If we have a ~/bin folder, add it to the path
+# If we have ~/bin or ~/.local/bin folders, add them to the path
 if [ -d "$HOME/bin/" ]; then
     export PATH=$PATH:$HOME/bin
+fi
+if [ -d "$HOME/.local/bin/" ]; then
+    export PATH=$PATH:$HOME/.local/bin
 fi
 
 # fuck microsoft
@@ -138,3 +135,9 @@ export POWERSHELL_TELEMETRY_OPTOUT=1
 export POWERSHELL_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_TELEMETRY_OPTOUT=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# if we have any other things for zsh to source that are specific
+# to one system, source them here
+if [ -f "$HOME/.zsh-extras" ]; then
+    source $HOME/.zsh-extras
+fi
