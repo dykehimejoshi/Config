@@ -316,8 +316,8 @@ if [ $(command -v php) ]; then
 fi
 
 # Misc
-alias tma='tmux attach'
-alias tmax='tmux attach || tmux'
+alias t='tmux'
+alias ta='tmux attach'
 
 ## ed
 if [ $(command -v ed) ]; then
