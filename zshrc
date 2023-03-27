@@ -54,7 +54,7 @@ _prompt_get_vars () {
     # define colors for different hosts
     h=$(hostname 2>/dev/null || hostnamectl hostname 2>/dev/null || cat /etc/hostname 2>/dev/null)
     # format: ( 256username 256hostname 8username 8hostname )
-    using=( 219 228 5 3 ) # default
+    using=( 219 122 5 2 ) # default
     test "$h" = "capybara"  && using=( 147 209 3 6 ) # server
     test "$h" = "amnesia"   && using=( 99  255 5 7 ) # tails usb
     test "$h" = "localhost" && using=( $using ) # termux TODO change
