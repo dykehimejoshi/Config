@@ -115,7 +115,7 @@ install_config "$HOME/.zshrc" "zshrc"
 install_config "$HOME/.config/i3/config" "i3config"
 
 ## rangerrc
-#install_config "$HOME/.config/ranger/rc.conf" "rangerrc"
+install_config "$HOME/.config/ranger/rc.conf" "rangerrc"
 
 ## vifm
 install_config "$HOME/.config/vifm/vifmrc" "vifmrc"
