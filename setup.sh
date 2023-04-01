@@ -40,33 +40,34 @@ test $(command -v pkg) &&    inst="pkg install"
 test $(command -v emerge) && inst="emerge --ask"
 test $(command -v guix) &&   inst="guix install"
 
-# testing vifm in place of ranger
-programs="tmux vim zsh git vifm elinks"
+programs="tmux helix vim zsh git ranger elinks jq"
 
 # Ask the user if they want to install programs
-echo -n "Install programs? (y/N) > "
+echo -en "Install programs?\n  $programs\n(y/N) > "
 read user_i
 if $(echo $user_i | grep -Eq '^(Y|y)$') ; then
-    echo -n "Install optional vifm utilities? (y/N) > "
-    read vifm_i
-    if $(echo $vifm_i | grep -Eq '^(Y|y)$') ; then
-        # make sure (most|all) tools get installed on systems with different
-        # package names
-        programs+=" tree odt2txt p7zip unrar unzip jq mpv"
-        if   [ $(command -v pkg) ]; then
-            programs+=" transmission-gtk poppler zip exiftool"
-        elif [ $(command -v apt) ]; then
-            progams+=" poppler-utils transmission-cli ziptool atool highlight"
-        elif [ $(command -v pacman) ]; then
-            programs+=" poppler transmission-cli perl-image-exiftool atool"
-            programs+=" highlight"
-        elif [ $(command -v emerge) ]; then
-            :
-            # todo (i don't really use gentoo)
-        elif [ $(command -v guix) ]; then
-            :
-            # todo
-        fi
+    echo -n "Install optional ranger utilities?"
+    # make sure (most|all) tools get installed on systems with different
+    # package names
+    toadd+="tree odt2txt p7zip unrar unzip mpv imagemagick"
+    if   [ $(command -v pkg) ]; then
+        toadd+=" transmission-gtk poppler zip exiftool"
+    elif [ $(command -v apt) ]; then
+        toadd+=" poppler-utils transmission-cli ziptool atool highlight"
+    elif [ $(command -v pacman) ]; then
+        toadd+=" poppler transmission-cli perl-image-exiftool atool w3m"
+        toadd+=" highlight ffmpegthumbnailer libcaca mediainfo python-chardet"
+    elif [ $(command -v emerge) ]; then
+        :
+        # todo (i don't really use gentoo)
+    elif [ $(command -v guix) ]; then
+        :
+        # todo
+    fi
+    echo -en "\n  $toadd\n(y/N) > "
+    read cli_fm
+    if $(echo $clifm_i | grep -Eq '^(Y|y)$') ; then
+        programs+=" $toadd"
     fi
     /usr/bin/env sh -c "$(which sudo) $inst $programs"
 else
