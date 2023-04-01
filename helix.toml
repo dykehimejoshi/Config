@@ -1,6 +1,6 @@
 # general configuration
 
-theme = "adwaita-dark"
+theme = "base16_default_dark"
 
 [editor]
 line-number = "relative"
@@ -70,7 +70,7 @@ G = "goto_file_end"
 ## fun extra keybinds
 [keys.normal."+"]
 # reload the helix config file
-r = ":run-shell-command pkill -USR1 hx"
+r = ":run-shell-command pkill -USR1 helix"
 
 ## mimicking vimrc <leader> binds
 [keys.normal.","]
