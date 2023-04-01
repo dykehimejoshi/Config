@@ -77,6 +77,12 @@ fi
 # vifm
 if [ $(command -v vifm) ]; then
     alias vf='vifm .'
+    alias fm='vifm'
+fi
+
+# ranger
+if [ $(command -v ranger) ]; then
+    alias fm='ranger'
 fi
 
 # helix

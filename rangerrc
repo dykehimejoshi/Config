@@ -1,8 +1,8 @@
 # rc.conf
 
 # options
-set preview_images true
-set preview_images_method ueberzug
+set preview_images false
+#set preview_images_method w3m
 set draw_borders true
 set update_tmux_title true
 set mouse_enabled false
@@ -14,9 +14,11 @@ map DD shell gio trash %s
 map Dl shell gio list trash:// | less
 
 unmap <F2>
-map <F3> set preview_images!
+unmap <F3>
+# map <F3> set preview_images!
 unmap <F4>
-map <F5> shell pkill ueberzug
+unmap <F5>
+# map <F5> shell pkill ueberzug
 unmap <F6>
 unmap <F7>
 unmap <F8>

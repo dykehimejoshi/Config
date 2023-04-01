@@ -33,7 +33,7 @@ prompt_custom_setup() {
     # we're in a git repo, or if the histfile is unset
     PROMPT="%f%b[%~] %(!.%b%F{red}%m%f%b.%F{\$_prompt_color_username}%n \
 %F{\$_prompt_color_hostname}%m%f%b) [%D{%H:%M:%S}]\
-%(?.. [%F{\$_prompt_color_cmderror}%?%f])\$_prompt_get_chroot
+%(?.. [%F{\$_prompt_color_cmderror}%?%f])\$_prompt_ranger\$_prompt_get_chroot
 %(!.%K{red}.)\$_prompt_histfile_active%#%f%b%k "
 
     RPROMPT=\$vcs_info_msg_0_
@@ -69,6 +69,9 @@ _prompt_get_vars () {
         export _prompt_color_cmderror=11
     fi
     unset less_colors
+
+    # determine whether or not we're running a shell in ranger
+    if [ -n "$RANGER_LEVEL" ]; then _prompt_ranger=" (R) "; fi
 
     return
     # display if chrooted

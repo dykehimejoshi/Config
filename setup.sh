@@ -117,6 +117,9 @@ install_config "$HOME/.config/i3/config" "i3config"
 ## rangerrc
 install_config "$HOME/.config/ranger/rc.conf" "rangerrc"
 
+### ranger's rifle.conf
+install_config "$HOME/.config/ranger/rifle.conf" "ranger.rifle"
+
 ## vifm
 install_config "$HOME/.config/vifm/vifmrc" "vifmrc"
 
