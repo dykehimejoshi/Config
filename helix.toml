@@ -1,3 +1,79 @@
+# general configuration
+
+theme = "adwaita-dark"
+
+[editor]
+line-number = "relative"
+mouse = false
+cursorline = true
+# cursorcolumn = true
+bufferline = "multiple"
+
+[editor.statusline]
+left = ["file-name", "file-modification-indicator", "spinner", "mode"]
+center = ["diagnostics", "workspace-diagnostics"]
+right = ["total-line-numbers", "file-line-ending", "position", "position-percentage", 
+    "selections", "file-encoding", "version-control"]
+mode.normal = ""
+mode.insert = "INS"
+mode.select = "SEL"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[editor.whitespace]
+render = "none"
+
+[editor.whitespace.characters]
+space = "-"
+tab = "|"
+nbsp = "%"
+
+[editor.indent-guides]
+render = true
+character = "|"
+
+# keybinds
+
+## normal mode
 [keys.normal]
 C-s = ":w"
 "ret" = ["open_below", "insert_mode"]
+D = ["select_mode", "goto_line_end", "delete_selection"]
+A-D = ["select_mode", "goto_line_end", "delete_selection_noyank"]
+0 = "goto_line_start"
+
+## window mode
+[keys.normal."C-w"]
+'"' = "hsplit"
+'/' = "vsplit"
+s = "no_op"
+C-s = "no_op"
+v = "no_op"
+C-v = "no_op"
+
+## same tab keybinds as in vimrc
+[keys.normal."C-w".t]
+c = ":n"
+q = ":bc"
+
+[keys.normal.g]
+t = ":bn"
+T = ":bp"
+G = "goto_file_end"
+
+## fun extra keybinds
+[keys.normal."+"]
+# reload the helix config file
+r = ":run-shell-command pkill -USR1 hx"
+
+## mimicking vimrc <leader> binds
+[keys.normal.","]
+s = ":w"
+x = ":wq"
+q = ":q!"
