@@ -144,7 +144,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         acss () { apt search "$1" | grep --color=none "$1" ; } # s = strict
         alias acshow='apt show'
         alias agr='sudo apt remove'
-        alias update='sudo /bin/bash -c "echo \"--- update\" ; apt update && echo \"--- upgrade\" ; apt upgrade -y && echo \"--- autoremove\" ; apt autoremove -y"'
+        alias upd='sudo /bin/bash -c "echo \"--- update\" ; apt update && echo \"--- upgrade\" ; apt upgrade -y && echo \"--- autoremove\" ; apt autoremove -y"'
 
         alias showmanualins='apt-mark showmanual'
 
@@ -160,7 +160,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias pks='pkg search'
         alias pkshow='pkg show'
         alias pkr='pkg remove'
-        alias update='pkg upgrade'
+        alias upd='pkg upgrade'
 
         alias ins='pki'
         alias srx='pks'
@@ -174,7 +174,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias pacs='pacman -Ss'
         alias pacshow='pacman -Si'
         alias pacr='sudo pacman -R'
-        alias update='sudo pacman -Syyu'
+        alias upd='sudo pacman -Syyu'
 
         alias remorphans='pacman -Qtdq | sudo pacman -Rns - || echo No packages to remove'
         alias showmanualins='pacman -Qetq'
@@ -192,7 +192,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias yayshow='yay -Si'
         alias yayr='yay -R'
         # Should overwrite the `update' alias from pacman if installed
-        alias update='yay'
+        alias upd='yay'
         alias updaur='yay -aSyyu'
 
         alias showmanualins='yay -Qetq'
@@ -209,7 +209,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias emr='emerge --deselect' # will be later removed with --depclean
         alias emsrx='emerge --search'
 
-        alias update='emerge --update --deep @world'
+        alias upd='emerge --update --deep @world'
 
         alias ins='emi'
         alias srx='emsrx'
@@ -223,7 +223,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias gsrx='guix search'
         alias gshw='guix show'
 
-        alias update='guix pull && guix package -u'
+        alias upd='guix pull && guix package -u'
 
         alias ins='gins'
         alias rem='grem'
