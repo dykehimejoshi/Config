@@ -12,10 +12,6 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias grip='grep -i'
 alias grvp='grep -i -v'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-alias lgr='ls | grep'
-alias llgr='ls -l | grep'
 alias findinfile='grep -iRl 2>/dev/null'
 alias printinfile='grep -iR 2>/dev/null'
 alias la='ls -a'
@@ -71,7 +67,8 @@ if [ $(command -v vim) ]; then
     alias view='vim -R -M'
     alias vi='vim -v -C -u NONE'
     alias v='vim'
-    alias e='vim'
+    #alias e='vim'
+    export VISUAL=vim
 fi
 
 # vifm
@@ -89,7 +86,8 @@ fi
 if [ $(command -v helix) ]; then
     alias hx='helix'
     # overwrite the alias in vim
-    alias e='helix'
+    #alias e='helix'
+    export VISUAL=helix
 fi
 
 if [ ! -z $DISPLAY ] || [ ! -z $WAYLAND_DISPLAY ]; then
@@ -328,6 +326,7 @@ alias ta='tmux attach'
 ## ed
 if [ $(command -v ed) ]; then
     alias ed='ed -p "> "'
+    export EDITOR=ed
 fi
 
 ## bc
@@ -349,6 +348,8 @@ fi
 if [ $(command -v nautilus) ]; then
     alias openhere='nautilus . &'
 fi
+
+alias e=${VISUAL:-${EDITOR}}
 
 ## Aliases for reverse engineering/pentesting/etc. ##
 
