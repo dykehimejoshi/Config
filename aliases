@@ -360,6 +360,12 @@ if [ $(command -v r2) ]; then
     alias r2empty='r2 malloc://512'
 fi
 
+# rizin (r2 fork)
+if [ $(command -v rizin) ]; then
+    alias rz='rizin'
+    alias rzd='rizin -A -d'
+fi
+
 # javap (reversing compiled .class files)
 if [ $(command -v javap) ]; then
     alias javadec='javap -v -p -c'

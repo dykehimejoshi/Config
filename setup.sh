@@ -108,6 +108,9 @@ install_config "$HOME/.gdbinit" "gdbinit"
 ## .radare2rc
 install_config "$HOME/.radare2rc" "radare2rc"
 
+## rizinrc
+install_config "$HOME/.rizinrc" "rizinrc"
+
 ## zshrc
 install_config "$HOME/.zshrc" "zshrc"
 
