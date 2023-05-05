@@ -319,6 +319,11 @@ if [ $(command -v php) ]; then
     alias servephp='servephp () { php -S ${2:-0.0.0.0}:${1:-8000}; }; servephp'
 fi
 
+# obs TODO
+if [ $(command -v obs) ]; then
+    alias obs='QT_QPA_PLATFORM=xcb obs'
+fi
+
 # Misc
 alias t='tmux'
 alias ta='tmux attach'
@@ -374,6 +379,11 @@ fi
 # Look at the hex or binary representations of files
 hex () { xxd "$1" | view -; }
 bin () { xxd -b -c 8 "$1" | view -; }
+
+hex-enc () { echo "$@" | xxd -p; }
+hex-dec () { echo "$@" | xxd -p -r; }
+b64-enc () { echo "$@" | base64; }
+b64-dec () { echo "$@" | base64 -d; }
 
 # compare hex dumps
 hexdiff () {
