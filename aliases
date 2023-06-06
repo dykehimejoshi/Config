@@ -1,5 +1,7 @@
 # Aliases
 
+alias resrc="source $_confdir/aliases"
+
 # Navigating directories
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -34,6 +36,12 @@ nohist () {
     test -z "$HISTFILE" && { echo 'Histfile already unset!'; return 1; }
     unset HISTFILE && echo 'Histfile unset.'
 }
+
+if [ "zsh" = `echo $(readlink /proc/$$/exe) | cut -d/ -f4`  ]; then
+    # this is kinda unwieldy and i'm not sure if this is the best way to find
+    # out if we're using zsh but it works for now
+    alias funcdef='type -f'
+fi
 
 # Git aliases
 if [ $(command -v git) ]; then
@@ -102,12 +110,12 @@ if [ ! -z $DISPLAY ] || [ ! -z $WAYLAND_DISPLAY ]; then
     test $(command -v ebook-viewer)  && alias epub='ebook-viewer'
 
     # set the image viewer alias
-    test $(command -v eog)  && alias image='eog'
-    test $(command -v eom)  && alias image='eom'
-    test $(command -v feh)  && alias image='feh'
+    test $(command -v eog)  && alias img='eog'
+    test $(command -v eom)  && alias img='eom'
+    test $(command -v feh)  && alias img='feh'
 else
     # pdf
-    test $(command -v pdftotext)    && alias pdf='pdf () { pdftotext "$1" - | less; }; pdf'
+    test $(command -v pdftotext)    && alias pdf='pdf () { pdftotext "$1" - | vim; }; pdf'
 
     : # TODO
 fi
