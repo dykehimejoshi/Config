@@ -108,15 +108,6 @@ prompt_themes+=( custom )
 
 prompt custom
 
-export _confdir=$(dirname `readlink -f $HOME/.zshrc` )
-
-source $_confdir/aliases
-
-# add completion for the newcd and mkcdir function aliases
-# otherwise it would try to complete to files as well, which we don't want
-compdef _dirs newcd
-compdef _dirs mkcd
-
 tmpfile="${TMPDIR:-/tmp}/.reminders_read" # only show reminders once
 if [ -f "$HOME/reminders" ] && [ ! -f $tmpfile ]; then
     if [ -s "$HOME/reminders" ]; then
@@ -138,12 +129,25 @@ fi
 if [ -d "$HOME/.local/bin/" ]; then
     export PATH=$PATH:$HOME/.local/bin
 fi
+# do the same for ~/.cargo/bin
+if [ -d "$HOME/.cargo/bin" ]; then
+    export PATH=$PATH:$HOME/.cargo/bin
+fi
 
 # fuck microsoft
 export POWERSHELL_TELEMETRY_OPTOUT=1
 export POWERSHELL_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_TELEMETRY_OPTOUT=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# source aliases
+export _confdir=$(dirname `readlink -f $HOME/.zshrc` )
+source $_confdir/aliases
+
+# add completion for the newcd and mkcdir function aliases
+# otherwise it would try to complete to files as well, which we don't want
+compdef _dirs newcd
+compdef _dirs mkcd
 
 # if we have any other things for zsh to source that are specific
 # to one system, source them here

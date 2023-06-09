@@ -11,6 +11,7 @@ alias ..4='cd ../../../..'
 alias ..5='cd ../../../../..'
 alias ..6='cd ../../../../../..'
 alias ls='ls --color=auto'
+test $(command -v exa) && alias ls=exa
 alias grep='grep --color=auto'
 alias grip='grep -i'
 alias grvp='grep -i -v'
@@ -24,6 +25,7 @@ alias ll='ls -la'
 alias lf='ls -F'
 alias laf='ls -aF'
 alias llf='ls -laF'
+test $(command -v bat) && alias cat=bat
 mkcd () { mkdir -p "$1" && cd "$1"; }
 alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
 test -d /run/media/$USER && alias cdmedia="cd /run/media/$USER"
@@ -245,6 +247,20 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
 
 fi
 
+# rustc/cargo/rustup
+if [ $(command -v rustc) ]; then
+    alias cargo='cargo --color auto'
+    alias cins='cargo install'
+    if [ $(command -v sccache) ]; then
+        alias cins='RUSTC_WRAPPER=sccache cargo install'
+    fi
+    alias csrx='cargo search'
+fi
+
+if [ $(command -v rustup) ]; then
+    alias cupd='rustup update'
+fi
+
 alias chkdu='df -h 2>/dev/null | head -n 1 && df -h 2>/dev/null | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
@@ -335,6 +351,16 @@ fi
 # Misc
 alias t='tmux'
 alias ta='tmux attach'
+
+# zellij (tmux rust alternative)
+if [ $(command -v zellij) ]; then
+    alias z='zellij'
+    alias za='zellij attach'
+fi
+
+if [ $(command -v mprocs) ]; then
+    alias mp='mprocs'
+fi
 
 ## ed
 if [ $(command -v ed) ]; then
