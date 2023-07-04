@@ -10,6 +10,9 @@ cursorline = true
 bufferline = "multiple"
 auto-save = true
 text-width = 80
+middle-click-paste = true
+auto-completion = true
+auto-format = false
 
 [editor.statusline]
 left = ["file-name", "file-modification-indicator", "spinner", "mode"]
@@ -55,6 +58,7 @@ C-s = ":w"
 D = ["select_mode", "goto_line_end", "delete_selection"]
 A-D = ["select_mode", "goto_line_end", "delete_selection_noyank"]
 0 = "goto_line_start"
+"'" = "keep_primary_selection"
 #';' = "command_mode"
 
 ## window mode
