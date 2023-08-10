@@ -11,7 +11,7 @@ alias ..4='cd ../../../..'
 alias ..5='cd ../../../../..'
 alias ..6='cd ../../../../../..'
 alias ls='ls --color=auto'
-test $(command -v exa) && alias ls=exa
+#test $(command -v exa) && alias ls=exa
 alias grep='grep --color=auto'
 alias grip='grep -i'
 alias grvp='grep -i -v'
@@ -25,10 +25,12 @@ alias ll='ls -la'
 alias lf='ls -F'
 alias laf='ls -aF'
 alias llf='ls -laF'
-test $(command -v bat) && alias cat=bat
+#test $(command -v bat) && alias cat=bat
 mkcd () { mkdir -p "$1" && cd "$1"; }
 alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
 test -d /run/media/$USER && alias cdmedia="cd /run/media/$USER"
+
+alias sex='set -x'
 
 # exit without saving shell history
 alias xx='kill -9 $$; unset HISTFILE && exit'
@@ -43,6 +45,13 @@ if [ "zsh" = `echo $(readlink /proc/$$/exe) | cut -d/ -f4`  ]; then
     # this is kinda unwieldy and i'm not sure if this is the best way to find
     # out if we're using zsh but it works for now
     alias funcdef='type -f'
+fi
+
+if [ $(command -v mktemp) ]; then
+    tempcd () {
+        export tempdir=$(mktemp -d)
+        cd $tempdir
+    }
 fi
 
 # Git aliases
@@ -73,11 +82,10 @@ if [ $(command -v xclip) ]; then
 fi
 
 # vim
-if [ $(command -v vim) ]; then
+if [ $(command -v vim) ] || [ $(command -v nvim) ]; then
     alias view='vim -R -M'
     alias vi='vim -v -C -u NONE'
     alias v='vim'
-    #alias e='vim'
     export VISUAL=vim
 fi
 
@@ -95,8 +103,6 @@ fi
 # helix
 if [ $(command -v helix) ]; then
     alias hx='helix'
-    # overwrite the alias in vim
-    #alias e='helix'
     export VISUAL=helix
 fi
 
@@ -334,6 +340,11 @@ if [ $(command -v python3) ]; then
     alias serve='serve () { port="${1:-8000}"; echo $( (ip -c=never -br -4 a | tr -s " " | \
         grep -E "^(wl|ww|sl|ib|en|eth|lo)" | cut -d " " -f3 | cut -d/ -f1 |\
         tail -n1) ):$port ; python3 -m http.server $port; }; serve'
+fi
+
+# javascript/node
+if [ $(command -v node) ]; then
+    alias js='node -i -e print=console.log'
 fi
 
 # php
