@@ -80,6 +80,9 @@ set wildmenu
 "" set the backspace to delete normally
 set backspace=indent,eol,start
 
+"" command to save changes to a file we may not be able to edit without root privs
+cmap w!! w !sudo tee % >/dev/null
+
 " Keybinds
 
 let mapleader = ","
