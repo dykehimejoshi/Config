@@ -40,7 +40,8 @@ test $(command -v pkg) &&    inst="pkg install"
 test $(command -v emerge) && inst="emerge --ask"
 test $(command -v guix) &&   inst="guix install"
 
-programs="tmux helix vim zsh git ranger elinks jq"
+programs="tmux neovim zsh git ranger elinks jq"
+# TODO: install rust programs from cargo (mprocs, exa, sccache, etc)
 
 # Ask the user if they want to install programs
 echo -en "Install programs?\n  $programs\n(y/N) > "
@@ -99,6 +100,12 @@ install_config "$HOME/.tmux.conf" "tmux.conf"
 ## .vimrc
 install_config "$HOME/.vimrc" "vimrc"
 
+## init.vim
+install_config "$HOME/.config/nvim/init.vim" "nvimrc"
+
+### neovim plugin config
+install_config "$HOME/.config/nvim/lua/plugins.lua" "nvim.plugins"
+
 ## .bash_aliases
 install_config "$HOME/.bash_aliases" "bash_aliases"
 
@@ -116,6 +123,12 @@ install_config "$HOME/.zshrc" "zshrc"
 
 ## i3config
 install_config "$HOME/.config/i3/config" "i3config"
+
+## polybar.ini
+install_config "$HOME/.config/polybar/config.ini" "polybar.ini"
+
+### launch.sh
+install_config "$HOME/.config/polybar/launch.sh" "polybar.sh"
 
 ## rangerrc
 install_config "$HOME/.config/ranger/rc.conf" "rangerrc"
