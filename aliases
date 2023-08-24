@@ -48,9 +48,9 @@ if [ "zsh" = `echo $(readlink /proc/$$/exe) | cut -d/ -f4`  ]; then
 fi
 
 if [ $(command -v mktemp) ]; then
-    tempcd () {
-        export tempdir=$(mktemp -d)
-        cd $tempdir
+    cdtemp () {
+        export _TEMPDIR=$(mktemp -d)
+        cd $_TEMPDIR
     }
 fi
 
@@ -103,7 +103,7 @@ fi
 # helix
 if [ $(command -v helix) ]; then
     alias hx='helix'
-    export VISUAL=helix
+    #export VISUAL=helix
 fi
 
 if [ ! -z $DISPLAY ] || [ ! -z $WAYLAND_DISPLAY ]; then
