@@ -35,10 +35,17 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+set $vol_max 130
+set $vol_steps 10
+bindsym XF86AudioRaiseVolume exec --no-startup-id [ $(pactl get-sink-volume @DEFAULT_SINK@ | tr -s ' ' | cut -d ' ' -f 5 | sed 's/%//') -lt $vol_max ] && pactl set-sink-volume @DEFAULT_SINK@ +$vol_steps%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -$vol_steps%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# symbols for brightness control: XF86MonBrightnessDown XF86MonBrightnessUp
+# can be modularized later; max on this machine is 96000, steps that/10 -> 9600
+bindsym XF86MonBrightnessUp exec --no-startup-id echo $(( $(cat /sys/class/backlight/intel_backlight/brightness) + 9600 )) > /sys/class/backlight/intel_backlight/brightness || echo $(cat /sys/class/backlight/intel_backlight/max_brightness) > /sys/class/backlight/intel_backlight/brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id echo $(( $(cat /sys/class/backlight/intel_backlight/brightness) - 9600 )) > /sys/class/backlight/intel_backlight/brightness || echo 0 > /sys/class/backlight/intel_backlight/brightness
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -207,6 +214,9 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 for_window [class="firetools"] floating enable
 for_window [class="VirtualBox"] floating enable
 for_window [title="Fcitx Configuration"] floating enable
+for_window [title="Characters"] floating enable
+
+for_window [title="feh*"] floating enable
 
 # lock the session
 #bindsym $mod+grave exec $(file -L ~/Pictures/wallpaper | grep -i png) >/dev/null && i3lock -Fi ~/Pictures/wallpaper || i3lock -c 333333
@@ -251,22 +261,23 @@ set $rp_hl_high #56526e
 
 # NOTE: while the background is also $rp_iris, the borders are changed to something else
 # class                 border  backgr.   text    indicator child_border
-client.focused          $rp_hl_high $rp_overlay $rp_text $rp_rose $rp_rose
+client.focused          $rp_hl_high $rp_overlay $rp_text $rp_rose $rp_gold
 client.focused_inactive        $rp_hl_low $rp_base $rp_text #000000 #000000
 client.unfocused        $rp_hl_med $rp_base $rp_text $rp_subtle $rp_muted
 client.urgent           $rp_hl_high $rp_love #000000 #000000 $rp_iris
 
 # background
-# ln -s desired background to ~/Pictures/wallpaper; if it doesn't exist, set it
-# to solid black
-exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper || xsetroot -solid "#ea9a97"
+# ln -s desired background to ~/Pictures/wallpaper
+#exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper &
+# we can put the xsetrootcall in ~/.xprofile and it'll call, this will just
+# silently fail if there's nothing there
 
 # mirror screens
 exec xrandr --output HDMI-1 --same-as eDP-1
 
-#exec dbus-update-action-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+exec dbus-update-action-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
 # start ibus
 #exec ibus-daemon -d -r
 exec --no-startup-id fcitx5 -d -r
-exec --no-startup-id xautolock -time 5 -killtime 15 -killer 'systemctl suspend' -locker "/usr/bin/i3lock -kB 10 --composite --wrong-text='' --noinput-text='' --verif-text='...' --ringwrong-color=c4a7e7ff --insidewrong-color=eb6f92ff --ringver-color=c4a7e7ff --insidever-color=00000088 --verif-color=e0def4ff --keyhl-color=56526eff --line-color=44415aff --ring-color=c4a7e7ff --inside-color=00000088 --radius 150 --indicator --time-color=e0def4ff --date-color=e0def4ff"
+exec --no-startup-id xautolock -time 5 -killtime 15 -killer 'systemctl suspend' -locker "/usr/bin/i3lock -kB 15 --composite --wrong-text='' --noinput-text='' --verif-text='...' --ringwrong-color=c4a7e7ff --insidewrong-color=eb6f92ff --ringver-color=c4a7e7ff --insidever-color=00000088 --verif-color=e0def4ff --keyhl-color=56526eff --line-color=44415aff --ring-color=c4a7e7ff --inside-color=00000088 --radius 150 --indicator --time-color=e0def4ff --date-color=e0def4ff"
