@@ -144,3 +144,6 @@ install_config "$HOME/.elinks/elinks.conf" "elinks.conf"
 
 ## helix config.toml
 install_config "$HOME/.config/helix/config.toml" "helix.toml"
+
+## kakoune
+install_config "$HOME/.config/kak/kakrc" "kakrc"
