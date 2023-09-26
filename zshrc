@@ -44,8 +44,8 @@ prompt_custom_setup() {
 _prompt_get_vars () {
     _prompt_histfile_active=`test -z $HISTFILE && echo '--'`
 
-    # find out whether the terminal supports 256 colors or not
-    if $(echo "$TERM" | grep -vq 256color); then
+    # find out whether the terminal supports 256 colors or not (or is kitty)
+    if $(echo "$TERM" | grep -vqE '(256color|kitty)'); then
         less_colors="yes"
     else
         less_colors=
@@ -117,22 +117,27 @@ if [ -f "$HOME/reminders" ] && [ ! -f $tmpfile ]; then
         touch $tmpfile
     fi
 fi
+unset tmpfile
 
 # Using a GPG key as an SSH key
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
+# adapted from /etc/profile
+# append "$1" to $PATH when not already in
+append_path () {
+    case ":$PATH:" in
+        *:"$1":*) ;;
+        *) [ -d "$1" ] && PATH="${PATH:+$PATH:}$1"
+    esac
+}
+
 # If we have ~/bin or ~/.local/bin folders, add them to the path
-if [ -d "$HOME/bin/" ]; then
-    export PATH=$PATH:$HOME/bin
-fi
-if [ -d "$HOME/.local/bin/" ]; then
-    export PATH=$PATH:$HOME/.local/bin
-fi
-# do the same for ~/.cargo/bin
-if [ -d "$HOME/.cargo/bin" ]; then
-    export PATH=$PATH:$HOME/.cargo/bin
-fi
+append_path "$HOME/bin"
+append_path "$HOME/.local/bin"
+append_path "$HOME/.cargo/bin"
+
+export PATH
 
 # fuck microsoft
 export POWERSHELL_TELEMETRY_OPTOUT=1
@@ -146,7 +151,7 @@ source $_confdir/aliases
 
 # add completion for the newcd and mkcdir function aliases
 # otherwise it would try to complete to files as well, which we don't want
-compdef _dirs newcd
+compdef _dirs c
 compdef _dirs mkcd
 
 # if we have any other things for zsh to source that are specific

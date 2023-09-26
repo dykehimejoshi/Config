@@ -1,6 +1,6 @@
 # general configuration
 
-theme = "fleet_dark"
+theme = "rose_pine_moon"
 
 [editor]
 line-number = "relative"
@@ -80,6 +80,8 @@ o = ":bco"
 t = ":bn"
 T = ":bp"
 G = "goto_file_end"
+j = "goto_file_end"
+k = "goto_file_start"
 
 ## fun extra keybinds
 [keys.normal."+"]

@@ -162,8 +162,10 @@ nnoremap <C-w>tm :tabmove
 
 "" Windows
 """ Keybinds to reflect my tmux.conf file
-nnoremap <C-w>/ :vsplit<CR>
-nnoremap <C-w>" :split<CR>
+nnoremap <C-w>\| :vsplit<CR>
+nnoremap <C-w>_ :split<CR>
+nnoremap <C-w>= :wincmd =<CR>
+nnoremap <C-w>z z999<CR>
 
 "" Saving and not exiting
 imap <C-s> <ESC>:w<CR>a

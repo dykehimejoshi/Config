@@ -2,32 +2,40 @@
 
 alias resrc="source $_confdir/aliases"
 
+_exists() {
+    command -v "$1" >/dev/null 2>&1 && return 0
+    return 1
+}
+
 # Navigating directories
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias ..3='cd ../../..'
-alias ..4='cd ../../../..'
-alias ..5='cd ../../../../..'
-alias ..6='cd ../../../../../..'
 alias ls='ls --color=auto'
+c () { cd "${1:-$HOME}" && ls; }
+alias ..='c ..'
+alias ...='c ../..'
+alias ....='c ../../..'
+alias ..3='c ../../..'
+alias ..4='c ../../../..'
+alias ..5='c ../../../../..'
+alias ..6='c ../../../../../..'
 #test $(command -v exa) && alias ls=exa
 alias grep='grep --color=auto'
 alias grip='grep -i'
 alias grvp='grep -i -v'
 alias findinfile='grep -iRl 2>/dev/null'
 alias printinfile='grep -iR 2>/dev/null'
+alias l='ls'
+alias l.='ls -d .*'
 alias la='ls -a'
 alias lah='ls -lah'
 alias lh='ls -lh'
-alias l='ls'
 alias ll='ls -la'
+alias ll.='ls -lad .*'
 alias lf='ls -F'
 alias laf='ls -aF'
 alias llf='ls -laF'
 #test $(command -v bat) && alias cat=bat
 mkcd () { mkdir -p "$1" && cd "$1"; }
-alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
+#alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
 test -d /run/media/$USER && alias cdmedia="cd /run/media/$USER"
 
 alias sex='set -x'
@@ -47,15 +55,15 @@ if [ "zsh" = `echo $(readlink /proc/$$/exe) | cut -d/ -f4`  ]; then
     alias funcdef='type -f'
 fi
 
-if [ $(command -v mktemp) ]; then
+_exists mktemp && {
     cdtemp () {
-        export _TEMPDIR=$(mktemp -d)
+        export _TEMPDIR=${_TEMPDIR:-$(mktemp -d)}
         cd $_TEMPDIR
     }
-fi
+}
 
 # Git aliases
-if [ $(command -v git) ]; then
+_exists git && {
     alias ga='git add'
     alias gcm='git commit'
     alias gcsm='git commit -S'
@@ -68,26 +76,32 @@ if [ $(command -v git) ]; then
     alias gdif='git diff'
     alias gst='git status'
     alias getgiturl='git config --get remote.origin.url'
-fi
+}
 
 # WINE aliases
-if [ $(command -v wine) ]; then
+_exists wine && {
     alias cdcdir='cd ~/.wine/drive_c/'
     alias wine64='WINEPREFIX=$HOME/.wine64 wine64'
-fi
+}
 
 # xclip
-if [ $(command -v xclip) ]; then
-    alias copyimg='copyimg () { xclip -selection clipboard -t image/png -i < $1; }; copyimg'
-fi
+_exists xclip && {
+    copyimg () { xclip -selection clipboard -t image/png -i < $1; }
+}
 
 # vim
-if [ $(command -v vim) ] || [ $(command -v nvim) ]; then
+_exists vim && {
     alias view='vim -R -M'
     alias vi='vim -v -C -u NONE'
     alias v='vim'
     export VISUAL=vim
-fi
+}
+
+# neovim
+_exists nvim && {
+    alias v='nvim'
+    export VISUAL=nvim
+}
 
 # vifm
 if [ $(command -v vifm) ]; then
@@ -101,10 +115,10 @@ if [ $(command -v ranger) ]; then
 fi
 
 # helix
-if [ $(command -v helix) ]; then
+_exists helix && {
     alias hx='helix'
     #export VISUAL=helix
-fi
+}
 
 if [ ! -z $DISPLAY ] || [ ! -z $WAYLAND_DISPLAY ]; then
     # we (probably) have a gui
@@ -129,7 +143,7 @@ else
 fi
 
 ## battery profile
-if [ $(command -v powerprofilesctl) ]; then
+_exists powerprofilesctl && {
     batprf () {
         if  [ "$1" = "performance" ] || [ "$1" = "balanced" ] || \
                 [ "$1" = "power-saver" ] || [ "$1" = "powersaver" ]; then
@@ -143,21 +157,24 @@ if [ $(command -v powerprofilesctl) ]; then
             powerprofilesctl $*
         fi
     }
-fi
+}
 
 # Administration
 
 ## sudo & pkg manager aliases
 if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERMUX_VERSION" ]]; then
-    if [ $(command -v sudo) ]; then
+    _exists sudo && {
         alias _='sudo'
+        alias fucking='sudo'
         alias _i='sudo -i'
         alias _s='sudo -s'
-    fi
+        alias please='sudo $(fc -ln -1)'
+        alias fuck='sudo $(fc -ln -1)'
+    }
 
     # ins, srx, shw, and rem aliases should use the default package manager
     # for any distro
-    if [ $(command -v apt) ]; then
+    _exists apt && {
         # if apt is installed
         alias agi='sudo apt install -y'
         alias acs='apt search'
@@ -172,9 +189,9 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias srx='acs'
         alias shw='acshow'
         alias rem='agr'
-    fi
+    }
 
-    if [ $(command -v pkg) ]; then
+    _exists pkg && {
         # if pkg is installed
         alias pki='pkg install'
         alias pks='pkg search'
@@ -186,9 +203,9 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias srx='pks'
         alias shw='pkshow'
         alias rem='pkr'
-    fi
+    }
 
-    if [ $(command -v pacman) ]; then
+    _exists pacman && {
         # if pacman is installed
         alias paci='sudo pacman -S'
         alias pacs='pacman -Ss'
@@ -203,9 +220,9 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias srx='pacs'
         alias shw='pacshow'
         alias rem='pacr'
-    fi
+    }
 
-    if [ $(command -v yay) ]; then
+    _exists yay && {
         # if yay is installed
         alias yayi='yay -S'
         alias yays='yay -Ss'
@@ -221,7 +238,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias srx='yays'
         alias shw='yayshow'
         alias rem='yayr'
-    fi
+    }
 
     if [ $(command -v emerge) ]; then
         # USE can be changed after a command, with the specified package going after
@@ -254,23 +271,29 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
 fi
 
 # rustc/cargo/rustup
-if [ $(command -v rustc) ]; then
+_exists rustc && {
     alias cargo='cargo --color auto'
     alias cins='cargo install'
-    if [ $(command -v sccache) ]; then
+    _exists sccache && {
         alias cins='RUSTC_WRAPPER=sccache cargo install'
-    fi
+    }
     alias csrx='cargo search'
-fi
+}
 
-if [ $(command -v rustup) ]; then
+_exists rustup && {
     alias cupd='rustup update'
-fi
+}
 
 alias chkdu='df -h 2>/dev/null | head -n 1 && df -h 2>/dev/null | grep data-root --color=none'
 alias dd='dd status=progress'
 alias rm='rm -i'
 alias ip='ip -color'
+alias getgateway='ip -c=never route | grep --color=never "^default" | cut -d " " -f3'
+getip () {
+    # could be more comprehensive
+    echo $(ip -c=never -br -4 a | tr -s " " | grep -E "^(wl|ww|sl|ib|en|eth|lo)" \
+    | cut -d " " -f3 | cut -d/ -f1 | tail -n1)
+}
 
 perms () {
     # get permissions for the current directory or a specified file
@@ -296,7 +319,7 @@ perms () {
 }
 
 ## ssh
-if [ $(command -v ssh) ]; then
+_exists ssh && {
     sshpassthru () {
         # $1: port on host you want access to; $2: port to put it on; $3: <user>@<host>
         if test $# -ne 3; then
@@ -305,7 +328,7 @@ if [ $(command -v ssh) ]; then
             ssh -NL "$2":localhost:"$1" "$3"
         fi
     }
-fi
+}
 
 ## usbguard
 if [ $(command -v usbguard) ]; then
@@ -317,42 +340,51 @@ if [ $(command -v usbguard) ]; then
 fi
 
 ## gpg
-if [ $(command -v gpg) ]; then
+_exists gpg && {
     # fixes when the gpg agent fucks up sometimes
     alias _fix-gpg='gpg-connect-agent killagent /bye; sleep 2; gpg-connect-agent updatestartuptty /bye'
-fi
+}
 
 # KDE Plasma
 if [ $(command -v plasmashell) ]; then
-    alias restartplasma='sh -c "kquitapp5 plasmashell && plasmashell >/dev/null &"'
+    alias restartplasma='kquitapp5 plasmashell && plasmashell >/dev/null & disown'
 fi
 
 # Less Configuration
 LESS="-f -g -i -J -M -R -S -w -x4"; export LESS
 
 # Python
-if [ $(command -v python3) ]; then
+_exists python3 && {
     alias py='python3'
     alias py3='python3'
     alias mkvenv='python3 -m venv venv'
     alias govenv='. venv/bin/activate'
     alias byevenv='deactivate'
-    alias serve='serve () { port="${1:-8000}"; echo $( (ip -c=never -br -4 a | tr -s " " | \
-        grep -E "^(wl|ww|sl|ib|en|eth|lo)" | cut -d " " -f3 | cut -d/ -f1 |\
-        tail -n1) ):$port ; python3 -m http.server $port; }; serve'
-fi
+    serve () {
+        # $1 is the port with 8000 being default
+        # $2 is the address we bind to, with everywhere being the default
+        python3 -m http.server -b ${2:-0.0.0.0} ${1:-8000}
+    }
+}
 
 # javascript/node
-if [ $(command -v node) ]; then
+_exists node && {
     alias js='node -i -e print=console.log'
-fi
+}
 
 # php
-if [ $(command -v php) ]; then
-    # $1 is the port with 8000 being default
-    # $2 is the address we bind to, with everywhere being the default
-    alias servephp='servephp () { php -S ${2:-0.0.0.0}:${1:-8000}; }; servephp'
-fi
+_exists php && {
+    servephp () {
+        # $1 is the port with 8000 being default
+        # $2 is the address we bind to, with everywhere being the default
+        php -S ${2:-0.0.0.0}:${1:-8000}
+    }
+}
+
+# haskell/ghc
+_exists ghc && {
+    alias hs='ghci'
+}
 
 # obs TODO
 if [ $(command -v obs) ]; then
@@ -361,7 +393,12 @@ fi
 
 # Misc
 alias t='tmux'
-alias ta='tmux attach'
+alias ta='tmux attach || tmux new-session \; display "New Session" '
+
+# tar
+alias untar-gz='tar -xzvf'
+alias untar-bz='tar -xjvf'
+alias untar-xz='tar -xJvf'
 
 # zellij (tmux rust alternative)
 if [ $(command -v zellij) ]; then
@@ -369,64 +406,66 @@ if [ $(command -v zellij) ]; then
     alias za='zellij attach'
 fi
 
-if [ $(command -v mprocs) ]; then
+_exists mprocs && {
     alias mp='mprocs'
-fi
+}
 
 ## ed
-if [ $(command -v ed) ]; then
+_exists ed && {
     alias ed='ed -p "> "'
     export EDITOR=ed
-fi
+}
 
 ## bc
-if [ $(command -v bc) ]; then
-    alias calc='calc () { bc -l <<< "$1"; }; calc'
-fi
+_exists bc && {
+    calc () { bc -l <<< "$1"; }
+}
 
-if [ $(command -v syncthing) ]; then
-    alias rmsyncconflicts='find -L ~ -name "*sync-conflict*" -exec rm -i {} \;'
-    alias findsyncconflicts='find ~ -name "*sync-conflict*"'
-fi
+_exists syncthing && {
+    alias rmsyncconflicts='find -name "*sync-conflict*" -exec rm -i {} \;'
+    alias findsyncconflicts='find -name "*sync-conflict*"'
+}
 
 ## alsamixer
-if [ $(command -v alsamixer) ]; then
+_exists alsamixer && {
     alias mixer='alsamixer'
-fi
+}
 
 ## nautilus (todo for other gui file managers)
-if [ $(command -v nautilus) ]; then
-    alias openhere='nautilus . &'
-fi
+_exists nautilus && {
+    alias openhere='nautilus . & disown'
+}
 
 alias e=${VISUAL:-${EDITOR}}
 
 ## Aliases for reverse engineering/pentesting/etc. ##
 
 # radare2
-if [ $(command -v r2) ]; then
+_exists r2 && {
     alias r2d='r2 -A -d'
     alias r2wd='r2 -A -d -w'
     alias r2empty='r2 malloc://512'
-fi
+}
 
 # rizin (r2 fork)
-if [ $(command -v rizin) ]; then
+_exists rizin && {
     alias rz='rizin'
     alias rzd='rizin -A -d'
-fi
+}
 
 # javap (reversing compiled .class files)
-if [ $(command -v javap) ]; then
+_exists javap && {
     alias javadec='javap -v -p -c'
-fi
+}
 
 # Look at the hex or binary representations of files
-hex () { xxd "$1" | view -; }
-bin () { xxd -b -c 8 "$1" | view -; }
+_exists xxd && {
+    hex () { xxd "$1" | view -; }
+    bin () { xxd -b -c 8 "$1" | view -; }
+    hex-enc () { echo "$@" | xxd -p; }
+    hex-dec () { echo "$@" | xxd -p -r; }
+}
 
-hex-enc () { echo "$@" | xxd -p; }
-hex-dec () { echo "$@" | xxd -p -r; }
 b64-enc () { echo "$@" | base64; }
 b64-dec () { echo "$@" | base64 -d; }
 
@@ -444,7 +483,7 @@ watchlog () {
 }
 
 ## netcat
-if [ $(command -v nc) ]; then
+_exists nc && {
     alias listen='nc -nvlp $1'
-fi
+}
 
