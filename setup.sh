@@ -147,3 +147,6 @@ install_config "$HOME/.config/helix/config.toml" "helix.toml"
 
 ## kakoune
 install_config "$HOME/.config/kak/kakrc" "kakrc"
+
+## kitty.conf
+install_config "$HOME/.config/kitty/kitty.conf" "kitty.conf"
