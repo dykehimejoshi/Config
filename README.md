@@ -1,5 +1,11 @@
 # Config
 
+NOTE: This hasn't been updated in quite a while. If you're using this yourself,
+what you find under the cut may not be accurate anymore.
+
+<details>
+<summary>old config</summary>
+
 ## i3config
 
 | Keybind | Command | Notes |
@@ -74,3 +80,5 @@
 | K | Move current line up 1 | |
 | J | Move current line down 1 | |
 | <C-c\>   | Removes margins and other visual aspects | Made for copying from tmux |
+
+</details>
