@@ -3,7 +3,10 @@
 alias resrc="source $_confdir/aliases"
 
 _exists() {
-    command -v "$1" >/dev/null 2>&1 && return 0
+    # returns "true" (0) when any parameters exist
+    for cmd in "$@"; do
+        command -v "$cmd" >/dev/null 2>&1 && return 0
+    done
     return 1
 }
 
@@ -21,7 +24,7 @@ alias ..6='c ../../../../../..'
 alias grep='grep --color=auto'
 alias grip='grep -i'
 alias grvp='grep -i -v'
-alias findinfile='grep -iRl 2>/dev/null'
+alias findinfile='grep --exclude-dir="*dosdevices*" --exclude-dir="*drive_c*" -iRl 2>/dev/null'
 alias printinfile='grep -iR 2>/dev/null'
 alias l='ls'
 alias l.='ls -d .*'
@@ -90,29 +93,23 @@ _exists xclip && {
 }
 
 # vim
-_exists vim && {
+_exists vim nvim && {
     alias view='vim -R -M'
     alias vi='vim -v -C -u NONE'
     alias v='vim'
     export VISUAL=vim
 }
 
-# neovim
-_exists nvim && {
-    alias v='nvim'
-    export VISUAL=nvim
-}
-
 # vifm
-if [ $(command -v vifm) ]; then
+_exists vifm && {
     alias vf='vifm .'
     alias fm='vifm'
-fi
+}
 
 # ranger
-if [ $(command -v ranger) ]; then
+_exists ranger && {
     alias fm='ranger'
-fi
+}
 
 # helix
 _exists helix && {
@@ -271,7 +268,7 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
 fi
 
 # rustc/cargo/rustup
-_exists rustc && {
+_exists rustc cargo && {
     alias cargo='cargo --color auto'
     alias cins='cargo install'
     _exists sccache && {
@@ -331,13 +328,13 @@ _exists ssh && {
 }
 
 ## usbguard
-if [ $(command -v usbguard) ]; then
+_exists usbguard && {
     alias usballow='sudo usbguard allow-device'
     alias usbblock='sudo usbguard block-device'
     alias usbreject='sudo usbguard reject-device'
     alias usblist='sudo usbguard list-devices'
     alias usbwatch='sudo usbguard watch'
-fi
+}
 
 ## gpg
 _exists gpg && {
@@ -346,15 +343,15 @@ _exists gpg && {
 }
 
 # KDE Plasma
-if [ $(command -v plasmashell) ]; then
+_exists plasmashell && {
     alias restartplasma='kquitapp5 plasmashell && plasmashell >/dev/null & disown'
-fi
+}
 
 # Less Configuration
-LESS="-f -g -i -J -M -R -S -w -x4"; export LESS
+export LESS="-f -g -i -J -M -R -S -w -x4"
 
 # Python
-_exists python3 && {
+_exists python python3 && {
     alias py='python3'
     alias py3='python3'
     alias mkvenv='python3 -m venv venv'
@@ -363,6 +360,7 @@ _exists python3 && {
     serve () {
         # $1 is the port with 8000 being default
         # $2 is the address we bind to, with everywhere being the default
+        echo $(getip):${1:-8000}
         python3 -m http.server -b ${2:-0.0.0.0} ${1:-8000}
     }
 }
@@ -386,10 +384,10 @@ _exists ghc && {
     alias hs='ghci'
 }
 
-# obs TODO
-if [ $(command -v obs) ]; then
+# obs
+_exists obs && {
     alias obs='QT_QPA_PLATFORM=xcb obs'
-fi
+}
 
 # Misc
 alias t='tmux'
@@ -433,7 +431,16 @@ _exists alsamixer && {
 
 ## nautilus (todo for other gui file managers)
 _exists nautilus && {
-    alias openhere='nautilus . & disown'
+    alias openhere='nautilus . >/dev/null 2>&1 & disown'
+}
+
+## imagemagick
+_exists convert && {
+    invertimg () {
+        for img in "$@"; do
+            convert "$img" -channel RGB -negate "$img"
+        done
+    }
 }
 
 alias e=${VISUAL:-${EDITOR}}
@@ -460,14 +467,31 @@ _exists javap && {
 
 # Look at the hex or binary representations of files
 _exists xxd && {
-    hex () { xxd "$1" | view -; }
-    bin () { xxd -b -c 8 "$1" | view -; }
+    hex () {
+        if [ "$1" = "-" ] || [ -z "$1" ]; then
+            xxd /dev/stdin | view -
+        else
+            xxd "$1" | view -
+        fi
+    }
+    bin () {
+        if [ "$1" = "-" ] || [ -z "$1" ]; then
+            xxd -b -c 8 /dev/stdin | view -
+        else
+            xxd -b -c 8 "$1" | view -
+        fi
+    }
     hex-enc () { echo "$@" | xxd -p; }
     hex-dec () { echo "$@" | xxd -p -r; }
 }
 
+# encoding/decoding strings
 b64-enc () { echo "$@" | base64; }
 b64-dec () { echo "$@" | base64 -d; }
+
+# encoding/decoding files
+b64-enc-f () { cat "$1" | base64; }
+b64-dec-f () { cat "$1" | base64 -d; }
 
 # compare hex dumps
 hexdiff () {
@@ -487,3 +511,4 @@ _exists nc && {
     alias listen='nc -nvlp $1'
 }
 
+# vim:ft=sh
