@@ -12,6 +12,7 @@ _exists() {
 
 # Navigating directories
 alias ls='ls --color=auto'
+_exists eza && alias ls=eza
 c () { cd "${1:-$HOME}" && ls; }
 alias ..='c ..'
 alias ...='c ../..'
@@ -20,7 +21,6 @@ alias ..3='c ../../..'
 alias ..4='c ../../../..'
 alias ..5='c ../../../../..'
 alias ..6='c ../../../../../..'
-#test $(command -v exa) && alias ls=exa
 alias grep='grep --color=auto'
 alias grip='grep -i'
 alias grvp='grep -i -v'
@@ -36,7 +36,8 @@ alias ll.='ls -lad .*'
 alias lf='ls -F'
 alias laf='ls -aF'
 alias llf='ls -laF'
-#test $(command -v bat) && alias cat=bat
+export BAT_PAGER=
+_exists bat && alias cat=bat
 mkcd () { mkdir -p "$1" && cd "$1"; }
 #alias cd='newcd () { cd "${1:-$HOME}" && ls; }; newcd'
 test -d /run/media/$USER && alias cdmedia="cd /run/media/$USER"
@@ -89,7 +90,7 @@ _exists wine && {
 
 # xclip
 _exists xclip && {
-    copyimg () { xclip -selection clipboard -t image/png -i < $1; }
+    copyimg () { xclip -t image/png -i < $1; }
 }
 
 # vim
@@ -97,7 +98,7 @@ _exists vim nvim && {
     alias view='vim -R -M'
     alias vi='vim -v -C -u NONE'
     alias v='vim'
-    export VISUAL=vim
+    # export VISUAL=vim
 }
 
 # vifm
@@ -114,7 +115,20 @@ _exists ranger && {
 # helix
 _exists helix && {
     alias hx='helix'
-    #export VISUAL=helix
+    export VISUAL=helix
+}
+
+# kakoune
+_exists kak && {
+    #export VISUAL=kak
+}
+
+# yt-dlp (youtube-dl clone)
+_exists yt-dlp && {
+    alias viddl='yt-dlp --concurrent-fragments 5 --retries infinite --fragment-retries infinite'
+    # anecdotally, sometimes using --concurrent-fragments corrupts the first few frames of a video
+    alias viddlx='yt-dlp --retries infinite --fragment-retries infinite'
+    alias auddl='yt-dlp --concurrent-fragments 5 --retries infinite --fragment-retries infinite --extract-audio'
 }
 
 if [ ! -z $DISPLAY ] || [ ! -z $WAYLAND_DISPLAY ]; then
@@ -157,6 +171,8 @@ _exists powerprofilesctl && {
 }
 
 # Administration
+
+alias checkip='curl checkip.amazonaws.com'
 
 ## sudo & pkg manager aliases
 if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERMUX_VERSION" ]]; then
@@ -397,12 +413,6 @@ alias ta='tmux attach || tmux new-session \; display "New Session" '
 alias untar-gz='tar -xzvf'
 alias untar-bz='tar -xjvf'
 alias untar-xz='tar -xJvf'
-
-# zellij (tmux rust alternative)
-if [ $(command -v zellij) ]; then
-    alias z='zellij'
-    alias za='zellij attach'
-fi
 
 _exists mprocs && {
     alias mp='mprocs'

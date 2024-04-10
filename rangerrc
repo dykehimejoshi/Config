@@ -23,3 +23,12 @@ unmap <F6>
 unmap <F7>
 unmap <F8>
 unmap <F10>
+
+# open highlighted files in tmux splits and windows
+map eh shell tmux split-window -h rifle %f
+map ev shell tmux split-window -v rifle %f
+map ee shell tmux new-window rifle %f
+
+# some other niceties
+map ,u shell du %d | less
+map ,t shell tree -h %d | less

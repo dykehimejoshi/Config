@@ -190,6 +190,13 @@ nnoremap <Leader>n :n<CR>
 nnoremap <Leader>p :N<CR>
 "inoremap <Leader>p <ESC>:w<CR>:N<CR>
 
+"" invert (black-and-white) svgs exported from logisim
+if &ft == "svg"
+    function! InvertSvg()
+        call feedkeys(":%s/0, 0, 0/255, 255, 255/g<CR>")
+    endfunction
+endif
+
 "" xxd
 "" interesting for reverse engineering but not really that useful
 let g:ishex = 0 " off by default

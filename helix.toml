@@ -1,6 +1,6 @@
 # general configuration
 
-theme = "rose_pine_moon"
+theme = "base16_default_dark"
 
 [editor]
 line-number = "relative"
@@ -62,16 +62,16 @@ A-D = ["select_mode", "goto_line_end", "delete_selection_noyank"]
 #';' = "command_mode"
 
 ## window mode
-[keys.normal."C-w"]
+[keys.normal."C-a"]
 '_' = "hsplit"
+'h' = "hsplit"
 '|' = "vsplit"
-s = "no_op"
+'v' = "vsplit"
 C-s = "no_op"
-v = "no_op"
 C-v = "no_op"
 
-## same tab keybinds as in vimrc
-[keys.normal."C-w".t]
+## tabs (submenu in "window mode")
+[keys.normal."C-a".w]
 c = ":n"
 q = ":bc"
 o = ":bco"
