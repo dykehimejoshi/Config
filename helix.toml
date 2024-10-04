@@ -1,6 +1,6 @@
 # general configuration
 
-theme = "base16_default_dark"
+theme = "base16_default"
 
 [editor]
 line-number = "relative"
@@ -55,8 +55,8 @@ wrap-at-text-width = true
 [keys.normal]
 C-s = ":w"
 "ret" = ["open_below", "insert_mode"]
-D = ["select_mode", "goto_line_end", "delete_selection"]
-A-D = ["select_mode", "goto_line_end", "delete_selection_noyank"]
+#D = ["select_mode", "goto_line_end", "delete_selection"]
+#A-D = ["select_mode", "goto_line_end", "delete_selection_noyank"]
 0 = "goto_line_start"
 "'" = "keep_primary_selection"
 #';' = "command_mode"

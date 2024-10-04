@@ -21,22 +21,56 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':vcs_info:git:*' formats '%r:%b%f'
 zstyle ':vcs_info:*' enable git
 
+function preexec() {
+    # timer code adapted from https://derrick.blog/2022/12/21/command-timing-in-zsh/
+    timer=$(($(date +%s%0N)/1000000))
+}
+
 # runs before each prompt
 function precmd() {
-    # this funky little workaround prints a blank line after each command
-    precmd() { echo }
+    precmd() {
+        # this bit has to be in the second precmd in order to show up
+        # putting the echo trick before and after didn't work, but it works here
+        if [ "$timer" ]; then
+            now=$(($(date +%s%0N)/1000000))
+            elapsed=$now-$timer
+            _prompt_timer="%F{white} $(converts $elapsed)"
+            export _prompt_timer
+            unset timer
+        fi
+        # adds a space after each command
+        echo
+    }
 }
+
+converts () {
+    local t=$1
+    local d=$((t/1000/60/60/24))
+    local h=$((t/1000/60/60%24))
+    local m=$((t/1000/60%60))
+    local s=$((t/1000%60))
+    local ms=$((t%1000))
+
+    test $d -gt 0 && echo -n " ${d}d"
+    test $h -gt 0 && echo -n " ${h}h"
+    test $m -gt 0 && echo -n " ${m}m"
+    test $s -gt 0 && echo -n " ${s}s"
+    test $ms -gt 0 && echo -n " ${ms}ms"
+    echo
+}
+
+REPORTTIME=3
 
 prompt_custom_setup() {
     # i don't know if this is better than what i had before, but this at least
     # allows the prompt the change dynamically based on e.g. whether or not
     # we're in a git repo, or if the histfile is unset
     PROMPT="%f%b[%~] %(!.%b%F{red}%m%f%b.%F{\$_prompt_color_username}%n \
-%F{\$_prompt_color_hostname}%m%f%b) [%D{%H:%M:%S}]\
+%F{\$_prompt_color_hostname}%m%f%b)\
 %(?.. [%F{\$_prompt_color_cmderror}%?%f])\$_prompt_ranger\$_prompt_get_chroot
 %(!.%K{red}.)\$_prompt_histfile_active%#%f%b%k "
 
-    RPROMPT=\$vcs_info_msg_0_
+    RPROMPT="\$vcs_info_msg_0_ \$_prompt_timer"
     #RPROMPT="[%D{%H:%M:%S}]"
 }
 
@@ -54,7 +88,7 @@ _prompt_get_vars () {
     # define colors for different hosts
     h=$(hostname 2>/dev/null || hostnamectl hostname 2>/dev/null || cat /etc/hostname 2>/dev/null)
     # format: ( 256username 256hostname 8username 8hostname )
-    using=( 219 122 5 2 ) # default
+    using=( 206 29 5 2 ) # default
     test "$h" = "capybara"  && using=( 147 209 3 6 ) # server
     test "$h" = "amnesia"   && using=( 99  255 5 7 ) # tails usb
     test "$h" = "localhost" && using=( $using ) # termux TODO change
@@ -72,6 +106,8 @@ _prompt_get_vars () {
 
     # determine whether or not we're running a shell in ranger
     if [ -n "$RANGER_LEVEL" ]; then _prompt_ranger=" (R) "; fi
+    # same, but for nnn
+    #if [ -n "$NNNLVL" ]; then _prompt_nnn=" (N$NNNLVL) "; fi
 
     return
     # display if chrooted

@@ -140,7 +140,7 @@ install_config "$HOME/.config/ranger/rifle.conf" "ranger.rifle"
 install_config "$HOME/.config/vifm/vifmrc" "vifmrc"
 
 ## elinks.conf
-install_config "$HOME/.elinks/elinks.conf" "elinks.conf"
+install_config "$HOME/.config/elinks.conf" "elinks.conf"
 
 ## helix config.toml
 install_config "$HOME/.config/helix/config.toml" "helix.toml"

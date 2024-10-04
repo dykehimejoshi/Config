@@ -45,7 +45,7 @@ test -d /run/media/$USER && alias cdmedia="cd /run/media/$USER"
 alias sex='set -x'
 
 # exit without saving shell history
-alias xx='kill -9 $$; unset HISTFILE && exit'
+alias xx='tmux set -w remain-on-exit off ; kill -9 $$; unset HISTFILE && exit'
 # reload shell without exit
 alias rlsh='exec $SHELL -l'
 nohist () {
@@ -98,7 +98,7 @@ _exists vim nvim && {
     alias view='vim -R -M'
     alias vi='vim -v -C -u NONE'
     alias v='vim'
-    # export VISUAL=vim
+    #export VISUAL=vim
 }
 
 # vifm

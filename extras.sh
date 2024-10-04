@@ -17,18 +17,18 @@ _battery_info () {
    state_symbol=
    if [[ "$charge_state" == 'discharging' ]]; then
        # characters: ↓⇃🔋
-       if [ $_tput_colors -eq 8 ]; then
-           state_symbol="↓"
-       else
-           state_symbol="⇃"
-       fi
+       state_symbol="↓"
+       #if [ $_tput_colors -eq 8 ]; then
+       #else
+           #state_symbol="⇃"
+       #fi
    elif [[ "$charge_state" == 'charging' ]]; then
        # characters: ↑↿⚡
-       if [ $_tput_colors -eq 8 ]; then
-           state_symbol="↑"
-       else
-           state_symbol="↿"
-       fi
+       state_symbol="↑"
+       #if [ $_tput_colors -eq 8 ]; then
+       #else
+           #state_symbol="↿"
+       #fi
    else
        :
        #state_symbol="🔌"
