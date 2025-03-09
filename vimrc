@@ -123,7 +123,7 @@ if has('autocmd')
     autocmd BufWritePost *vimrc autocmd! | source %
 
     "" Run Python scripts
-    autocmd FileType python noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
+    autocmd FileType python noremap <buffer> <Leader>r :w<CR>:exec '!/usr/bin/env python' shellescape(@%, 1)<CR>
 "    autocmd FileType python inoremap <buffer> <Leader>r <esc>:w<CR>:exec '!/usr/bin/env python3' shellescape(@%, 1)<CR>
 
     "" Run Javascript scripts

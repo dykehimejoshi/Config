@@ -24,8 +24,8 @@ alias ..6='c ../../../../../..'
 alias grep='grep --color=auto'
 alias grip='grep -i'
 alias grvp='grep -i -v'
-alias findinfile='grep --exclude-dir="*dosdevices*" --exclude-dir="*drive_c*" -iRl 2>/dev/null'
-alias printinfile='grep -iR 2>/dev/null'
+alias findinfile='grep --exclude-dir="*dosdevices*" --exclude-dir="*drive_c*" -iIRl 2>/dev/null'
+alias printinfile='grep -iIR 2>/dev/null'
 alias l='ls'
 alias l.='ls -d .*'
 alias la='ls -a'
@@ -43,6 +43,10 @@ mkcd () { mkdir -p "$1" && cd "$1"; }
 test -d /run/media/$USER && alias cdmedia="cd /run/media/$USER"
 
 alias sex='set -x'
+
+path () {
+    echo $PATH | tr -s ':' '\n'
+}
 
 # exit without saving shell history
 alias xx='tmux set -w remain-on-exit off ; kill -9 $$; unset HISTFILE && exit'
@@ -64,6 +68,14 @@ _exists mktemp && {
         export _TEMPDIR=${_TEMPDIR:-$(mktemp -d)}
         cd $_TEMPDIR
     }
+}
+
+# bedrock linux
+_exists brl strata && {
+    # export some envars to make navigating to stratum-specific directories easier
+    for i in $(ls /bedrock/strata); do
+        export strat${i}=/bedrock/strata/$i
+    done
 }
 
 # Git aliases
@@ -94,11 +106,11 @@ _exists xclip && {
 }
 
 # vim
-_exists vim nvim && {
-    alias view='vim -R -M'
-    alias vi='vim -v -C -u NONE'
-    alias v='vim'
-    #export VISUAL=vim
+_exists nvim && {
+    alias view='nvim -R -M'
+    alias vi='nvim -v -C -u NONE'
+    alias v='nvim'
+    export VISUAL=nvim
 }
 
 # vifm
@@ -115,12 +127,13 @@ _exists ranger && {
 # helix
 _exists helix && {
     alias hx='helix'
-    export VISUAL=helix
+    #export VISUAL=helix
 }
 
 # kakoune
 _exists kak && {
     #export VISUAL=kak
+    :
 }
 
 # yt-dlp (youtube-dl clone)
@@ -202,6 +215,44 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias srx='acs'
         alias shw='acshow'
         alias rem='agr'
+
+        deb () {
+            # helper function, basically just for bedrock linux
+            # i'm not aware of any scripts that call `deb`, so i'm not going
+            # to worry about anything
+            while [[ $# -gt 0 ]]; do
+                case $1 in
+                    ins|install)
+                        shift
+                        sudo apt install $*
+                        return $?
+                        ;;
+                    srx|search)
+                        shift
+                        apt-cache search $*
+                        return $?
+                        ;;
+                    shw|show)
+                        shift
+                        apt show $*
+                        return $?
+                        ;;
+                    rem|remove)
+                        shift
+                        sudo apt remove $*
+                        return $?
+                        ;;
+                    upd|update)
+                        sudo /bin/sh -c "apt update; apt-file update; apt full-upgrade"
+                        return $?
+                        ;;
+                    *)
+                        echo "Unknown command"
+                        return 1
+                        ;;
+                esac
+            done
+        }
     }
 
     _exists pkg && {
@@ -233,6 +284,49 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias srx='pacs'
         alias shw='pacshow'
         alias rem='pacr'
+
+        arch () {
+            # helper function, basically just for bedrock linux
+            # there exists an executable on (at least) debian called `arch` which is
+            # equivalent to `uname -m`. i'm not aware of any scripts which use
+            # that and not just uname but just in case, let's cover for it
+            if [[ $# -eq 0 ]]; then
+                uname -m
+                return
+            fi
+            while [[ $# -gt 0 ]]; do
+                case $1 in
+                    ins|install)
+                        shift
+                        sudo pacman -S $*
+                        return $?
+                        ;;
+                    srx|search)
+                        shift
+                        pacman -Ss $*
+                        return $?
+                        ;;
+                    shw|show)
+                        shift
+                        pacman -Si $*
+                        return $?
+                        ;;
+                    rem|remove)
+                        shift
+                        sudo pacman -R $*
+                        return $?
+                        ;;
+                    upd|update)
+                        sudo pacman -Syyu
+                        return $?
+                        ;;
+                    *)
+                        echo "Unknown command"
+                        return 1
+                        ;;
+                esac
+            done
+        }
     }
 
     _exists yay && {
@@ -281,6 +375,15 @@ if [[ "$(id -u)" -eq 0  ||  -n "$(groups | grep -E '(sudo|wheel)')" || -n "$TERM
         alias srx='gsrx'
     fi
 
+    _exists pmm && {
+        # bedrock linux package manager manager
+        alias srx='pmm -Ss'
+        alias shw='pmm -Si'
+        alias rem='sudo pmm -R'
+        alias ins='sudo pmm -Sy'
+        alias upd='sudo pmm -Syu'
+    }
+
 fi
 
 # rustc/cargo/rustup
@@ -303,9 +406,15 @@ alias rm='rm -i'
 alias ip='ip -color'
 alias getgateway='ip -c=never route | grep --color=never "^default" | cut -d " " -f3'
 getip () {
-    # could be more comprehensive
-    echo $(ip -c=never -br -4 a | tr -s " " | grep -E "^(wl|ww|sl|ib|en|eth|lo)" \
-    | cut -d " " -f3 | cut -d/ -f1 | tail -n1)
+    if [ -z "$TERMUX_VERSION" ]; then
+        echo $(ip -c=never -br -4 a | tr -s " " \
+        | grep -E "^(wl|rmnet|ww|sl|ib|en|eth|lo)" \
+        | cut -d " " -f3 | cut -d/ -f1 | tail -n1)
+    else
+        # here we're using termux where `ip a` has stopped working; we can still
+        # find the ip with `ifconfig`
+        echo $(ifconfig | grep -EA 1 '^(wlan|rmnet)' | tail -1 | tr -s ' ' | cut -d' ' -f3)
+    fi
 }
 
 perms () {
@@ -421,12 +530,7 @@ _exists mprocs && {
 ## ed
 _exists ed && {
     alias ed='ed -p "> "'
-    export EDITOR=ed
-}
-
-## bc
-_exists bc && {
-    calc () { bc -l <<< "$1"; }
+    #export EDITOR=ed
 }
 
 _exists syncthing && {

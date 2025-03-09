@@ -1,17 +1,67 @@
--- using packer
--- loaded by calling `lua require('plugins')` in init.vim
--- it looks like the file needs to be loaded into neovim before changes
---  are actually realized
+-- using lazy
 
--- vim.cmd [[packadd packer.nvim]]
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
+end
+vim.opt.rtp:prepend(lazypath)
 
-return require('packer').startup(function(use)
+vim.g.mapleader = ","
+vim.g.maplocalleader = "\\"
 
-    use {
-        'glacambre/firenvim',
-        run = function() vim.fn['firenvim#install'](0) end
-    }
+-- setup lazy.nvim
+require("lazy").setup({
+    spec = {
+        -- plugins go here
+        {
+            "nvim-treesitter/nvim-treesitter",
+            build = ":TSUpdate",
+        },
+        {
+            "epwalsh/obsidian.nvim",
+            version = "*",
+            lazy = true,
+            event = {
+                "BufReadPre " .. vim.fn.expand "~" .. "/Documents/obsidian/notes/*.md",
+                "BufNewFile " .. vim.fn.expand "~" .. "/Documents/obsidian/notes/*.md",
+            },
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+                "hrsh7th/nvim-cmp",
+                "nvim-telescope/telescope.nvim",
+            },
+            opts = {
+                workspaces = {
+                    {
+                        name = "notes",
+                        path = "~/Documents/obsidian/notes",
+                    },
+                    {
+                        name = "languages",
+                        path = "~/Documents/obsidian/languages",
+                    },
+                },
+            },
+        }
+    },
+    install = { },
+    checker = { enabled = true },
+})
 
-    use {'rose-pine/neovim', as = 'rose-pine'}
-
-end)
+require("nvim-treesitter.configs").setup({
+    ensure_installed = { "markdown", "markdown_inline", },
+    highlight = {
+        enable = true,
+    },
+})

@@ -75,6 +75,24 @@ else
     echo "Not installing."
 fi
 
+# install alacritty themes
+if [ ! -d "$HOME/.config/alacritty/themes" ]; then
+    echo -en "Install alacritty themes?\n(y/N) > "
+    read theme_i
+    if $(echo $theme_i | grep -Eq '^(Y|y)$'); then
+        mkdir -p $HOME/.config/alacritty/themes
+        git clone https://github.com/alacritty/alacritty-theme $HOME/.config/alacritty/themes
+        code=$?
+        if [ $code = 0 ]; then
+            echo "$COLOR_GREEN[+] Alacritty themes installed.$COLOR_RST"
+        else
+            echo "$COLOR_RED[!] Error cloning alacritty themes: $code$COLOR_RST"
+        fi
+    fi
+else
+    echo "$COLOR_YELLOW[~] Alacritty themes already cloned.$COLOR_RST"
+fi
+
 # Install the config files to their respective places
 
 install_config () {
@@ -104,7 +122,7 @@ install_config "$HOME/.vimrc" "vimrc"
 install_config "$HOME/.config/nvim/init.vim" "nvimrc"
 
 ### neovim plugin config
-install_config "$HOME/.config/nvim/lua/plugins.lua" "nvim.plugins"
+install_config "$HOME/.config/nvim/lua/config/lazy.lua" "nvim.plugins"
 
 ## .bash_aliases
 install_config "$HOME/.bash_aliases" "bash_aliases"
@@ -150,3 +168,6 @@ install_config "$HOME/.config/kak/kakrc" "kakrc"
 
 ## kitty.conf
 install_config "$HOME/.config/kitty/kitty.conf" "kitty.conf"
+
+## alacritty.toml
+install_config "$HOME/.config/alacritty/alacritty.toml" "alacritty.toml"

@@ -13,6 +13,11 @@ text-width = 80
 middle-click-paste = true
 auto-completion = true
 auto-format = false
+end-of-line-diagnostics = "hint"
+
+[editor.inline-diagnostics]
+cursor-line = "error"
+other-lines = "error"
 
 [editor.statusline]
 left = ["file-name", "file-modification-indicator", "spinner", "mode"]

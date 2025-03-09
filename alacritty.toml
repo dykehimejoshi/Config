@@ -1,0 +1,8 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/rose_pine_moon.toml"
+]
+
+[window]
+decorations = "None"
+

@@ -36,6 +36,8 @@ function precmd() {
             elapsed=$now-$timer
             _prompt_timer="%F{white} $(converts $elapsed)"
             export _prompt_timer
+            # don't show timer in midnight commander
+            if [ ! -z "$MC_SID" ]; then unset _prompt_timer; fi
             unset timer
         fi
         # adds a space after each command
@@ -70,6 +72,10 @@ prompt_custom_setup() {
 %(?.. [%F{\$_prompt_color_cmderror}%?%f])\$_prompt_ranger\$_prompt_get_chroot
 %(!.%K{red}.)\$_prompt_histfile_active%#%f%b%k "
 
+    # this should clear the timer only on zsh init (i.e. when there have
+    # been no commands run yet)
+    # otherwise, new tmux panes adopt the envar from the session
+    unset _prompt_timer
     RPROMPT="\$vcs_info_msg_0_ \$_prompt_timer"
     #RPROMPT="[%D{%H:%M:%S}]"
 }
@@ -78,8 +84,8 @@ prompt_custom_setup() {
 _prompt_get_vars () {
     _prompt_histfile_active=`test -z $HISTFILE && echo '--'`
 
-    # find out whether the terminal supports 256 colors or not (or is kitty)
-    if $(echo "$TERM" | grep -vqE '(256color|kitty)'); then
+    # find out whether the terminal supports 256 colors or not
+    if $(echo "$TERM" | grep -vqE '(256color|alacritty|kitty)'); then
         less_colors="yes"
     else
         less_colors=
@@ -87,11 +93,21 @@ _prompt_get_vars () {
 
     # define colors for different hosts
     h=$(hostname 2>/dev/null || hostnamectl hostname 2>/dev/null || cat /etc/hostname 2>/dev/null)
+    # light & dark mode!
     # format: ( 256username 256hostname 8username 8hostname )
-    using=( 206 29 5 2 ) # default
-    test "$h" = "capybara"  && using=( 147 209 3 6 ) # server
-    test "$h" = "amnesia"   && using=( 99  255 5 7 ) # tails usb
-    test "$h" = "localhost" && using=( $using ) # termux TODO change
+    if $(gsettings get org.gnome.desktop.interface color-scheme | grep -q default); then
+        # "default" = light mode
+        using=( 206 29 5 2 ) # default
+        test "$h" = "capybara"  && using=( 147 209 3 6 ) # server
+        test "$h" = "amnesia"   && using=( 99  255 5 7 ) # tails usb
+        test "$h" = "localhost" && using=( $using ) # termux TODO change
+    else
+        # "prefer-dark" = dark mode
+        using=( 219 122 5 2 ) # default
+        test "$h" = "capybara"  && using=( 147 209 3 6 ) # server
+        test "$h" = "amnesia"   && using=( 99  255 5 7 ) # tails usb
+        test "$h" = "localhost" && using=( $using ) # termux TODO change
+    fi
     ###
     if [ ! -z "$less_colors" ]; then
         export _prompt_color_username=${using[3]}
@@ -145,12 +161,15 @@ prompt_themes+=( custom )
 prompt custom
 
 tmpfile="${TMPDIR:-/tmp}/.reminders_read" # only show reminders once
-if [ -f "$HOME/reminders" ] && [ ! -f $tmpfile ]; then
-    if [ -s "$HOME/reminders" ]; then
-        echo -e "Reminders:\n----------"
-        cat $HOME/reminders
-        echo "----------"
-        touch $tmpfile
+if [ -f "$HOME/reminders" ]; then
+    # https://stackoverflow.com/questions/32019432/if-file-modification-date-is-older-than-n-days
+    if [ ! -f $tmpfile ] || (( $(date -r $tmpfile +%s) <= $(date -d 'now - 24 hours' +%s) )); then
+        if [ -s "$HOME/reminders" ]; then
+            echo -e "Reminders:\n----------"
+            cat $HOME/reminders
+            echo "----------"
+            touch $tmpfile
+        fi
     fi
 fi
 unset tmpfile
@@ -189,6 +208,11 @@ source $_confdir/aliases
 # otherwise it would try to complete to files as well, which we don't want
 compdef _dirs c
 compdef _dirs mkcd
+
+if [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=${_prompt_color_cmderror}"
+    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
 # if we have any other things for zsh to source that are specific
 # to one system, source them here
